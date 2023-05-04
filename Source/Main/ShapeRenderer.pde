@@ -28,9 +28,9 @@ class ShapeRenderer {
     this.radius = 0;
   }
 
-  public void renderSphere(PVector position, float radius) {
+  public void renderSphere(PVector pos, float radius) {
     pushMatrix();
-    translate(position.x, position.y, position.z);
+    translate(pos.x, pos.y, pos.z);
     sphere(radius);
     popMatrix();
   }
