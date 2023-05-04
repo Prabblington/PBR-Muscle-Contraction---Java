@@ -1,7 +1,7 @@
 class CameraOrbit {
-  final float CAMERA_PAN_SPEED = 0.8;
-  final float CAMERA_ORBIT_SPEED = 0.1;
-  final float CAMERA_ZOOM_SPEED = 15;
+  private final float CAMERA_PAN_SPEED = 0.8;
+  private final float CAMERA_ORBIT_SPEED = 0.1;
+  private final float CAMERA_ZOOM_SPEED = 15;
 
   private float distance, angleX, angleY;
   private PVector target;
