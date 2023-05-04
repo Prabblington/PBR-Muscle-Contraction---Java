@@ -76,12 +76,14 @@ class ShapeRenderer {
     }
     return null;
   }
-  // Renders anything rectangular
-  public void renderRectangle(PVector pos, float size)  {
-    pushMatrix();
-    translate(pos.x, pos.y, pos.z);
-    box(pos.x, pos.y, size);
-    popMatrix();
+  
+  // Renders any specified shape using vertex custom creation
+  public void renderCustomVertex(ArrayList<PVector> ver)  {
+    beginShape();
+    for(int i = 0; i < ver.size(); i++)  {
+     vertex(ver.get(i).x, ver.get(i).y, ver.get(i).z);
+    }
+    endShape();
   }
 
   // Renders anything spherical
