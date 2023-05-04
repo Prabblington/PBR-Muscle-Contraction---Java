@@ -23,14 +23,14 @@ class ShapeRenderer {
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
-  ShapeRenderer(float x, float y, float z, float radius) {
-    position = new PVector(x, y, z);
+  ShapeRenderer(PVector position, float radius) {
+    position = new PVector(position.x, position.y, position.z);
     this.radius = radius;
   }
 
-  public void renderSphere(float x, float y, float z, float radius) {
+  public void renderSphere(PVector position, float radius) {
     pushMatrix();
-    translate(x, y, z);
+    translate(position.x, position.y, position.z);
     sphere(radius);
     popMatrix();
   }
