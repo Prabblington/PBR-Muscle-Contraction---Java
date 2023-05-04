@@ -16,11 +16,11 @@ void setup() {
 void draw() {
   background(20, 5, 15);
   //orbitControl();
-  
+
   for (int i = 0; i < NUM_SPHERES; i++) {
     PVector point = points1.get(i);
     PVector point2 = points2.get(i);
-    
+
     fill(255, 0, 255);
     renderSphere(point.x, point.y, point.z, SPHERE_RADIUS);
     fill(70, 20, 150);
