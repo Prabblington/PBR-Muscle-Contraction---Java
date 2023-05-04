@@ -1,6 +1,6 @@
 class Actin extends ShapeRenderer {
 
-  private final int NUM_SPHERES = 30;
+  private final int NUM_SPHERES = 22;
   private final int SPHERE_RADIUS = 30;
   private final float SPACING = SPHERE_RADIUS * 1.05;
   //1.05
@@ -36,7 +36,6 @@ class Actin extends ShapeRenderer {
     points1 = new ArrayList<PVector>();
     points2 = new ArrayList<PVector>();
 
-    //this.X_START = -600;
     this.xStart = initX;
     this.yStart = initY;
 
