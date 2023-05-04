@@ -41,34 +41,4 @@ class Actin extends ShapeRenderer {
     points1 = this.helicalPointsGenerator(1, NUM_SPHERES, SIN_COS_VAL, SPACING, xStart, yStart);
     points2 = this.helicalPointsGenerator(2, NUM_SPHERES, SIN_COS_VAL, SPACING, xStart, yStart);
   }
-
-  //// Generates a value of positions forming a helical form
-  //// along the x value, left to right
-  //private void generateStruct1() {
-  //  float x = xStart;
-  //  float y = yStart;
-  //  float z = 0;
-
-  //  for (int i = 0; i < NUM_SPHERES; i++) {
-  //    points1.add(new PVector(x, y, z));
-  //    x += SPACING;
-  //    y = sin(x * SIN_COS_VAL) * SPACING;
-  //    z = cos(x * SIN_COS_VAL) * SPACING;
-  //  }
-  //}
-
-  //// Generates a value of positions forming a helical form
-  //// along the x value, left to right which intertwines with struct1
-  //private void generateStruct2() {
-  //  float x = xStart;
-  //  float y = yStart;
-  //  float z = 0;
-
-  //  for (int i = 0; i < NUM_SPHERES; i++) {
-  //    points2.add(new PVector(x, y, z));
-  //    x += SPACING;
-  //    y = -sin(x * SIN_COS_VAL) * SPACING;
-  //    z = -cos(x * SIN_COS_VAL) * SPACING;
-  //  }
-  //}
 }
