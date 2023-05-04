@@ -8,8 +8,6 @@ void setup() {
   camera = new CameraOrbit(1000, 0, 0, new PVector(0, 0, 0));
 
   actin = new Actin(-600, 0);
-  actin.generateStruct1();
-  actin.generateStruct2();
 }
 
 void draw() {
