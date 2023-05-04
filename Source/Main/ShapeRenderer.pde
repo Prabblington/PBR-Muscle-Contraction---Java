@@ -58,7 +58,7 @@ class ShapeRenderer {
     if (isPositive) {
       for (int i = 0; i < amount; i++) {
         points.add(new PVector(x, y, z));
-        x += SPACING;
+        x += SPACING * 1.63;
         y = -sin(x * SIN_COS_VAL) * SPACING;
         z = -cos(x * SIN_COS_VAL) * SPACING;
       }
@@ -67,7 +67,7 @@ class ShapeRenderer {
     } else if (!isPositive) {
       for (int i = 0; i < amount; i++) {
         points.add(new PVector(x, y, z));
-        x += SPACING;
+        x += SPACING * 1.63;
         y = sin(x * SIN_COS_VAL) * SPACING;
         z = cos(x * SIN_COS_VAL) * SPACING;
       }

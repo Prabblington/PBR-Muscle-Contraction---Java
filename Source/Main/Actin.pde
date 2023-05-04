@@ -3,7 +3,9 @@ class Actin extends ShapeRenderer {
   private final int NUM_SPHERES = 30;
   private final int SPHERE_RADIUS = 30;
   private final float SPACING = SPHERE_RADIUS * 1.05;
-  private final float SIN_COS_VAL = 0.053;
+  //1.05
+  private final float SIN_COS_VAL = 0.019;
+  //0.053
 
   private float xStart, yStart;
 
