@@ -8,7 +8,6 @@ class CameraOrbit {
   private boolean isOrbiting, isPanning = false;
   private int prevMouseX, prevMouseY;
 
-
   // ------------------------------ GETTERS AND SETTERS ------------------------------
 
   public float CAMERA_PAN_SPEED() {

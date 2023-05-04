@@ -27,7 +27,8 @@ class ShapeRenderer {
     position = new PVector(0, 0, 0);
     this.radius = 0;
   }
-
+  
+  // Renders anything spherical
   public void renderSphere(PVector pos, float radius) {
     pushMatrix();
     translate(pos.x, pos.y, pos.z);

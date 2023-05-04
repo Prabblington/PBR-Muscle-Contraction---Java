@@ -4,7 +4,7 @@ class Actin extends ShapeRenderer {
   private final int SPHERE_RADIUS = 30;
   private final float SPACING = SPHERE_RADIUS * 1.05;
   private final float SIN_COS_VAL = 0.053;
-  
+
   private float xStart, yStart;
 
   private ArrayList<PVector> points1;
@@ -12,11 +12,18 @@ class Actin extends ShapeRenderer {
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------
 
-  public ArrayList<PVector> getStruct1Points()  {
-   return this.points1; 
+  public ArrayList<PVector> getStruct1Points() {
+    return this.points1;
   }
-  public ArrayList<PVector> getStruct2Points()  {
-   return this.points2; 
+  public ArrayList<PVector> getStruct2Points() {
+    return this.points2;
+  }
+
+  public int NUM_SPHERES() {
+    return this.NUM_SPHERES;
+  }
+  public int SPHERE_RADIUS() {
+    return this.SPHERE_RADIUS;
   }
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
