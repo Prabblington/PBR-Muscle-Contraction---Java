@@ -23,9 +23,9 @@ class ShapeRenderer {
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
-  ShapeRenderer(PVector position, float radius) {
-    position = new PVector(position.x, position.y, position.z);
-    this.radius = radius;
+  public ShapeRenderer() {
+    position = new PVector(0, 0, 0);
+    this.radius = 0;
   }
 
   public void renderSphere(PVector position, float radius) {

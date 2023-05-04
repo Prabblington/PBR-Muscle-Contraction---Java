@@ -1,31 +1,45 @@
 class Actin extends ShapeRenderer {
 
-  private final int NUM_SPHERES, SPHERE_RADIUS;
-  private final float X_START, SPACING, SIN_COS_VAL;
+  private final int NUM_SPHERES = 30;
+  private final int SPHERE_RADIUS = 30;
+  private final float SPACING = SPHERE_RADIUS * 1.05;
+  private final float SIN_COS_VAL = 0.053;
+  ;
+  private float xStart, yStart;
 
   private ArrayList<PVector> points1;
   private ArrayList<PVector> points2;
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------
 
-
+  public ArrayList<PVector> getStruct1Points()  {
+   return this.points1; 
+  }
+  public ArrayList<PVector> getStruct2Points()  {
+   return this.points2; 
+  }
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
-  public Actin() {
+  public Actin(float initX, float initY) {
+    super();
+
     points1 = new ArrayList<PVector>();
     points2 = new ArrayList<PVector>();
-    
-    this.NUM_SPHERES = 30;
-    this.X_START = -600;
-    this.SPHERE_RADIUS = 30;
-    this.SIN_COS_VAL = 0.053;
-    this.SPACING = SPHERE_RADIUS * 1.05;
+
+    //this.X_START = -600;
+    this.xStart = initX;
+    this.yStart = initY;
+
+    this.generateStruct1();
+    this.generateStruct2();
   }
 
+  // Generates a value of positions forming a helical form
+  // along the x value, left to right
   private void generateStruct1() {
-    float x = X_START;
-    float y = 0;
+    float x = xStart;
+    float y = yStart;
     float z = 0;
 
     for (int i = 0; i < NUM_SPHERES; i++) {
@@ -36,9 +50,11 @@ class Actin extends ShapeRenderer {
     }
   }
 
+  // Generates a value of positions forming a helical form
+  // along the x value, left to right which intertwines with struct1
   private void generateStruct2() {
-    float x = X_START;
-    float y = 0;
+    float x = xStart;
+    float y = yStart;
     float z = 0;
 
     for (int i = 0; i < NUM_SPHERES; i++) {
