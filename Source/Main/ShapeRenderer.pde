@@ -76,6 +76,13 @@ class ShapeRenderer {
     }
     return null;
   }
+  // Renders anything rectangular
+  public void renderRectangle(PVector pos, float size)  {
+    pushMatrix();
+    translate(pos.x, pos.y, pos.z);
+    box(pos.x, pos.y, size);
+    popMatrix();
+  }
 
   // Renders anything spherical
   public void renderSphere(PVector pos, float radius) {
