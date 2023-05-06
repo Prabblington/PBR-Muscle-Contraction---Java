@@ -11,20 +11,20 @@ void setup() {
   camera = new CameraOrbit(1000, 0, 0, new PVector(0, 0, 0));
 
   actin = new Actin(-600, 0);
+  float[] d = {900, 100, 50};
 
   // Myosin filament vertex arrayList
-  vertex.add(new PVector(-900, -100, -50));
-  vertex.add(new PVector(50, -100, -50));
-  vertex.add(new PVector(50, 50, -50));
-  vertex.add(new PVector(-900, 50, -50));
-  
-  vertex.add(new PVector(-900, -100, 50));
-  vertex.add(new PVector(50, -100, 50));
-  vertex.add(new PVector(50, 50, 50));
-  vertex.add(new PVector(-900, 50, 50));  
+  vertex.add(new PVector( -d[0], -d[1], -d[2] ));
+  vertex.add(new PVector( d[2], -d[1], -d[2] ));
+  vertex.add(new PVector( d[2], d[2], -d[2] ));
+  vertex.add(new PVector( -d[0], d[2], -d[2] ));
+
+  vertex.add(new PVector( -d[0], -d[1], d[2] ));
+  vertex.add(new PVector( d[2], -d[1], d[2] ));
+  vertex.add(new PVector( d[2], d[2], d[2] ));
+  vertex.add(new PVector( -d[0], d[2], d[2] ));
 
   myosinFilament = new Myosin(vertex);
-  
 }
 
 void draw() {
