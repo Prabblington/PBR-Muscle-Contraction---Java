@@ -76,19 +76,49 @@ class ShapeRenderer {
     }
     return null;
   }
+  
+  // Renders 6 sided 3D shape
+  public void renderQuadShape(ArrayList<PVector> vertices) {
+    // Define the indices for each face
+    int[][] faces = {
+      {0, 1, 2, 3}, // Front face
+      {4, 5, 6, 7}, // Back face
+      {3, 2, 6, 7}, // Top face
+      {0, 1, 5, 4}, // Bottom face
+      {0, 3, 7, 4}, // Left face
+      {1, 2, 6, 5}  // Right face
+    };
+
+    PShape customShape = createShape();
+    customShape.beginShape(QUADS);
+
+    for (int i = 0; i < faces.length; i++) {
+      int[] face = faces[i];
+      for (int j = 0; j < face.length; j++) {
+        PVector vertex = vertices.get(face[j]);
+        customShape.vertex(vertex.x, vertex.y, vertex.z);
+      }
+    }
+
+    customShape.endShape(CLOSE);
+
+    pushMatrix();
+    translate(400, 250, 0);
+    shape(customShape, 0, 0); //display
+    popMatrix();
+  }
 
   // Renders any specified shape using vertex custom creation
   public void renderCustomVertex(ArrayList<PVector> ver) {
     PShape customShape = createShape();
 
-    
     customShape.beginShape();
     for (int i = 0; i < ver.size(); i++) {
       customShape.vertex(ver.get(i).x, ver.get(i).y, ver.get(i).z);
     }
     customShape.endShape(CLOSE);
     pushMatrix();
-    translate(400, 350, 0);    
+    translate(400, 350, 0);
     shape(customShape, 0, 0); //display
     popMatrix();
   }

@@ -2,45 +2,35 @@ CameraOrbit camera;
 Actin actin;
 Myosin myosinFilament;
 
+private ArrayList<PVector> vertex = new ArrayList<PVector>();
+
 void setup() {
   size(1200, 800, P3D);
   background(20, 5, 15);
 
   camera = new CameraOrbit(1000, 0, 0, new PVector(0, 0, 0));
-  
+
   actin = new Actin(-600, 0);
-  
+
   // Myosin filament vertex arrayList
-  ArrayList<PVector> vertex = new ArrayList<PVector>();
+  vertex.add(new PVector(-900, -100, -50));
+  vertex.add(new PVector(50, -100, -50));
+  vertex.add(new PVector(50, 50, -50));
+  vertex.add(new PVector(-900, 50, -50));
   
-  stroke(255, 255, 255);
-  vertex.add(new PVector(-600, -200, 0));
-  vertex.add(new PVector(-600, -200, 50));
-  vertex.add(new PVector(-600, -250, 50));
-  vertex.add(new PVector(-600, -250, 0));
-  vertex.add(new PVector(-600, -200, 0));
-  
-  vertex.add(new PVector(200, -200, 0));
-  vertex.add(new PVector(200, -250, 0));
-  //vertex.add(new PVector(200, -250, 50));
-  //vertex.add(new PVector(200, -200, 50));
-  //vertex.add(new PVector(200, -250, 50));
-  
-  //vertex.add(new PVector(-600, -250, 0));
-  //vertex.add(new PVector(-600, -250, 50)); 
-  
-  //vertex.add(new PVector(200, -250, 0));  
-  //vertex.add(new PVector(200, -250, 50));
-  
-  //vertex.add(new PVector(200, -200, 50));
-  //vertex.add(new PVector(200, -200, 0));
+  vertex.add(new PVector(-900, -100, 50));
+  vertex.add(new PVector(50, -100, 50));
+  vertex.add(new PVector(50, 50, 50));
+  vertex.add(new PVector(-900, 50, 50));  
+
   myosinFilament = new Myosin(vertex);
+  
 }
 
 void draw() {
   background(20, 5, 15);
   camera.update();
-
+  stroke(0);
   for (int i = 0; i < actin.NUM_SPHERES(); i++) {
     ArrayList<PVector> points1 = actin.getStruct1Points();
     ArrayList<PVector> points2 = actin.getStruct2Points();
@@ -50,11 +40,9 @@ void draw() {
 
     fill(70, 20, 150);
     actin.renderSphere(points2.get(i), actin.SPHERE_RADIUS());
-    
-    fill(255, 255, 255);
-    myosinFilament.displayThickFilament();
   }
-
+  fill(55);
+  myosinFilament.renderQuadShape(vertex);
 }
 
 // Controlls camera panning
