@@ -1,13 +1,40 @@
 CameraOrbit camera;
 Actin actin;
+Myosin myosinFilament;
 
 void setup() {
   size(1200, 800, P3D);
   background(20, 5, 15);
 
   camera = new CameraOrbit(1000, 0, 0, new PVector(0, 0, 0));
-
+  
   actin = new Actin(-600, 0);
+  
+  // Myosin filament vertex arrayList
+  ArrayList<PVector> vertex = new ArrayList<PVector>();
+  
+  stroke(255, 255, 255);
+  vertex.add(new PVector(-600, -200, 0));
+  vertex.add(new PVector(-600, -200, 50));
+  vertex.add(new PVector(-600, -250, 50));
+  vertex.add(new PVector(-600, -250, 0));
+  vertex.add(new PVector(-600, -200, 0));
+  
+  vertex.add(new PVector(200, -200, 0));
+  vertex.add(new PVector(200, -250, 0));
+  //vertex.add(new PVector(200, -250, 50));
+  //vertex.add(new PVector(200, -200, 50));
+  //vertex.add(new PVector(200, -250, 50));
+  
+  //vertex.add(new PVector(-600, -250, 0));
+  //vertex.add(new PVector(-600, -250, 50)); 
+  
+  //vertex.add(new PVector(200, -250, 0));  
+  //vertex.add(new PVector(200, -250, 50));
+  
+  //vertex.add(new PVector(200, -200, 50));
+  //vertex.add(new PVector(200, -200, 0));
+  myosinFilament = new Myosin(vertex);
 }
 
 void draw() {
@@ -23,6 +50,9 @@ void draw() {
 
     fill(70, 20, 150);
     actin.renderSphere(points2.get(i), actin.SPHERE_RADIUS());
+    
+    fill(255, 255, 255);
+    myosinFilament.displayThickFilament();
   }
 
 }

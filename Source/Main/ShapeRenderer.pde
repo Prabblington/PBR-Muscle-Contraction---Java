@@ -76,14 +76,21 @@ class ShapeRenderer {
     }
     return null;
   }
-  
+
   // Renders any specified shape using vertex custom creation
-  public void renderCustomVertex(ArrayList<PVector> ver)  {
-    beginShape();
-    for(int i = 0; i < ver.size(); i++)  {
-     vertex(ver.get(i).x, ver.get(i).y, ver.get(i).z);
+  public void renderCustomVertex(ArrayList<PVector> ver) {
+    PShape customShape = createShape();
+
+    
+    customShape.beginShape();
+    for (int i = 0; i < ver.size(); i++) {
+      customShape.vertex(ver.get(i).x, ver.get(i).y, ver.get(i).z);
     }
-    endShape();
+    customShape.endShape(CLOSE);
+    pushMatrix();
+    translate(400, 350, 0);    
+    shape(customShape, 0, 0); //display
+    popMatrix();
   }
 
   // Renders anything spherical

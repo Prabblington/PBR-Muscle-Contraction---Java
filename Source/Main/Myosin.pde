@@ -7,15 +7,15 @@ class Myosin extends ShapeRenderer {
   public ArrayList<PVector> getVertexList()  {
    return vertex; 
   }  
-  public void setVertexList(ArrayList<PVector> v)  {
-   this.vertex = v; 
+  public void setVertexList(ArrayList<PVector> ver)  {
+   this.vertex = ver; 
   }
   
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
-  public Myosin() {
+  public Myosin(ArrayList<PVector> v) {
     super();
-    vertex = new ArrayList<PVector>();
+    vertex = new ArrayList<PVector>(v);
     //myosinHeads = new ArrayList<PVector>();
   }
   
