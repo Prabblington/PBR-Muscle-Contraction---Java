@@ -1,4 +1,4 @@
-class Myosin extends ShapeRenderer {
+class Myosin extends MeshRenderer {
   private ArrayList<PVector> vertex;
   //private ArrayList<PVector> myosinHeads;
 
@@ -13,6 +13,11 @@ class Myosin extends ShapeRenderer {
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
+  // Empty constructor 
+  public Myosin() {
+    super();
+  }
+  
   // Constructor for myosin heads
   public Myosin(ArrayList<PVector> v) {
     super();
@@ -38,6 +43,6 @@ class Myosin extends ShapeRenderer {
   }
 
   public void displayThickFilament() {
-    this.renderCustomVertex(vertex);
+    this.renderQuadShape(vertex);
   }
 }

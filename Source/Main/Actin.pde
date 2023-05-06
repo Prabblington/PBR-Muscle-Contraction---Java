@@ -1,4 +1,4 @@
-class Actin extends ShapeRenderer {
+class Actin extends MeshRenderer {
 
   private final int NUM_SPHERES = 22;
   private final int SPHERE_RADIUS = 30;

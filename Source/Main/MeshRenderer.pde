@@ -1,7 +1,8 @@
-class ShapeRenderer {
+class MeshRenderer {
 
   private PVector position;
   private float radius;
+
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------
 
@@ -23,9 +24,38 @@ class ShapeRenderer {
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
-  public ShapeRenderer() {
+  public MeshRenderer() {
     position = new PVector(0, 0, 0);
     this.radius = 0;
+  }
+
+  public void renderMeshGrid() {
+    int[] dim = {64, 64};
+    int scale = 1;
+
+    dim[0] = dim[0] * scale;
+    dim[1] = dim[1] * scale;
+
+    this.generateMeshGrid(dim, scale);
+  }
+
+  private void generateMeshGrid(int[] d, int scale) {    
+
+    for (int y = 0; y < d[0]; y++) {
+      PShape customShape = createShape();      
+      customShape.beginShape(TRIANGLE_STRIP);
+      
+      for (int x = 0; x < d[1]; x++) {
+        customShape.vertex(x * scale, y * scale);
+        customShape.vertex(x * scale, (y+1) * scale);
+      }
+      customShape.endShape(CLOSE);
+
+      pushMatrix();
+      translate(0, 0, 200);
+      shape(customShape, 0, 0); //display
+      popMatrix();
+    }
   }
 
   // helicalPointsGenerator():
@@ -76,7 +106,7 @@ class ShapeRenderer {
     }
     return null;
   }
-  
+
   // Renders 6 sided 3D shape
   public void renderQuadShape(ArrayList<PVector> vertices) {
     // Define the indices for each face
@@ -104,21 +134,6 @@ class ShapeRenderer {
 
     pushMatrix();
     translate(400, 250, 0);
-    shape(customShape, 0, 0); //display
-    popMatrix();
-  }
-
-  // Renders any specified shape using vertex custom creation
-  public void renderCustomVertex(ArrayList<PVector> ver) {
-    PShape customShape = createShape();
-
-    customShape.beginShape();
-    for (int i = 0; i < ver.size(); i++) {
-      customShape.vertex(ver.get(i).x, ver.get(i).y, ver.get(i).z);
-    }
-    customShape.endShape(CLOSE);
-    pushMatrix();
-    translate(400, 350, 0);
     shape(customShape, 0, 0); //display
     popMatrix();
   }

@@ -11,15 +11,17 @@ void setup() {
 
   actin = new Actin(-600, 0);
   // Myosin dimentions: 1 = x, 2 = y(range), 3 = z(range)
-  float[] d = {900, 100, 50};  
+  float[] d = {900, 100, 50};
 
   myosinFilament = new Myosin(d);
-  //myosinHeads = new Myosin(); // ADD MYOSIN HEAD VERTEXS
+  myosinHeads = new Myosin();
 }
 
 void draw() {
   background(20, 5, 15);
   camera.update();
+
+  // Actin renderings
   stroke(0);
   for (int i = 0; i < actin.NUM_SPHERES(); i++) {
     ArrayList<PVector> points1 = actin.getStruct1Points();
@@ -31,8 +33,12 @@ void draw() {
     fill(70, 20, 150);
     actin.renderSphere(points2.get(i), actin.SPHERE_RADIUS());
   }
+  // Myosin renderings
   fill(55);
   myosinFilament.renderQuadShape(myosinFilament.getVertexList());
+
+  stroke(255);
+  myosinHeads.renderMeshGrid();
 }
 
 // Controlls camera panning
