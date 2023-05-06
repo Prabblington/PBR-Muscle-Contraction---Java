@@ -11,19 +11,19 @@ void setup() {
   camera = new CameraOrbit(1000, 0, 0, new PVector(0, 0, 0));
 
   actin = new Actin(-600, 0);
-  // Myosin dimentions: x, y, z
+  // Myosin dimentions: 1, 2, 3
   float[] d = {900, 100, 50};
 
   // Myosin filament vertex arrayList
-  vertex.add(new PVector( -d[0], -d[1], -d[2] ));
-  vertex.add(new PVector( d[2], -d[1], -d[2] ));
-  vertex.add(new PVector( d[2], d[2], -d[2] ));
-  vertex.add(new PVector( -d[0], d[2], -d[2] ));
+  vertex.add(new PVector( -d[0], -d[1], -d[2] )); // -1, -2, -3
+  vertex.add(new PVector( d[2], -d[1], -d[2] ));  // 3, -2, -3
+  vertex.add(new PVector( d[2], d[2], -d[2] ));   // 2, 2, -2
+  vertex.add(new PVector( -d[0], d[2], -d[2] ));  // -1, -3, -3
 
-  vertex.add(new PVector( -d[0], -d[1], d[2] ));
-  vertex.add(new PVector( d[2], -d[1], d[2] ));
-  vertex.add(new PVector( d[2], d[2], d[2] ));
-  vertex.add(new PVector( -d[0], d[2], d[2] ));
+  vertex.add(new PVector( -d[0], -d[1], d[2] ));  // -1, -2, 3
+  vertex.add(new PVector( d[2], -d[1], d[2] ));   // 3, -2, -3
+  vertex.add(new PVector( d[2], d[2], d[2] ));    // 3, 3, 3
+  vertex.add(new PVector( -d[0], d[2], d[2] ));   // -1, 3, 3
 
   myosinFilament = new Myosin(vertex);
 }
