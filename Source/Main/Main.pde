@@ -1,8 +1,7 @@
 CameraOrbit camera;
 Actin actin;
 Myosin myosinFilament;
-
-private ArrayList<PVector> vertex = new ArrayList<PVector>();
+Myosin myosinHeads;
 
 void setup() {
   size(1200, 800, P3D);
@@ -11,21 +10,11 @@ void setup() {
   camera = new CameraOrbit(1000, 0, 0, new PVector(0, 0, 0));
 
   actin = new Actin(-600, 0);
-  // Myosin dimentions: 1, 2, 3
-  float[] d = {900, 100, 50};
+  // Myosin dimentions: 1 = x, 2 = y(range), 3 = z(range)
+  float[] d = {900, 100, 50};  
 
-  // Myosin filament vertex arrayList
-  vertex.add(new PVector( -d[0], -d[1], -d[2] )); // -1, -2, -3
-  vertex.add(new PVector( d[2], -d[1], -d[2] ));  // 3, -2, -3
-  vertex.add(new PVector( d[2], d[2], -d[2] ));   // 2, 2, -2
-  vertex.add(new PVector( -d[0], d[2], -d[2] ));  // -1, -3, -3
-
-  vertex.add(new PVector( -d[0], -d[1], d[2] ));  // -1, -2, 3
-  vertex.add(new PVector( d[2], -d[1], d[2] ));   // 3, -2, -3
-  vertex.add(new PVector( d[2], d[2], d[2] ));    // 3, 3, 3
-  vertex.add(new PVector( -d[0], d[2], d[2] ));   // -1, 3, 3
-
-  myosinFilament = new Myosin(vertex);
+  myosinFilament = new Myosin(d);
+  //myosinHeads = new Myosin(); // ADD MYOSIN HEAD VERTEXS
 }
 
 void draw() {
@@ -43,7 +32,7 @@ void draw() {
     actin.renderSphere(points2.get(i), actin.SPHERE_RADIUS());
   }
   fill(55);
-  myosinFilament.renderQuadShape(vertex);
+  myosinFilament.renderQuadShape(myosinFilament.getVertexList());
 }
 
 // Controlls camera panning
