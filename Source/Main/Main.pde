@@ -13,15 +13,15 @@ void setup() {
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
   actin = new Actin(-600, 0);
   // Myosin dimentions: 1 = x, 2 = y(range), 3 = z(range)
-  float[] d = {900, 100, 50};
-  myosinFilament = new Myosin(d);
+  //float[] d = {900, 100, 50};
+  //myosinFilament = new Myosin(d);
 
-  int[] dims = {64, 64};
-  myosinHeads = new Myosin();
-  myosinHeads.setVertexGap(4);
-  myosinHeads.setMeshDimensions(dims);
-  myosinHeads.setPerlinDensity(15);
-  myosinHeads.applyPerlin();
+  //int[] dims = {64, 64};
+  //myosinHeads = new Myosin();
+  //myosinHeads.setVertexGap(4);
+  //myosinHeads.setMeshDimensions(dims);
+  //myosinHeads.setPerlinDensity(15);
+  //myosinHeads.applyPerlin();
   
   globule = new Myosin(new PVector(0, 0, 200), 32);
  

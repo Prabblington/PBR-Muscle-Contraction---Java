@@ -5,10 +5,10 @@ class MeshRenderer {
 
   private int vertexGap;
   private float perlinDensity;
-  private float[][] perlin;
 
   private int[] meshDimensions;
-  private float[][] globePoints;
+  private float[][] perlin;
+  private ArrayList<PVector> globeCoordinates;
   private int numPoints;
 
 
@@ -45,13 +45,13 @@ class MeshRenderer {
   public int[] getMeshDimensions() {
     return this.meshDimensions;
   }
-  
+
   // Points generated for globes
-  public void setNumPoints(int num)  {
-   this.numPoints = num; 
+  public void setNumPoints(int num) {
+    this.numPoints = num;
   }
-  public int getNumPoints()  {
-   return this.numPoints; 
+  public int getNumPoints() {
+    return this.numPoints;
   }
 
   // Scale properties
@@ -89,7 +89,7 @@ class MeshRenderer {
       popMatrix();
     }
   }
-  
+
   // Renders the mesh globe as a custom shape
   public void renderMeshGlobe(PVector location) {
     this.generateMeshGlobe();
@@ -100,23 +100,22 @@ class MeshRenderer {
     for (int i = 0; i < numPoints; i++) {
       for (int j = 0; j < numPoints; j++) {
         // These vertices form a square on the globe's surface
-        
         // -- top left
-        customShape.vertex( globePoints[i * numPoints + j][0], 
-                            globePoints[i * numPoints + j][1], 
-                            globePoints[i * numPoints + j][2]);
+        customShape.vertex(globeCoordinates.get(i * numPoints + j).x,
+          globeCoordinates.get(i * numPoints + j).y,
+          globeCoordinates.get(i * numPoints + j).z);
         // -- bottom left
-        customShape.vertex( globePoints[(i + 1) % numPoints * numPoints + j][0], 
-                            globePoints[(i + 1) % numPoints * numPoints + j][1], 
-                            globePoints[(i + 1) % numPoints * numPoints + j][2]);
+        customShape.vertex(globeCoordinates.get((i + 1) % numPoints * numPoints + j).x,
+          globeCoordinates.get((i + 1) % numPoints * numPoints + j).y,
+          globeCoordinates.get((i + 1) % numPoints * numPoints + j).z);
         // -- top right
-        customShape.vertex( globePoints[i * numPoints + (j + 1) % numPoints][0], 
-                            globePoints[i * numPoints + (j + 1) % numPoints][1], 
-                            globePoints[i * numPoints + (j + 1) % numPoints][2]);
+        customShape.vertex(globeCoordinates.get(i * numPoints + (j + 1) % numPoints).x,
+          globeCoordinates.get(i * numPoints + (j + 1) % numPoints).y,
+          globeCoordinates.get(i * numPoints + (j + 1) % numPoints).z);
         // -- bottom right
-        customShape.vertex(globePoints[(i + 1) % numPoints * numPoints + (j + 1) % numPoints][0], 
-                            globePoints[(i + 1) % numPoints * numPoints + (j + 1) % numPoints][1], 
-                            globePoints[(i + 1) % numPoints * numPoints + (j + 1) % numPoints][2]);
+        customShape.vertex(globeCoordinates.get((i + 1) % numPoints * numPoints + (j + 1) % numPoints).x,
+          globeCoordinates.get((i + 1) % numPoints * numPoints + (j + 1) % numPoints).y,
+          globeCoordinates.get((i + 1) % numPoints * numPoints + (j + 1) % numPoints).z);
       }
     }
     customShape.endShape(CLOSE);
@@ -126,11 +125,12 @@ class MeshRenderer {
     shape(customShape, 0, 0); //display
     popMatrix();
   }
-  
+
   // Generates the points for a mesh globe
   private void generateMeshGlobe() {
     this.numPoints = 100; // number of points to generate
-    globePoints = new float[numPoints * numPoints][3]; // array to hold the points
+    globeCoordinates = new ArrayList<PVector>();
+    //globePoints = new float[numPoints * numPoints][3]; // array to hold the points
 
     for (int i = 0; i < numPoints; i++) {
       float theta = map(i, 0, numPoints, 0, TWO_PI); // angle around the sphere
@@ -140,21 +140,27 @@ class MeshRenderer {
         float y = radius * sin(phi) * sin(theta); // calculate y coordinate
         float z = radius * cos(phi); // calculate z coordinate
 
-        globePoints[i * numPoints + j][0] = x;
-        globePoints[i * numPoints + j][1] = y;
-        globePoints[i * numPoints + j][2] = z;
+        PVector coordinate = new PVector(x, y, z);
+
+        globeCoordinates.add(coordinate);
       }
     }
+    this.applyPerlin();
   }
 
+  // CONVERT FLOAT[][] TO PVECTOR
+  // FIND NORMAL USING NORMALIZE()
+  // APPLY PERLIN TO NORMALIZE() DIRECTION
   // Set perlin noise values once so values don't change constantly throughout draw()
   public void applyPerlin() {
-    this.perlin = new float[meshDimensions[0]][meshDimensions[1]];
+    for (int i = 0; i < globeCoordinates.size(); i++) {
+      PVector tempCoords = new PVector(globeCoordinates.get(i).x, globeCoordinates.get(i).y, globeCoordinates.get(i).z);
 
-    for (int i = 0; i < meshDimensions[0]; i++) {
-      for (int j = 0; j < meshDimensions[1]; j++) {
-        perlin[i][j] = noise(i, j);
-      }
+      tempCoords.normalize();
+      float noise = noise(i) * 5;
+      
+      tempCoords.mult(noise);
+      globeCoordinates.get(i).add(tempCoords);
     }
   }
 
