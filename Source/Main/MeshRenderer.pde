@@ -148,7 +148,7 @@ class MeshRenderer {
   }
 
   // Set perlin noise values once so values don't change constantly throughout draw()
-  public void generatePerlinValues() {
+  public void applyPerlin() {
     this.perlin = new float[meshDimensions[0]][meshDimensions[1]];
 
     for (int i = 0; i < meshDimensions[0]; i++) {

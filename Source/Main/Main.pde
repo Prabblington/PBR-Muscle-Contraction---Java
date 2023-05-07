@@ -21,7 +21,7 @@ void setup() {
   myosinHeads.setVertexGap(4);
   myosinHeads.setMeshDimensions(dims);
   myosinHeads.setPerlinDensity(15);
-  myosinHeads.generatePerlinValues();
+  myosinHeads.applyPerlin();
   
   globule = new Myosin(new PVector(0, 0, 200), 32);
  
