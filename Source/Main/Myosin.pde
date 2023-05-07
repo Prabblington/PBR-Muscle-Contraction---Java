@@ -23,7 +23,6 @@ class Myosin extends MeshRenderer {
     super();
     this.location = new PVector(initLocation.x, initLocation.y, initLocation.z);
     this.setNumPoints(initNumPoints);
-    //myosinHeads = new ArrayList<PVector>();
   }
 
   // Constructor for myosin thick filament
