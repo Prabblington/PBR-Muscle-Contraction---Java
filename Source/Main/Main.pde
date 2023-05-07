@@ -23,7 +23,7 @@ void setup() {
   //myosinHeads.setPerlinDensity(15);
   //myosinHeads.applyPerlin();
   
-  globule = new Myosin(new PVector(0, 0, 200), 32);
+  globule = new Myosin(new PVector(0, 0, 200), 64);
  
 }
 

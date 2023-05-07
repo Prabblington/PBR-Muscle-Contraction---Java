@@ -93,6 +93,7 @@ class MeshRenderer {
   // Renders the mesh globe as a custom shape
   public void renderMeshGlobe(PVector location) {
     this.generateMeshGlobe();
+    System.out.println(this.numPoints);
 
     PShape customShape = createShape();
     customShape.beginShape(TRIANGLE_STRIP);
@@ -128,7 +129,6 @@ class MeshRenderer {
 
   // Generates the points for a mesh globe
   private void generateMeshGlobe() {
-    this.numPoints = 100; // number of points to generate
     globeCoordinates = new ArrayList<PVector>();
     //globePoints = new float[numPoints * numPoints][3]; // array to hold the points
 
@@ -157,7 +157,7 @@ class MeshRenderer {
       PVector tempCoords = new PVector(globeCoordinates.get(i).x, globeCoordinates.get(i).y, globeCoordinates.get(i).z);
 
       tempCoords.normalize();
-      float noise = noise(i) * 5;
+      float noise = noise(i) * 12;
       
       tempCoords.mult(noise);
       globeCoordinates.get(i).add(tempCoords);
