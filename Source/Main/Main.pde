@@ -12,19 +12,15 @@ void setup() {
 
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
   actin = new Actin(-600, 0);
-  // Myosin dimentions: 1 = x, 2 = y(range), 3 = z(range)
-  //float[] d = {900, 100, 50};
-  //myosinFilament = new Myosin(d);
 
-  //int[] dims = {64, 64};
-  //myosinHeads = new Myosin();
-  //myosinHeads.setVertexGap(4);
-  //myosinHeads.setMeshDimensions(dims);
-  //myosinHeads.setPerlinDensity(15);
-  //myosinHeads.applyPerlin();
-  
+  //Myosin dimentions: 1 = x, 2 = y(range), 3 = z(range)
+  float[] d = {900, 100, 50};
+  myosinFilament = new Myosin(d);
+  myosinHeads = new Myosin();
   globule = new Myosin(new PVector(0, 0, 200), 64);
- 
+
+  myosinHeads.setVertexGap(4);
+  myosinHeads.setPerlinDensity(15);
 }
 
 void draw() {
@@ -33,22 +29,22 @@ void draw() {
 
   // Actin renderings
   stroke(0);
-  //for (int i = 0; i < actin.NUM_SPHERES(); i++) {
-  //  ArrayList<PVector> points1 = actin.getStruct1Points();
-  //  ArrayList<PVector> points2 = actin.getStruct2Points();
+  for (int i = 0; i < actin.NUM_SPHERES(); i++) {
+    ArrayList<PVector> points1 = actin.getStruct1Points();
+    ArrayList<PVector> points2 = actin.getStruct2Points();
 
-  //  fill(255, 0, 255);
-  //  actin.renderSphere(points1.get(i), actin.SPHERE_RADIUS());
+    fill(255, 0, 255);
+    actin.renderSphere(points1.get(i), actin.SPHERE_RADIUS());
 
-  //  fill(70, 20, 150);
-  //  actin.renderSphere(points2.get(i), actin.SPHERE_RADIUS());
-  //}
-  // Myosin renderings
+    fill(70, 20, 150);
+    actin.renderSphere(points2.get(i), actin.SPHERE_RADIUS());
+  }
+  // Myosin thick filament render
   fill(55);
-  //myosinFilament.renderQuadShape(myosinFilament.getVertexList());
-
+  myosinFilament.renderQuadShape(myosinFilament.getVertexList());
+  
+  // Render myosin head globules
   stroke(255);
-  //myosinHeads.generateMeshGrid();
   globule.setRadius(50);
   globule.displayMyosinHead();
 }

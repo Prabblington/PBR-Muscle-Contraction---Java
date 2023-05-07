@@ -157,7 +157,7 @@ class MeshRenderer {
 
       tempCoords.normalize();
       float noise = noise(i) * 12;
-      
+
       tempCoords.mult(noise);
       originalPoints.get(i).add(tempCoords);
     }

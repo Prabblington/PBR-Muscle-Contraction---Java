@@ -9,15 +9,15 @@ class Myosin extends MeshRenderer {
   }
   public void setVertexList(ArrayList<PVector> ver) {
     this.vertex = ver;
-  }  
+  }
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
-  // Empty constructor 
+  // Empty constructor
   public Myosin() {
     super();
   }
-  
+
   // Constructor for myosin heads
   public Myosin(PVector initLocation, int initNumPoints) {
     super();
@@ -46,8 +46,8 @@ class Myosin extends MeshRenderer {
   public void displayThickFilament() {
     this.renderQuadShape(vertex);
   }
-  
-  public void displayMyosinHead()  {
+
+  public void displayMyosinHead() {
     this.renderMeshGlobe(this.location);
   }
 }

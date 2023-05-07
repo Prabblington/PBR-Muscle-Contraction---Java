@@ -3,9 +3,7 @@ class Actin extends MeshRenderer {
   private final int NUM_SPHERES = 22;
   private final int SPHERE_RADIUS = 30;
   private final float SPACING = SPHERE_RADIUS * 1.05;
-  //1.05
   private final float SIN_COS_VAL = 0.019;
-  //0.053
 
   private float xStart, yStart;
 
