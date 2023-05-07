@@ -93,7 +93,6 @@ class MeshRenderer {
   // Renders the mesh globe as a custom shape
   public void renderMeshGlobe(PVector location) {
     this.generateMeshGlobe();
-    System.out.println(this.numPoints);
 
     PShape customShape = createShape();
     customShape.beginShape(TRIANGLE_STRIP);
@@ -145,22 +144,22 @@ class MeshRenderer {
         globeCoordinates.add(coordinate);
       }
     }
-    this.applyPerlin();
+    this.applyPerlin(globeCoordinates);
   }
 
   // CONVERT FLOAT[][] TO PVECTOR
   // FIND NORMAL USING NORMALIZE()
   // APPLY PERLIN TO NORMALIZE() DIRECTION
   // Set perlin noise values once so values don't change constantly throughout draw()
-  public void applyPerlin() {
-    for (int i = 0; i < globeCoordinates.size(); i++) {
-      PVector tempCoords = new PVector(globeCoordinates.get(i).x, globeCoordinates.get(i).y, globeCoordinates.get(i).z);
+  public void applyPerlin(ArrayList<PVector> originalPoints) {
+    for (int i = 0; i < originalPoints.size(); i++) {
+      PVector tempCoords = new PVector(originalPoints.get(i).x, originalPoints.get(i).y, originalPoints.get(i).z);
 
       tempCoords.normalize();
       float noise = noise(i) * 12;
       
       tempCoords.mult(noise);
-      globeCoordinates.get(i).add(tempCoords);
+      originalPoints.get(i).add(tempCoords);
     }
   }
 
