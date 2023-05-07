@@ -21,6 +21,7 @@ void setup() {
   myosinHeads.setMeshDimensions(dims);
   myosinHeads.setPerlinDensity(15);
   myosinHeads.generatePerlinValues();
+ 
 }
 
 void draw() {
@@ -29,22 +30,24 @@ void draw() {
 
   // Actin renderings
   stroke(0);
-  for (int i = 0; i < actin.NUM_SPHERES(); i++) {
-    ArrayList<PVector> points1 = actin.getStruct1Points();
-    ArrayList<PVector> points2 = actin.getStruct2Points();
+  //for (int i = 0; i < actin.NUM_SPHERES(); i++) {
+  //  ArrayList<PVector> points1 = actin.getStruct1Points();
+  //  ArrayList<PVector> points2 = actin.getStruct2Points();
 
-    fill(255, 0, 255);
-    actin.renderSphere(points1.get(i), actin.SPHERE_RADIUS());
+  //  fill(255, 0, 255);
+  //  actin.renderSphere(points1.get(i), actin.SPHERE_RADIUS());
 
-    fill(70, 20, 150);
-    actin.renderSphere(points2.get(i), actin.SPHERE_RADIUS());
-  }
+  //  fill(70, 20, 150);
+  //  actin.renderSphere(points2.get(i), actin.SPHERE_RADIUS());
+  //}
   // Myosin renderings
   fill(55);
-  myosinFilament.renderQuadShape(myosinFilament.getVertexList());
+  //myosinFilament.renderQuadShape(myosinFilament.getVertexList());
 
   stroke(255);
-  myosinHeads.generateMeshGrid();
+  //myosinHeads.generateMeshGrid();
+  myosinHeads.setRadius(50);
+  myosinHeads.displayMyosinHead();
 }
 
 // Controlls camera panning

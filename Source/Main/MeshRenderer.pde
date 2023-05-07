@@ -6,7 +6,10 @@ class MeshRenderer {
   private int vertexGap;
   private float perlinDensity;
   private float[][] perlin;
+
   private int[] meshDimensions;
+  private float[][] globePoints;
+  private int numPoints;
 
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------
@@ -76,6 +79,49 @@ class MeshRenderer {
       translate(0, 0, 200);
       shape(customShape, 0, 0); //display
       popMatrix();
+    }
+  }
+  
+  // Renders the mesh globe as a custom shape
+  public void renderMeshGlobe() {
+    this.generateMeshGlobe();
+
+    PShape customShape = createShape();
+    customShape.beginShape(TRIANGLE_STRIP);
+
+    for (int i = 0; i < numPoints; i++) {
+      for (int j = 0; j < numPoints; j++) {
+        customShape.vertex(globePoints[i * numPoints + j][0], globePoints[i * numPoints + j][1], globePoints[i * numPoints + j][2]);
+        customShape.vertex(globePoints[(i + 1) % numPoints * numPoints + j][0], globePoints[(i + 1) % numPoints * numPoints + j][1], globePoints[(i + 1) % numPoints * numPoints + j][2]);
+        customShape.vertex(globePoints[i * numPoints + (j + 1) % numPoints][0], globePoints[i * numPoints + (j + 1) % numPoints][1], globePoints[i * numPoints + (j + 1) % numPoints][2]);
+        customShape.vertex(globePoints[(i + 1) % numPoints * numPoints + (j + 1) % numPoints][0], globePoints[(i + 1) % numPoints * numPoints + (j + 1) % numPoints][1], globePoints[(i + 1) % numPoints * numPoints + (j + 1) % numPoints][2]);
+      }
+    }
+    customShape.endShape(CLOSE);
+
+    pushMatrix();
+    translate(0, 0, 200);
+    shape(customShape, 0, 0); //display
+    popMatrix();
+  }
+  
+  // Generates the points for a mesh globe
+  private void generateMeshGlobe() {
+    this.numPoints = 100; // number of points to generate
+    globePoints = new float[numPoints * numPoints][3]; // array to hold the points
+
+    for (int i = 0; i < numPoints; i++) {
+      float theta = map(i, 0, numPoints, 0, TWO_PI); // angle around the sphere
+      for (int j = 0; j < numPoints; j++) {
+        float phi = map(j, 0, numPoints, 0, PI); // angle from the top of the sphere
+        float x = radius * sin(phi) * cos(theta); // calculate x coordinate
+        float y = radius * sin(phi) * sin(theta); // calculate y coordinate
+        float z = radius * cos(phi); // calculate z coordinate
+
+        globePoints[i * numPoints + j][0] = x;
+        globePoints[i * numPoints + j][1] = y;
+        globePoints[i * numPoints + j][2] = z;
+      }
     }
   }
 
