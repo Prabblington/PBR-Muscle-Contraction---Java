@@ -6,15 +6,20 @@ Myosin myosinHeads;
 void setup() {
   size(1200, 800, P3D);
   background(20, 5, 15);
+  frameRate(30);
 
-  camera = new CameraOrbit(1000, 0, 0, new PVector(0, 0, 0));
-
+  camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
   actin = new Actin(-600, 0);
   // Myosin dimentions: 1 = x, 2 = y(range), 3 = z(range)
   float[] d = {900, 100, 50};
-
   myosinFilament = new Myosin(d);
+
+  int[] dims = {64, 64};
   myosinHeads = new Myosin();
+  myosinHeads.setScale(4);
+  myosinHeads.setMeshDimensions(dims);
+  myosinHeads.setPerlinDensity(15);
+  myosinHeads.generatePerlinValues();  
 }
 
 void draw() {
@@ -38,7 +43,7 @@ void draw() {
   myosinFilament.renderQuadShape(myosinFilament.getVertexList());
 
   stroke(255);
-  myosinHeads.renderMeshGrid();
+  myosinHeads.generateMeshGrid();
 }
 
 // Controlls camera panning

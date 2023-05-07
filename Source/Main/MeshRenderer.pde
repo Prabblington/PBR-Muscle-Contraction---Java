@@ -3,6 +3,11 @@ class MeshRenderer {
   private PVector position;
   private float radius;
 
+  private int scale;
+  private float perlinDensity;
+  private float[][] perlin;
+  private int[] meshDimensions;
+
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------
 
@@ -14,12 +19,44 @@ class MeshRenderer {
     return this.position;
   }
 
-  // Radius properties
+  // Sphere radius properties
   public void setRadius(float radius) {
     this.radius = radius;
   }
-  public float setRadius() {
+  public float getRadius() {
     return this.radius;
+  }
+
+  //// Perlin noise properties
+  //public void setPerlinValues(float[][] perlin) {
+  //  this.perlin = perlin;
+  //}
+  //public float[][] getPerlinValues() {
+  //  return this.perlin;
+  //}
+
+  // Perlin density properties
+  public void setPerlinDensity(float density) {
+    this.perlinDensity = density;
+  }
+  public float getPerlinDensity() {
+    return this.perlinDensity;
+  }
+
+  // Mesh properties
+  public void setMeshDimensions(int[] dims) {
+    this.meshDimensions = dims;
+  }
+  public int[] getMeshDimensions() {
+    return this.meshDimensions;
+  }
+
+  // Scale properties
+  public void setScale(int scale) {
+    this.scale = scale;
+  }
+  public float getScale() {
+    return this.scale;
   }
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
@@ -29,25 +66,17 @@ class MeshRenderer {
     this.radius = 0;
   }
 
-  public void renderMeshGrid() {
-    int[] dim = {64, 64};
-    int scale = 1;
 
-    dim[0] = dim[0] * scale;
-    dim[1] = dim[1] * scale;
-
-    this.generateMeshGrid(dim, scale);
-  }
-
-  private void generateMeshGrid(int[] d, int scale) {    
-
-    for (int y = 0; y < d[0]; y++) {
-      PShape customShape = createShape();      
+  public void generateMeshGrid() {
+    for (int y = 0; y < meshDimensions[0]; y++) {
+      PShape customShape = createShape();
       customShape.beginShape(TRIANGLE_STRIP);
-      
-      for (int x = 0; x < d[1]; x++) {
-        customShape.vertex(x * scale, y * scale);
-        customShape.vertex(x * scale, (y+1) * scale);
+
+      for (int x = 0; x < meshDimensions[1]; x++) {
+        customShape.vertex(x * scale, y * scale, perlin[y][x] * perlinDensity);
+        if (y <= meshDimensions[0] -2) {
+          customShape.vertex(x * scale, (y+1) * scale, perlin[y + 1][x] * perlinDensity);
+        }
       }
       customShape.endShape(CLOSE);
 
@@ -55,6 +84,17 @@ class MeshRenderer {
       translate(0, 0, 200);
       shape(customShape, 0, 0); //display
       popMatrix();
+    }
+  }
+
+  // Set perlin noise values once so values don't change constantly throughout draw()
+  public void generatePerlinValues() {
+    this.perlin = new float[meshDimensions[0]][meshDimensions[1]];
+
+    for (int i = 0; i < meshDimensions[0]; i++) {
+      for (int j = 0; j < meshDimensions[1]; j++) {
+        perlin[i][j] = noise(i, j);
+      }
     }
   }
 
