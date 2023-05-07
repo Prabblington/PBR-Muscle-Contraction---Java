@@ -7,7 +7,7 @@ class MeshRenderer {
   private float perlinDensity;
 
   private int[] meshDimensions;
-  private float[][] perlin;
+  //private float[][] perlin;
   private ArrayList<PVector> globeCoordinates;
   private int numPoints;
 
@@ -67,27 +67,6 @@ class MeshRenderer {
   public MeshRenderer() {
     position = new PVector(0, 0, 0);
     this.radius = 0;
-  }
-
-  // Renders a mesh grid usig perlin noise which is affected by perlinDensity
-  public void generateMeshGrid() {
-    for (int y = 0; y < meshDimensions[0]; y++) {
-      PShape customShape = createShape();
-      customShape.beginShape(TRIANGLE_STRIP);
-
-      for (int x = 0; x < meshDimensions[1]; x++) {
-        customShape.vertex(x * vertexGap, y * vertexGap, perlin[y][x] * perlinDensity);
-        if (y <= meshDimensions[0] -2) {
-          customShape.vertex(x * vertexGap, (y+1) * vertexGap, perlin[y + 1][x] * perlinDensity);
-        }
-      }
-      customShape.endShape(CLOSE);
-
-      pushMatrix();
-      translate(0, 0, 200);
-      shape(customShape, 0, 0); //display
-      popMatrix();
-    }
   }
 
   // Renders the mesh globe as a custom shape
