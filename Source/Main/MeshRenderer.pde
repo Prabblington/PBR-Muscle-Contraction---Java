@@ -3,7 +3,7 @@ class MeshRenderer {
   private PVector position;
   private float radius;
 
-  private int scale;
+  private int vertexGap;
   private float perlinDensity;
   private float[][] perlin;
   private int[] meshDimensions;
@@ -20,43 +20,35 @@ class MeshRenderer {
   }
 
   // Sphere radius properties
-  public void setRadius(float radius) {
-    this.radius = radius;
+  public void setRadius(float newRadius) {
+    this.radius = newRadius;
   }
   public float getRadius() {
     return this.radius;
   }
 
-  //// Perlin noise properties
-  //public void setPerlinValues(float[][] perlin) {
-  //  this.perlin = perlin;
-  //}
-  //public float[][] getPerlinValues() {
-  //  return this.perlin;
-  //}
-
   // Perlin density properties
-  public void setPerlinDensity(float density) {
-    this.perlinDensity = density;
+  public void setPerlinDensity(float newDensity) {
+    this.perlinDensity = newDensity;
   }
   public float getPerlinDensity() {
     return this.perlinDensity;
   }
 
   // Mesh properties
-  public void setMeshDimensions(int[] dims) {
-    this.meshDimensions = dims;
+  public void setMeshDimensions(int[] newDims) {
+    this.meshDimensions = newDims;
   }
   public int[] getMeshDimensions() {
     return this.meshDimensions;
   }
 
   // Scale properties
-  public void setScale(int scale) {
-    this.scale = scale;
+  public void setVertexGap(int newVertexGap) {
+    this.vertexGap = newVertexGap;
   }
-  public float getScale() {
-    return this.scale;
+  public float getVertexGap() {
+    return this.vertexGap;
   }
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
@@ -73,9 +65,9 @@ class MeshRenderer {
       customShape.beginShape(TRIANGLE_STRIP);
 
       for (int x = 0; x < meshDimensions[1]; x++) {
-        customShape.vertex(x * scale, y * scale, perlin[y][x] * perlinDensity);
+        customShape.vertex(x * vertexGap, y * vertexGap, perlin[y][x] * perlinDensity);
         if (y <= meshDimensions[0] -2) {
-          customShape.vertex(x * scale, (y+1) * scale, perlin[y + 1][x] * perlinDensity);
+          customShape.vertex(x * vertexGap, (y+1) * vertexGap, perlin[y + 1][x] * perlinDensity);
         }
       }
       customShape.endShape(CLOSE);

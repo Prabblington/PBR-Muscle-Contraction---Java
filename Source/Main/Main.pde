@@ -8,6 +8,7 @@ void setup() {
   background(20, 5, 15);
   frameRate(30);
 
+
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
   actin = new Actin(-600, 0);
   // Myosin dimentions: 1 = x, 2 = y(range), 3 = z(range)
@@ -16,10 +17,10 @@ void setup() {
 
   int[] dims = {64, 64};
   myosinHeads = new Myosin();
-  myosinHeads.setScale(4);
+  myosinHeads.setVertexGap(4);
   myosinHeads.setMeshDimensions(dims);
   myosinHeads.setPerlinDensity(15);
-  myosinHeads.generatePerlinValues();  
+  myosinHeads.generatePerlinValues();
 }
 
 void draw() {
