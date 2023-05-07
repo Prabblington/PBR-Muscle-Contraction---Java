@@ -45,6 +45,14 @@ class MeshRenderer {
   public int[] getMeshDimensions() {
     return this.meshDimensions;
   }
+  
+  // Points generated for globes
+  public void setNumPoints(int num)  {
+   this.numPoints = num; 
+  }
+  public int getNumPoints()  {
+   return this.numPoints; 
+  }
 
   // Scale properties
   public void setVertexGap(int newVertexGap) {
@@ -61,7 +69,7 @@ class MeshRenderer {
     this.radius = 0;
   }
 
-
+  // Renders a mesh grid usig perlin noise which is affected by perlinDensity
   public void generateMeshGrid() {
     for (int y = 0; y < meshDimensions[0]; y++) {
       PShape customShape = createShape();
@@ -83,7 +91,7 @@ class MeshRenderer {
   }
   
   // Renders the mesh globe as a custom shape
-  public void renderMeshGlobe() {
+  public void renderMeshGlobe(PVector location) {
     this.generateMeshGlobe();
 
     PShape customShape = createShape();
@@ -91,16 +99,30 @@ class MeshRenderer {
 
     for (int i = 0; i < numPoints; i++) {
       for (int j = 0; j < numPoints; j++) {
-        customShape.vertex(globePoints[i * numPoints + j][0], globePoints[i * numPoints + j][1], globePoints[i * numPoints + j][2]);
-        customShape.vertex(globePoints[(i + 1) % numPoints * numPoints + j][0], globePoints[(i + 1) % numPoints * numPoints + j][1], globePoints[(i + 1) % numPoints * numPoints + j][2]);
-        customShape.vertex(globePoints[i * numPoints + (j + 1) % numPoints][0], globePoints[i * numPoints + (j + 1) % numPoints][1], globePoints[i * numPoints + (j + 1) % numPoints][2]);
-        customShape.vertex(globePoints[(i + 1) % numPoints * numPoints + (j + 1) % numPoints][0], globePoints[(i + 1) % numPoints * numPoints + (j + 1) % numPoints][1], globePoints[(i + 1) % numPoints * numPoints + (j + 1) % numPoints][2]);
+        // These vertices form a square on the globe's surface
+        
+        // -- top left
+        customShape.vertex( globePoints[i * numPoints + j][0], 
+                            globePoints[i * numPoints + j][1], 
+                            globePoints[i * numPoints + j][2]);
+        // -- bottom left
+        customShape.vertex( globePoints[(i + 1) % numPoints * numPoints + j][0], 
+                            globePoints[(i + 1) % numPoints * numPoints + j][1], 
+                            globePoints[(i + 1) % numPoints * numPoints + j][2]);
+        // -- top right
+        customShape.vertex( globePoints[i * numPoints + (j + 1) % numPoints][0], 
+                            globePoints[i * numPoints + (j + 1) % numPoints][1], 
+                            globePoints[i * numPoints + (j + 1) % numPoints][2]);
+        // -- bottom right
+        customShape.vertex(globePoints[(i + 1) % numPoints * numPoints + (j + 1) % numPoints][0], 
+                            globePoints[(i + 1) % numPoints * numPoints + (j + 1) % numPoints][1], 
+                            globePoints[(i + 1) % numPoints * numPoints + (j + 1) % numPoints][2]);
       }
     }
     customShape.endShape(CLOSE);
 
     pushMatrix();
-    translate(0, 0, 200);
+    translate(location.x, location.y, location.z);
     shape(customShape, 0, 0); //display
     popMatrix();
   }

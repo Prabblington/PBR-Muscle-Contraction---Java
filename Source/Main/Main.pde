@@ -2,6 +2,7 @@ CameraOrbit camera;
 Actin actin;
 Myosin myosinFilament;
 Myosin myosinHeads;
+Myosin globule;
 
 void setup() {
   size(1200, 800, P3D);
@@ -21,6 +22,8 @@ void setup() {
   myosinHeads.setMeshDimensions(dims);
   myosinHeads.setPerlinDensity(15);
   myosinHeads.generatePerlinValues();
+  
+  globule = new Myosin(new PVector(0, 0, 200), 32);
  
 }
 
@@ -46,8 +49,8 @@ void draw() {
 
   stroke(255);
   //myosinHeads.generateMeshGrid();
-  myosinHeads.setRadius(50);
-  myosinHeads.displayMyosinHead();
+  globule.setRadius(50);
+  globule.displayMyosinHead();
 }
 
 // Controlls camera panning

@@ -1,6 +1,6 @@
 class Myosin extends MeshRenderer {
   private ArrayList<PVector> vertex;
-  //private ArrayList<PVector> myosinHeads;
+  private PVector location;
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------
 
@@ -9,7 +9,7 @@ class Myosin extends MeshRenderer {
   }
   public void setVertexList(ArrayList<PVector> ver) {
     this.vertex = ver;
-  }
+  }  
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
@@ -19,9 +19,10 @@ class Myosin extends MeshRenderer {
   }
   
   // Constructor for myosin heads
-  public Myosin(ArrayList<PVector> v) {
+  public Myosin(PVector initLocation, int initNumPoints) {
     super();
-    vertex = new ArrayList<PVector>(v);
+    this.location = new PVector(initLocation.x, initLocation.y, initLocation.z);
+    this.setNumPoints(initNumPoints);
     //myosinHeads = new ArrayList<PVector>();
   }
 
@@ -47,6 +48,6 @@ class Myosin extends MeshRenderer {
   }
   
   public void displayMyosinHead()  {
-    this.renderMeshGlobe();
+    this.renderMeshGlobe(this.location);
   }
 }
