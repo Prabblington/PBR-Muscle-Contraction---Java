@@ -1,14 +1,24 @@
 class Myosin extends MeshRenderer {
   private ArrayList<PVector> vertex;
   private PVector location;
+  private float filamentHeight;
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------
 
+  // vertexList for myosin heads
   public ArrayList<PVector> getVertexList() {
     return vertex;
   }
   public void setVertexList(ArrayList<PVector> ver) {
     this.vertex = ver;
+  }
+
+  // Myosin thick filament height properties
+  public float getHeight() {
+    return this.filamentHeight;
+  }
+  public void setHeight(float newHeight) {
+    this.filamentHeight = newHeight;
   }
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
@@ -18,7 +28,7 @@ class Myosin extends MeshRenderer {
     super();
   }
 
-  // Constructor for myosin heads
+  // Constructor for myosin
   public Myosin(PVector initLocation, int initNumPoints) {
     super();
     this.location = new PVector(initLocation.x, initLocation.y, initLocation.z);
@@ -43,7 +53,9 @@ class Myosin extends MeshRenderer {
   }
 
   public void displayThickFilament() {
-    this.renderQuadShape(vertex);
+    //this.renderQuadShape(vertex);
+    this.renderMeshCapsule(this.location, this.getNumPoints(), this.filamentHeight);
+    //this.renderMeshCylinder(this.location, 50, 40);
   }
 
   public void displayMyosinHead() {

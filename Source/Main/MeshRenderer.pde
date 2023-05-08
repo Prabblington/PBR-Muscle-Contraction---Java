@@ -4,11 +4,11 @@ class MeshRenderer {
   private float radius;
 
   private int vertexGap;
-  private float perlinDensity;
+  private float perlinHeight;
 
   private int[] meshDimensions;
   //private float[][] perlin;
-  private ArrayList<PVector> globeCoordinates;
+  private ArrayList<PVector> globeCoordinates, capsuleCoordinates;
   private int numPoints;
 
 
@@ -31,11 +31,11 @@ class MeshRenderer {
   }
 
   // Perlin density properties
-  public void setPerlinDensity(float newDensity) {
-    this.perlinDensity = newDensity;
+  public void setPerlinHeight(float newHeight) {
+    this.perlinHeight = newHeight;
   }
-  public float getPerlinDensity() {
-    return this.perlinDensity;
+  public float getPerlinHeight() {
+    return this.perlinHeight;
   }
 
   // Mesh properties
@@ -68,6 +68,110 @@ class MeshRenderer {
     position = new PVector(0, 0, 0);
     this.radius = 0;
   }
+
+  public void renderMeshCylinder(PVector location, int sides, float h) {
+    PShape cylinder = createShape();
+
+    float angle = 360 / sides;
+    float halfHeight = h / 2;
+    // draw top shape
+    cylinder.beginShape();
+    for (int i = 0; i < sides; i++) {
+      float x = cos( radians( i * angle ) ) * radius;
+      float y = sin( radians( i * angle ) ) * radius;
+      cylinder.vertex( x, y, -halfHeight );
+    }
+    cylinder.endShape(CLOSE);
+    // draw bottom shape
+    cylinder.beginShape();
+    for (int i = 0; i < sides; i++) {
+      float x = cos( radians( i * angle ) ) * radius;
+      float y = sin( radians( i * angle ) ) * radius;
+      cylinder.vertex( x, y, halfHeight );
+    }
+    cylinder.endShape(CLOSE);
+
+    // draw body
+    cylinder.beginShape(TRIANGLE_STRIP);
+    for (int i = 0; i < sides + 1; i++) {
+      float x = cos( radians( i * angle ) ) * radius;
+      float y = sin( radians( i * angle ) ) * radius;
+      cylinder.vertex( x, y, halfHeight);
+      cylinder.vertex( x, y, -halfHeight);
+    }
+    cylinder.endShape(CLOSE);
+
+    pushMatrix();
+    translate(location.x, location.y, location.z);
+    shape(cylinder, 0, 0);
+    popMatrix();
+  }
+
+  // Generates capsule co-ordinates
+  public void renderMeshCapsule(PVector location, int sides, float h) {
+    capsuleCoordinates = new ArrayList<PVector>();
+    PShape cylinder = createShape(GROUP);
+
+    float angle = 360 / sides;
+    float halfHeight = h / 2;
+
+    // draw top of the tube
+    PShape cylinderTop = createShape();
+    cylinderTop.beginShape();
+
+    for (int i = 0; i < sides; i++) {
+      float x = cos( radians( i * angle ) ) * radius;
+      float y = sin( radians( i * angle ) ) * radius;
+
+      cylinderTop.vertex( x, y, -halfHeight);
+
+      capsuleCoordinates.add(new PVector(x, y, -halfHeight));
+    }
+    cylinderTop.endShape(CLOSE);
+    cylinder.addChild(cylinderTop);
+
+    // draw bottom of the tube
+    PShape cylinderBottom = createShape();
+    cylinderBottom.beginShape();
+
+    for (int i = 0; i < sides; i++) {
+      float x = cos( radians( i * angle ) ) * radius;
+      float y = sin( radians( i * angle ) ) * radius;
+
+      cylinderBottom.vertex( x, y, halfHeight);
+
+      capsuleCoordinates.add(new PVector(x, y, -halfHeight));
+    }
+    cylinderBottom.endShape(CLOSE);
+    cylinder.addChild(cylinderBottom);
+
+
+    // draw sides
+    PShape cylinderBody = createShape();
+    cylinderBody.beginShape(TRIANGLE_STRIP);
+
+    for (int i = 0; i < sides + 1; i++) {
+      float x = cos( radians( i * angle ) ) * radius;
+      float y = sin( radians( i * angle ) ) * radius;
+
+      cylinderBody.vertex( x, y, halfHeight);
+      cylinderBody.vertex( x, y, -halfHeight);
+
+      capsuleCoordinates.add(new PVector(x, y, halfHeight));
+      capsuleCoordinates.add(new PVector(x, y, -halfHeight));
+    }
+    cylinderBody.endShape(CLOSE);
+    cylinder.addChild(cylinderBody);
+
+    this.applyPerlin(capsuleCoordinates);
+
+    pushMatrix();
+    translate(location.x, location.y, location.z);
+    cylinder.rotateY(PI/2);
+    shape(cylinder, 0, 0);
+    popMatrix();
+  }
+
 
   // Renders the mesh globe as a custom shape
   public void renderMeshGlobe(PVector location) {
@@ -105,7 +209,7 @@ class MeshRenderer {
     popMatrix();
   }
 
-  // Generates the points for a mesh globe
+  // Generates the co-ordinates for a mesh globe
   private void generateMeshGlobe() {
     globeCoordinates = new ArrayList<PVector>();
     //globePoints = new float[numPoints * numPoints][3]; // array to hold the points
@@ -135,7 +239,7 @@ class MeshRenderer {
       PVector tempCoords = new PVector(originalPoints.get(i).x, originalPoints.get(i).y, originalPoints.get(i).z);
 
       tempCoords.normalize();
-      float noise = noise(i) * 12;
+      float noise = noise(i) * perlinHeight;
 
       tempCoords.mult(noise);
       originalPoints.get(i).add(tempCoords);

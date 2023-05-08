@@ -14,13 +14,18 @@ void setup() {
   actin = new Actin(-600, 0);
 
   //Myosin dimentions: 1 = x, 2 = y(range), 3 = z(range)
-  float[] d = {900, 100, 50};
-  myosinFilament = new Myosin(d);
-  myosinHeads = new Myosin();
-  globule = new Myosin(new PVector(0, 0, 200), 64);
+  //float[] d = {900, 100, 50};
+  myosinFilament = new Myosin(new PVector(-25, 150, 0), 10);
+  myosinFilament.setHeight(1000);
+  myosinFilament.setRadius(30);
+  myosinFilament.setNumPoints(50);
 
-  myosinHeads.setVertexGap(4);
-  myosinHeads.setPerlinDensity(15);
+  //myosinHeads = new Myosin();
+  //myosinHeads.setVertexGap(4);
+  //myosinHeads.setPerlinHeight(15);
+
+  globule = new Myosin(new PVector(0, 0, 200), 64);
+  globule.setPerlinHeight(12);
 }
 
 void draw() {
@@ -41,10 +46,11 @@ void draw() {
   }
   // Myosin thick filament render
   fill(55);
-  myosinFilament.renderQuadShape(myosinFilament.getVertexList());
-  
-  // Render myosin head globules
   stroke(255);
+  //myosinFilament.renderQuadShape(myosinFilament.getVertexList());
+  myosinFilament.displayThickFilament();
+
+  // Render myosin head globules
   globule.setRadius(50);
   globule.displayMyosinHead();
 }
