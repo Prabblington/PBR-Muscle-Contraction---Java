@@ -37,7 +37,7 @@ class Actin extends MeshRenderer {
     this.xStart = initX;
     this.yStart = initY;
 
-    points1 = this.helicalPointsGenerator(1, NUM_SPHERES, SIN_COS_VAL, SPACING, xStart, yStart);
-    points2 = this.helicalPointsGenerator(2, NUM_SPHERES, SIN_COS_VAL, SPACING, xStart, yStart);
+    points1 = this.helicalPointsGenerator(true, NUM_SPHERES, SIN_COS_VAL, SPACING, xStart, yStart);
+    points2 = this.helicalPointsGenerator(false, NUM_SPHERES, SIN_COS_VAL, SPACING, xStart, yStart);
   }
 }
