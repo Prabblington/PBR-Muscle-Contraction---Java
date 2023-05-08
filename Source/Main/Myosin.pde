@@ -39,9 +39,11 @@ class Myosin extends MeshRenderer {
     renderMeshShape(getShape(), getPosition());
   }
 
-  public ArrayList<PVector> formMyosinHeadConnection(PVector startPos, PVector endPos) {
+  public ArrayList<PVector> formMyosinHeadConnection(PVector s, PVector e, float spacing) {
     ArrayList<PVector> points = new ArrayList<PVector>();
 
+    PVector startPos = new PVector(s.x + spacing, s.y + spacing, s.z);
+    PVector endPos = new PVector(e.x + spacing, e.y + spacing, e.z);
     PVector midPoint = new PVector((startPos.x + endPos.x) /2, (startPos.y + endPos.y) / 2, startPos.z);
 
     points.add(startPos);
@@ -55,7 +57,7 @@ class Myosin extends MeshRenderer {
       point.y += (1 - t) * (1 - t) * (endPos.y - startPos.y) + t * t * (midPoint.y - startPos.y);
       points.add(point);
     }
-    points.add(endPos);   
+    points.add(endPos);
 
     return points;
   }
@@ -65,7 +67,7 @@ class Myosin extends MeshRenderer {
     stroke(255, 255, 0);
     strokeWeight(3);
 
-    PShape connection = generateBezierStructure(formMyosinHeadConnection(startPos, endPos));
+    PShape connection = generateBezierStructure(formMyosinHeadConnection(startPos, endPos, 0));
     renderMeshShape(connection, new PVector(endPos.x + (getRadius()/2), -10, 0));
   }
 }
