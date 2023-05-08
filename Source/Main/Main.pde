@@ -1,7 +1,6 @@
 CameraOrbit camera;
 Actin actin;
 Myosin myosinFilament;
-//Myosin myosinHeads;
 Myosin globule;
 
 void setup() {
