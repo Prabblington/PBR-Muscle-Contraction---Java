@@ -69,6 +69,7 @@ class MeshRenderer {
     this.radius = 0;
   }
 
+  // Generate and render a mesh capsule
   public void renderMeshCapsule(PVector location, int stepSize, float h) {
     capsuleCoordinates = new ArrayList<PVector>();
 
@@ -150,7 +151,7 @@ class MeshRenderer {
   }
 
 
-  // Generates capsule co-ordinates
+  // Generates cylinder co-ordinates
   public void renderMeshCylinder(PVector location, int sides, float h) {
     capsuleCoordinates = new ArrayList<PVector>();
     PShape cylinder = createShape(GROUP);
@@ -257,7 +258,6 @@ class MeshRenderer {
   // Generates the co-ordinates for a mesh globe
   private void generateMeshGlobe() {
     globeCoordinates = new ArrayList<PVector>();
-    //globePoints = new float[numPoints * numPoints][3]; // array to hold the points
 
     for (int i = 0; i < numPoints; i++) {
       float theta = map(i, 0, numPoints, 0, TWO_PI); // angle around the sphere
