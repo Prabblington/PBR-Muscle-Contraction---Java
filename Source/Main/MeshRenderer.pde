@@ -166,7 +166,6 @@ class MeshRenderer extends PerlinNoise {
   // Generates the co-ordinates for a mesh globe
   private void generateMeshHalfGlobe() {
     coordinates = new ArrayList<PVector>();
-    //globePoints = new float[numPoints * numPoints][3]; // array to hold the points
 
     for (int i = 0; i < numPoints; i++) {
       float theta = map(i, 0, numPoints, 0, PI); // angle around the sphere
