@@ -28,17 +28,11 @@ void setup() {
 void draw() {
   background(20, 5, 15);
   camera.update();
-
-  // Actin renderings
   stroke(0);
-  actin.displayShape();
-  
-  // Myosin thick filament render
-  fill(55);
-  stroke(255);
-  myosinFilament.displayShape();
 
-  // Render myosin head globules
+  // Display rendered structures
+  actin.displayShape();
+  myosinFilament.displayShape();
   globule.displayShape();
 }
 

@@ -14,6 +14,9 @@ class MyosinFilament extends Myosin  {
   
   @Override
   public void coordinateGenerator()  {
+    fill(#464343);
+    noStroke();
+    
     PShape s = generateMeshCylinder(getNumPoints(), getHeight());
     s.rotateY(HALF_PI);
     
