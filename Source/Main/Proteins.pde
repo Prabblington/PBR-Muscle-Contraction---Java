@@ -121,4 +121,12 @@ abstract class Proteins extends PerlinNoise {
     this.position = new PVector(initLocation.x, initLocation.y, initLocation.z);
     setNumPoints(initNumPoints);
   }
+  
+  public void coordinateGenerator()  {
+    
+  }
+  
+  public void displayShape()  {
+    
+  }
 }

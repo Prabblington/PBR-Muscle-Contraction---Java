@@ -1,6 +1,15 @@
 class Myosin extends MeshRenderer {
   private PShape shape;
 
+  // ------------------------------ GETTERS AND SETTERS ------------------------------
+
+  public PShape getShape() {
+    return this.shape;
+  }
+  public void setShape(PShape newShape) {
+    this.shape = newShape;
+  }
+
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
   // Empty constructor
@@ -13,21 +22,14 @@ class Myosin extends MeshRenderer {
     super(initLocation, initNumPoints);
   }
 
-  public void generateThickFilamentShape() {
-    shape = generateMeshCylinder(getNumPoints(), getHeight());
-    shape.rotateY(HALF_PI);
-  }
-
-  public void generateMyosinHeadShape() {
+  @Override
+    public void coordinateGenerator() {
     shape = this.renderMeshGlobe(true, false);
     shape.rotateY(HALF_PI);
   }
 
-  public void displayThickFilament() {
-    renderMeshShape(shape, getPosition());
-  }
-
-  public void displayMyosinHead() {
+  @Override
+    public void displayShape() {
     renderMeshShape(shape, getPosition());
   }
 }

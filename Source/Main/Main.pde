@@ -11,16 +11,18 @@ void setup() {
   // Object creation
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
   actin = new Actin(-600, 0);
-
-  myosinFilament = new Myosin(new PVector(-25, 150, 0), 12);
+  myosinFilament = new MyosinFilament(new PVector(-25, 150, 0), 12);
+  globule = new Myosin(new PVector(-475, 90, 0), 42);
+  
   myosinFilament.setHeight(1000);
   myosinFilament.setRadius(30);
-  myosinFilament.generateThickFilamentShape();
-
-  globule = new Myosin(new PVector(-475, 90, 0), 42);
+  
   globule.setRadius(actin.SPHERE_RADIUS() / 2);
   globule.setPerlinHeight(12);
-  globule.generateMyosinHeadShape();
+  
+  actin.coordinateGenerator(); 
+  myosinFilament.coordinateGenerator(); 
+  globule.coordinateGenerator();
 }
 
 void draw() {
@@ -29,23 +31,15 @@ void draw() {
 
   // Actin renderings
   stroke(0);
-  for (int i = 0; i < actin.NUM_SPHERES(); i++) {
-    ArrayList<PVector> points1 = actin.getStruct1Points();
-    ArrayList<PVector> points2 = actin.getStruct2Points();
-
-    fill(255, 0, 255);
-    actin.renderSphere(points1.get(i), actin.SPHERE_RADIUS());
-
-    fill(70, 20, 150);
-    actin.renderSphere(points2.get(i), actin.SPHERE_RADIUS());
-  }
+  actin.displayShape();
+  
   // Myosin thick filament render
   fill(55);
   stroke(255);
-  myosinFilament.displayThickFilament();
+  myosinFilament.displayShape();
 
   // Render myosin head globules
-  globule.displayMyosinHead();
+  globule.displayShape();
 }
 
 // Controlls camera panning
