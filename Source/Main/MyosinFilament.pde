@@ -1,7 +1,7 @@
-class MyosinFilament extends Myosin  {
-  
+class MyosinFilament extends Myosin {
+
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
-  
+
   // Empty constructor
   public MyosinFilament() {
     super();
@@ -11,20 +11,20 @@ class MyosinFilament extends Myosin  {
   public MyosinFilament(PVector initLocation, int initNumPoints) {
     super(initLocation, initNumPoints);
   }
-  
+
   @Override
-  public void coordinateGenerator()  {
+    public void coordinateGenerator() {
     fill(#464343);
     noStroke();
-    
+
     PShape s = generateMeshCylinder(getNumPoints(), getHeight());
     s.rotateY(HALF_PI);
-    
+
     setShape(s);
   }
-  
+
   @Override
-  public void displayShape()  {
+    public void displayShape() {
     renderMeshShape(getShape(), getPosition());
   }
 }

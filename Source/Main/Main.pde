@@ -13,15 +13,15 @@ void setup() {
   actin = new Actin(-600, 0);
   myosinFilament = new MyosinFilament(new PVector(-25, 150, 0), 12);
   globule = new Myosin(new PVector(-475, 90, 0), 42);
-  
+
   myosinFilament.setHeight(1000);
   myosinFilament.setRadius(30);
-  
+
   globule.setRadius(actin.SPHERE_RADIUS() / 2);
   globule.setPerlinHeight(12);
-  
-  actin.coordinateGenerator(); 
-  myosinFilament.coordinateGenerator(); 
+
+  actin.coordinateGenerator();
+  myosinFilament.coordinateGenerator();
   globule.coordinateGenerator();
 }
 

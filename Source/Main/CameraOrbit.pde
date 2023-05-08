@@ -1,4 +1,5 @@
 class CameraOrbit {
+  
   private final float CAMERA_PAN_SPEED = 0.8;
   private final float CAMERA_ORBIT_SPEED = 0.1;
   private final float CAMERA_ZOOM_SPEED = 1;
