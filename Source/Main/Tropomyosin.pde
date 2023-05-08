@@ -12,19 +12,23 @@ class Tropomyosin extends Myosin {
     super(initLocation, initNumPoints);
   }
 
-  //@Override
-  //  public void coordinateGenerator() {
-  //  fill(#464343);
-  //  noStroke();
+  @Override
+    public void coordinateGenerator() {
+    noFill();
+    stroke(255, 255, 0);
+    strokeWeight(15);
+    
+    populateStruct1Points(helicalPointsGenerator(true, this.NUM_SPHERES(), this.SIN_COS_VAL(), this.SPACING(), this.getXStart(), this.getYStart() ));
+    populateStruct2Points(helicalPointsGenerator(false, this.NUM_SPHERES(), this.SIN_COS_VAL(), this.SPACING(), this.getXStart(), this.getYStart() ));
+    
+    PShape s = generateHelicalBezier(getStruct1Points());
+    //s.rotateY(HALF_PI);
 
-  //  PShape s = generateMeshCylinder(getNumPoints(), getHeight());
-  //  s.rotateY(HALF_PI);
+    setShape(s);
+  }
 
-  //  setShape(s);
-  //}
-
-  //@Override
-  //  public void displayShape() {
-  //  renderMeshShape(getShape(), getPosition());
-  //}
+  @Override
+    public void displayShape() {
+    renderMeshShape(getShape(), getPosition());
+  }
 }

@@ -8,8 +8,8 @@ class Actin extends MeshRenderer {
 
   @Override
     public void coordinateGenerator() {
-    this.populateStruct1Points(this.helicalPointsGenerator(true, this.NUM_SPHERES(), this.SIN_COS_VAL(), this.SPACING(), this.getXStart(), this.getYStart() ));
-    this.populateStruct2Points(this.helicalPointsGenerator(false, this.NUM_SPHERES(), this.SIN_COS_VAL(), this.SPACING(), this.getXStart(), this.getYStart() ));
+    populateStruct1Points(this.helicalPointsGenerator(true, this.NUM_SPHERES(), this.SIN_COS_VAL(), this.SPACING(), this.getXStart(), this.getYStart() ));
+    populateStruct2Points(this.helicalPointsGenerator(false, this.NUM_SPHERES(), this.SIN_COS_VAL(), this.SPACING(), this.getXStart(), this.getYStart() ));
   }
 
   @Override
@@ -17,6 +17,7 @@ class Actin extends MeshRenderer {
     for (int i = 0; i < actin.NUM_SPHERES(); i++) {
       ArrayList<PVector> points1 = this.getStruct1Points();
       ArrayList<PVector> points2 = this.getStruct2Points();
+      strokeWeight(1);
 
       fill(255, 0, 255);
       actin.renderSphere(points1.get(i), this.SPHERE_RADIUS());

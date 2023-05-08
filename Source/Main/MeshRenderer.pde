@@ -7,9 +7,9 @@ class MeshRenderer extends Proteins {
   public MeshRenderer() {
     super();
   }
-  
-  public MeshRenderer(PVector initLocation, int initNumPoints)  {
-   super(initLocation, initNumPoints); 
+
+  public MeshRenderer(PVector initLocation, int initNumPoints) {
+    super(initLocation, initNumPoints);
   }
 
   public MeshRenderer(float initX, float initY) {
@@ -21,9 +21,9 @@ class MeshRenderer extends Proteins {
   }
 
   // Renders shape mesh
-  public void renderMeshShape(PShape shape, PVector location) {
+  public void renderMeshShape(PShape shape, PVector pos) {
     pushMatrix();
-    translate(location.x, location.y, location.z);
+    translate(pos.x, pos.y, pos.z);
     shape(shape, 0, 0);
     popMatrix();
   }
@@ -36,17 +36,27 @@ class MeshRenderer extends Proteins {
     popMatrix();
   }
 
-  public PShape generateHelicalBezier() {
-    this.helicalPointsGenerator(true, this.getNumPoints(), 0.019, 30 * 1.05, -600, 0);
-
+  public PShape generateHelicalBezier(ArrayList<PVector> points) {
     PShape quadraticBezier = createShape();
-    strokeWeight(10);
-
     quadraticBezier.beginShape();
-    quadraticBezier.vertex(80, 80);
-    quadraticBezier.quadraticVertex(320, 80, 200, 200);
-    quadraticBezier.quadraticVertex(80, 320, 320, 320);
-    quadraticBezier.vertex(320, 240);
+
+    int numPoints = this.getNumPoints();
+
+    if (numPoints < 3) {
+      throw new RuntimeException("Cannot generate a quadratic bezier with less than three points.");
+    }
+
+    quadraticBezier.vertex(points.get(0).x, points.get(0).y, points.get(0).z);
+    for (int i = 1; i < numPoints - 1; i++) {
+      PVector p1 = points.get(i - 1);
+      PVector p2 = points.get(i);
+      PVector p3 = points.get(i + 1);
+      PVector c1 = PVector.lerp(p1, p2, 0.5f);
+      PVector c2 = PVector.lerp(p2, p3, 0.5f);
+      quadraticBezier.bezierVertex(c1.x, c1.y, c1.z, p2.x, p2.y, p2.z, c2.x, c2.y, c2.z);
+    }
+    quadraticBezier.vertex(points.get(numPoints - 1).x, points.get(numPoints - 1).y, points.get(numPoints - 1).z);
+
     quadraticBezier.endShape();
 
     return quadraticBezier;
