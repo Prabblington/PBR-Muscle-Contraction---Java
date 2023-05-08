@@ -1,5 +1,5 @@
-abstract class Proteins extends PerlinNoise  {
-  
+abstract class Proteins extends PerlinNoise {
+
   // FOR ACTIN MAINLY
   private final int NUM_SPHERES = 22;
   private final int SPHERE_RADIUS = 30;
@@ -10,7 +10,7 @@ abstract class Proteins extends PerlinNoise  {
 
   private ArrayList<PVector> points1;
   private ArrayList<PVector> points2;
-  
+
   private PVector position;
   private float radius;
   private int numPoints;
@@ -25,21 +25,21 @@ abstract class Proteins extends PerlinNoise  {
   public PVector getPosition() {
     return this.position;
   }
-  
+
   // X start properties
-  public void setXStart(float xPos)  {
+  public void setXStart(float xPos) {
     this.xStart = xPos;
   }
-  public float getXStart()  {
-   return this.xStart; 
+  public float getXStart() {
+    return this.xStart;
   }
-  
+
   // Y start properties
-  public void setYStart(float yPos)  {
+  public void setYStart(float yPos) {
     this.yStart = yPos;
   }
-  public float getYStart()  {
-   return this.yStart; 
+  public float getYStart() {
+    return this.yStart;
   }
 
   // Sphere radius properties
@@ -57,7 +57,7 @@ abstract class Proteins extends PerlinNoise  {
   public int getNumPoints() {
     return this.numPoints;
   }
-  
+
   // Myosin thick filament height properties
   public float getHeight() {
     return this.objectHeight;
@@ -65,7 +65,7 @@ abstract class Proteins extends PerlinNoise  {
   public void setHeight(float newHeight) {
     this.objectHeight = newHeight;
   }
-  
+
   // Helical structure points properties
   public ArrayList<PVector> getStruct1Points() {
     return this.points1;
@@ -79,7 +79,7 @@ abstract class Proteins extends PerlinNoise  {
   public void populateStruct2Points(ArrayList<PVector> generatedPoints) {
     this.points2 = generatedPoints;
   }
-  
+
   // Finalised temp properties for actin
   public int NUM_SPHERES() {
     return this.NUM_SPHERES;
@@ -100,7 +100,7 @@ abstract class Proteins extends PerlinNoise  {
     this.position = new PVector(0, 0, 0);
     this.radius = 0;
   }
-  
+
   //Actin generation
   public Proteins(float initX, float initY) {
     points1 = new ArrayList<PVector>();
@@ -109,12 +109,16 @@ abstract class Proteins extends PerlinNoise  {
     this.xStart = initX;
     this.yStart = initY;
   }
-  // Myosin generation
+  // Myosin heads generation
   public Proteins(PVector pos, float r, int initPoints) {
     this.position = new PVector(pos.x, pos.y, pos.z);
     this.radius = r;
     this.numPoints = initPoints;
   }
-  
-  
+  // Constructor for myosin filament
+  public Proteins(PVector initLocation, int initNumPoints) {
+    super();
+    this.position = new PVector(initLocation.x, initLocation.y, initLocation.z);
+    setNumPoints(initNumPoints);
+  }
 }

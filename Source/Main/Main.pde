@@ -7,7 +7,7 @@ void setup() {
   size(1200, 800, P3D);
   background(20, 5, 15);
   frameRate(30);
-  
+
   // Object creation
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
   actin = new Actin(-600, 0);
@@ -19,7 +19,7 @@ void setup() {
 
   globule = new Myosin(new PVector(-475, 90, 0), 42);
   globule.setRadius(actin.SPHERE_RADIUS() / 2);
-  globule.setPerlinHeight(12);  
+  globule.setPerlinHeight(12);
   globule.generateMyosinHeadShape();
 }
 
@@ -44,7 +44,7 @@ void draw() {
   stroke(255);
   myosinFilament.displayThickFilament();
 
-  // Render myosin head globules  
+  // Render myosin head globules
   globule.displayMyosinHead();
 }
 

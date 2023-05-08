@@ -7,6 +7,10 @@ class MeshRenderer extends Proteins {
   public MeshRenderer() {
     super();
   }
+  
+  public MeshRenderer(PVector initLocation, int initNumPoints)  {
+   super(initLocation, initNumPoints); 
+  }
 
   public MeshRenderer(float initX, float initY) {
     super(initX, initY);
