@@ -6,7 +6,6 @@ class MeshRenderer extends PerlinNoise {
   private ArrayList<PVector> coordinates;
   private int numPoints;
 
-
   // ------------------------------ GETTERS AND SETTERS ------------------------------
 
   // Position properties
@@ -52,10 +51,10 @@ class MeshRenderer extends PerlinNoise {
   public void renderMeshShape(PShape shape, PVector location) {
     pushMatrix();
     translate(location.x, location.y, location.z);
-
     shape(shape, 0, 0);
     popMatrix();
   }
+
   // Returns a PShape of a defined structure of a cylinder
   public PShape generateMeshCylinder(int sides, float h) {
     PShape cylinder = createShape(GROUP);
@@ -63,7 +62,7 @@ class MeshRenderer extends PerlinNoise {
     float angle = 360 / sides;
     float halfHeight = h / 2;
 
-    // draw top of the tube
+    // Generate top of the tube
     PShape cylinderTop = createShape();
     cylinderTop.beginShape();
 
@@ -76,7 +75,7 @@ class MeshRenderer extends PerlinNoise {
     cylinderTop.endShape(CLOSE);
     cylinder.addChild(cylinderTop);
 
-    // draw bottom of the tube
+    // Generate bottom of the tube
     PShape cylinderBottom = createShape();
     cylinderBottom.beginShape();
 
@@ -89,7 +88,7 @@ class MeshRenderer extends PerlinNoise {
     cylinderBottom.endShape(CLOSE);
     cylinder.addChild(cylinderBottom);
 
-    // draw sides
+    // Generate sides
     PShape cylinderBody = createShape();
     cylinderBody.beginShape(TRIANGLE_STRIP);
 
@@ -107,12 +106,8 @@ class MeshRenderer extends PerlinNoise {
   }
 
   // Renders the mesh globe as a custom shape
-  public PShape renderMeshGlobe(boolean isFull) {
-    if (isFull) {
-      this.generateMeshGlobePoints();
-    } else {
-      this.generateMeshHalfGlobe();
-    }
+  public PShape renderMeshGlobe(boolean isFull, boolean isTop) {
+    this.generateMeshGlobePoints(isFull, isTop);
 
     PShape globe = createShape();
     globe.beginShape(TRIANGLE_STRIP);
@@ -143,13 +138,15 @@ class MeshRenderer extends PerlinNoise {
   }
 
   // Generates the co-ordinates for a mesh globe
-  private void generateMeshGlobePoints() {
+  private void generateMeshGlobePoints(boolean isFull, boolean isTop) {
     coordinates = new ArrayList<PVector>();
 
     for (int i = 0; i < numPoints; i++) {
-      float theta = map(i, 0, numPoints, 0, TWO_PI); // angle around the sphere
+      float theta = map(i, 0, numPoints, 0, (isFull && !isTop) ? TWO_PI : PI);
+      
       for (int j = 0; j < numPoints; j++) {
-        float phi = map(j, 0, numPoints, 0, PI); // angle from the top of the sphere
+        // T
+        float phi = map(j, 0, numPoints, 0, (isFull && !isTop) ? PI : HALF_PI); // angle from the top of the sphere
         float x = radius * sin(phi) * cos(theta); // calculate x coordinate
         float y = radius * sin(phi) * sin(theta); // calculate y coordinate
         float z = radius * cos(phi); // calculate z coordinate
@@ -160,26 +157,6 @@ class MeshRenderer extends PerlinNoise {
       }
     }
     // Applies perlin noise to all globeCoordinates to generate jagged height map
-    this.applyPerlin(coordinates);
-  }
-
-  // Generates the co-ordinates for a mesh globe
-  private void generateMeshHalfGlobe() {
-    coordinates = new ArrayList<PVector>();
-
-    for (int i = 0; i < numPoints; i++) {
-      float theta = map(i, 0, numPoints, 0, PI); // angle around the sphere
-      for (int j = 0; j < numPoints; j++) {
-        float phi = map(j, 0, numPoints, 0, HALF_PI); // angle from the top of the sphere
-        float x = radius * sin(phi) * cos(theta); // calculate x coordinate
-        float y = radius * sin(phi) * sin(theta); // calculate y coordinate
-        float z = radius * cos(phi); // calculate z coordinate
-
-        PVector coordinate = new PVector(x, y, z);
-
-        coordinates.add(coordinate);
-      }
-    }
     this.applyPerlin(coordinates);
   }
 

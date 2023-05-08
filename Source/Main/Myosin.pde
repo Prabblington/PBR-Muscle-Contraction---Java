@@ -33,7 +33,7 @@ class Myosin extends MeshRenderer {
   }
 
   public void generateMyosinHeadShape() {
-    this.shape = this.renderMeshGlobe(true);
+    this.shape = this.renderMeshGlobe(true, false);
     shape.rotateY(HALF_PI);
   }
 
