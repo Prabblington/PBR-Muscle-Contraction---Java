@@ -9,8 +9,8 @@ class MyosinHead extends Myosin {
   @Override
     public void coordinateGenerator() {
     strokeWeight(0.5);
-    fill(#6F4040);
-    stroke(#F7B1B1);
+    fill(180, 135, 135, 100);
+    stroke(118, 67, 67);
 
     PShape s = this.renderMeshGlobe(true, false);
     s.rotateY(HALF_PI);

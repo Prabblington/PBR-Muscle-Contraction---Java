@@ -7,7 +7,6 @@ MyosinFilament myosinFilament;
 Tropomyosin bindingSiteA;
 Tropomyosin bindingSiteB;
 
-
 void setup() {
   size(1200, 800, P3D);
   background(20, 5, 15);
@@ -15,9 +14,12 @@ void setup() {
 
   // Object creation
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
-  actin = new Actin(-600, 0);
-  myosinFilament = new MyosinFilament(new PVector(-20, 160, 0), 12);
+  actin = new Actin(-600, 0); 
+    
   myosinHead = new MyosinHead(new PVector(-475, 90, 0), 42);
+  myosinFilament = new MyosinFilament(new PVector(-20, 160, 0), 12);
+  
+  // Tropomyosin binding sites for myosin heads
   bindingSiteA = new Tropomyosin(new PVector(-600, -10, 0), 5, true);
   bindingSiteB = new Tropomyosin(new PVector(-600, -10, 0), 5, false);
 

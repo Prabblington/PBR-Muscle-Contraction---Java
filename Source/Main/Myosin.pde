@@ -64,7 +64,7 @@ class Myosin extends MeshRenderer {
 
   public void renderMyosinHeadConnection(PVector startPos, PVector endPos) {
     noFill();
-    stroke(255, 255, 0);
+    stroke(#6F4040);
     strokeWeight(3);
 
     PShape connection = generateBezierStructure(formMyosinHeadConnection(startPos, endPos, 0));
