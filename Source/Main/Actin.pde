@@ -1,43 +1,11 @@
 class Actin extends MeshRenderer {
 
-  private final int NUM_SPHERES = 22;
-  private final int SPHERE_RADIUS = 30;
-  private final float SPACING = SPHERE_RADIUS * 1.05;
-  private final float SIN_COS_VAL = 0.019;
-
-  private float xStart, yStart;
-
-  private ArrayList<PVector> points1;
-  private ArrayList<PVector> points2;
-
-  // ------------------------------ GETTERS AND SETTERS ------------------------------
-
-  public ArrayList<PVector> getStruct1Points() {
-    return this.points1;
-  }
-  public ArrayList<PVector> getStruct2Points() {
-    return this.points2;
-  }
-
-  public int NUM_SPHERES() {
-    return this.NUM_SPHERES;
-  }
-  public int SPHERE_RADIUS() {
-    return this.SPHERE_RADIUS;
-  }
-
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
   public Actin(float initX, float initY) {
-    super();
-
-    points1 = new ArrayList<PVector>();
-    points2 = new ArrayList<PVector>();
-
-    this.xStart = initX;
-    this.yStart = initY;
-
-    points1 = this.helicalPointsGenerator(true, NUM_SPHERES, SIN_COS_VAL, SPACING, xStart, yStart);
-    points2 = this.helicalPointsGenerator(false, NUM_SPHERES, SIN_COS_VAL, SPACING, xStart, yStart);
+    super(initX, initY);
+    this.populateStruct1Points(this.helicalPointsGenerator(true, this.NUM_SPHERES(), this.SIN_COS_VAL(), this.SPACING(), initX, initY ));
+    this.populateStruct2Points(this.helicalPointsGenerator(false, this.NUM_SPHERES(), this.SIN_COS_VAL(), this.SPACING(), initX, initY ));
   }
+  
 }

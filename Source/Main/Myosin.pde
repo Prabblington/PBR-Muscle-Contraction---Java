@@ -1,17 +1,17 @@
 class Myosin extends MeshRenderer {
   private PVector location;
-  private float filamentHeight;
+  //private float filamentHeight;
   private PShape shape;
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------
 
-  // Myosin thick filament height properties
-  public float getHeight() {
-    return this.filamentHeight;
-  }
-  public void setHeight(float newHeight) {
-    this.filamentHeight = newHeight;
-  }
+  //// Myosin thick filament height properties
+  //public float getHeight() {
+  //  return this.filamentHeight;
+  //}
+  //public void setHeight(float newHeight) {
+  //  this.filamentHeight = newHeight;
+  //}
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
@@ -24,24 +24,24 @@ class Myosin extends MeshRenderer {
   public Myosin(PVector initLocation, int initNumPoints) {
     super();
     this.location = new PVector(initLocation.x, initLocation.y, initLocation.z);
-    this.setNumPoints(initNumPoints);
+    setNumPoints(initNumPoints);
   }
 
   public void generateThickFilamentShape() {
-    this.shape = this.generateMeshCylinder(this.getNumPoints(), this.filamentHeight);
+    shape = generateMeshCylinder(getNumPoints(), getHeight());
     shape.rotateY(HALF_PI);
   }
 
   public void generateMyosinHeadShape() {
-    this.shape = this.renderMeshGlobe(true, false);
+    shape = this.renderMeshGlobe(true, false);
     shape.rotateY(HALF_PI);
   }
 
   public void displayThickFilament() {
-    this.renderMeshShape(shape, this.location);
+    renderMeshShape(shape, location);
   }
 
   public void displayMyosinHead() {
-    this.renderMeshShape(shape, this.location);
+    renderMeshShape(shape, location);
   }
 }

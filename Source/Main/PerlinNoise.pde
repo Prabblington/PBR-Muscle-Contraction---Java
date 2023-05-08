@@ -1,4 +1,4 @@
-class PerlinNoise {
+class PerlinNoise  {
   private float perlinHeight;
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------

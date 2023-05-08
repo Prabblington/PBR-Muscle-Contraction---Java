@@ -18,7 +18,7 @@ void setup() {
   myosinFilament.generateThickFilamentShape();
 
   globule = new Myosin(new PVector(-475, 90, 0), 42);
-  globule.setRadius(actin.SPHERE_RADIUS / 2);
+  globule.setRadius(actin.SPHERE_RADIUS() / 2);
   globule.setPerlinHeight(12);  
   globule.generateMyosinHeadShape();
 }

@@ -1,50 +1,19 @@
-class MeshRenderer extends PerlinNoise {
-
-  private PVector position;
-  private float radius;
+class MeshRenderer extends Proteins {
 
   private ArrayList<PVector> coordinates;
-  private int numPoints;
-
-  // ------------------------------ GETTERS AND SETTERS ------------------------------
-
-  // Position properties
-  public void setPosition(float x, float y, float z) {
-    this.position.set(x, y, z);
-  }
-  public PVector getPosition() {
-    return this.position;
-  }
-
-  // Sphere radius properties
-  public void setRadius(float newRadius) {
-    this.radius = newRadius;
-  }
-  public float getRadius() {
-    return this.radius;
-  }
-
-  // Points generated for globes
-  public void setNumPoints(int num) {
-    this.numPoints = num;
-  }
-  public int getNumPoints() {
-    return this.numPoints;
-  }
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
   public MeshRenderer() {
     super();
-    this.position = new PVector(0, 0, 0);
-    this.radius = 0;
+  }
+
+  public MeshRenderer(float initX, float initY) {
+    super(initX, initY);
   }
 
   public MeshRenderer(PVector pos, float r, int initPoints) {
-    super();
-    this.position = new PVector(pos.x, pos.y, pos.z);
-    this.radius = r;
-    this.numPoints = initPoints;
+    super(pos, r, initPoints);
   }
 
   // Renders shape mesh
@@ -55,12 +24,37 @@ class MeshRenderer extends PerlinNoise {
     popMatrix();
   }
 
+  // Renders a sphere at PVector pos (position) with a defined radius
+  public void renderSphere(PVector pos, float radius) {
+    pushMatrix();
+    translate(pos.x, pos.y, pos.z);
+    sphere(radius);
+    popMatrix();
+  }
+
+  public PShape generateHelicalBezier() {
+    this.helicalPointsGenerator(true, this.getNumPoints(), 0.019, 30 * 1.05, -600, 0);
+
+    PShape quadraticBezier = createShape();
+    strokeWeight(10);
+
+    quadraticBezier.beginShape();
+    quadraticBezier.vertex(80, 80);
+    quadraticBezier.quadraticVertex(320, 80, 200, 200);
+    quadraticBezier.quadraticVertex(80, 320, 320, 320);
+    quadraticBezier.vertex(320, 240);
+    quadraticBezier.endShape();
+
+    return quadraticBezier;
+  }
+
   // Returns a PShape of a defined structure of a cylinder
   public PShape generateMeshCylinder(int sides, float h) {
     PShape cylinder = createShape(GROUP);
 
     float angle = 360 / sides;
     float halfHeight = h / 2;
+    float radius = this.getRadius();
 
     // Generate top of the tube
     PShape cylinderTop = createShape();
@@ -109,6 +103,8 @@ class MeshRenderer extends PerlinNoise {
   public PShape renderMeshGlobe(boolean isFull, boolean isTop) {
     this.generateMeshGlobePoints(isFull, isTop);
 
+    int numPoints = this.getNumPoints();
+
     PShape globe = createShape();
     globe.beginShape(TRIANGLE_STRIP);
 
@@ -140,10 +136,12 @@ class MeshRenderer extends PerlinNoise {
   // Generates the co-ordinates for a mesh globe
   private void generateMeshGlobePoints(boolean isFull, boolean isTop) {
     coordinates = new ArrayList<PVector>();
+    int numPoints = this.getNumPoints();
+    float radius = this.getRadius();
 
     for (int i = 0; i < numPoints; i++) {
       float theta = map(i, 0, numPoints, 0, (isFull && !isTop) ? TWO_PI : PI);
-      
+
       for (int j = 0; j < numPoints; j++) {
         // T
         float phi = map(j, 0, numPoints, 0, (isFull && !isTop) ? PI : HALF_PI); // angle from the top of the sphere
@@ -158,14 +156,6 @@ class MeshRenderer extends PerlinNoise {
     }
     // Applies perlin noise to all globeCoordinates to generate jagged height map
     this.applyPerlin(coordinates);
-  }
-
-  // Renders a sphere at PVector pos (position) with a defined radius
-  public void renderSphere(PVector pos, float radius) {
-    pushMatrix();
-    translate(pos.x, pos.y, pos.z);
-    sphere(radius);
-    popMatrix();
   }
 
   // helicalPointsGenerator():
