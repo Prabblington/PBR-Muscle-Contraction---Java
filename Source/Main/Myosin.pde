@@ -1,18 +1,9 @@
 class Myosin extends MeshRenderer {
-  private ArrayList<PVector> vertex;
   private PVector location;
   private float filamentHeight;
   private PShape shape;
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------
-
-  // vertexList for myosin heads
-  public ArrayList<PVector> getVertexList() {
-    return vertex;
-  }
-  public void setVertexList(ArrayList<PVector> ver) {
-    this.vertex = ver;
-  }
 
   // Myosin thick filament height properties
   public float getHeight() {
@@ -36,22 +27,6 @@ class Myosin extends MeshRenderer {
     this.setNumPoints(initNumPoints);
   }
 
-  // Constructor for myosin thick filament
-  public Myosin(float[] d) {
-    super();
-    vertex = new ArrayList<PVector>();
-
-    // Myosin filament vertex arrayList
-    vertex.add(new PVector( -d[0], -d[1], -d[2] )); // -1, -2, -3
-    vertex.add(new PVector( d[2], -d[1], -d[2] ));  // 3, -2, -3
-    vertex.add(new PVector( d[2], d[2], -d[2] ));   // 2, 2, -2
-    vertex.add(new PVector( -d[0], d[2], -d[2] ));  // -1, -3, -3
-
-    vertex.add(new PVector( -d[0], -d[1], d[2] ));  // -1, -2, 3
-    vertex.add(new PVector( d[2], -d[1], d[2] ));   // 3, -2, -3
-    vertex.add(new PVector( d[2], d[2], d[2] ));    // 3, 3, 3
-    vertex.add(new PVector( -d[0], d[2], d[2] ));   // -1, 3, 3
-  }
   public void generateThickFilamentShape() {
     this.shape = this.generateMeshCylinder(this.getNumPoints(), this.filamentHeight);
     shape.rotateY(HALF_PI);

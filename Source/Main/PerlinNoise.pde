@@ -27,7 +27,7 @@ class PerlinNoise {
       PVector tempCoords = new PVector(originalPoints.get(i).x, originalPoints.get(i).y, originalPoints.get(i).z);
 
       tempCoords.normalize();
-      float noise = noise(i) * perlinHeight;
+      float noise = noise(i) * perlinHeight * 0.9;
 
       tempCoords.mult(noise);
       originalPoints.get(i).add(tempCoords);
