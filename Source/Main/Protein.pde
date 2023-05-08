@@ -1,4 +1,4 @@
-abstract class Proteins extends PerlinNoise {
+abstract class Protein extends PerlinNoise {
 
   // FOR ACTIN MAINLY
   private final int NUM_SPHERES = 22;
@@ -96,13 +96,13 @@ abstract class Proteins extends PerlinNoise {
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
-  public Proteins() {
+  public Protein() {
     this.position = new PVector(0, 0, 0);
     this.radius = 0;
   }
 
   //Actin generation
-  public Proteins(float initX, float initY) {
+  public Protein(float initX, float initY) {
     points1 = new ArrayList<PVector>();
     points2 = new ArrayList<PVector>();
 
@@ -110,13 +110,13 @@ abstract class Proteins extends PerlinNoise {
     this.yStart = initY;
   }
   // Myosin heads generation
-  public Proteins(PVector pos, float r, int initPoints) {
+  public Protein(PVector pos, float r, int initPoints) {
     this.position = new PVector(pos.x, pos.y, pos.z);
     this.radius = r;
     this.numPoints = initPoints;
   }
   // Constructor for myosin filament
-  public Proteins(PVector initLocation, int initNumPoints) {
+  public Protein(PVector initLocation, int initNumPoints) {
     super();
     this.position = new PVector(initLocation.x, initLocation.y, initLocation.z);
     setNumPoints(initNumPoints);

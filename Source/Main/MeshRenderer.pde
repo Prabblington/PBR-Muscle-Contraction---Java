@@ -1,4 +1,4 @@
-class MeshRenderer extends Proteins {
+class MeshRenderer extends Protein {
 
   private ArrayList<PVector> coordinates;
 
