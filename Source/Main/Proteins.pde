@@ -11,8 +11,8 @@ abstract class Proteins extends PerlinNoise {
   private ArrayList<PVector> points1;
   private ArrayList<PVector> points2;
 
-  private PVector position;
-  private float radius;
+  private PVector position
+    private float radius;
   private int numPoints;
   private float objectHeight;
 

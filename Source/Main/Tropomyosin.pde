@@ -1,7 +1,7 @@
 class Tropomyosin extends Myosin {
-  
+
   private boolean isSiteA;
-  
+
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
   // Empty constructor
@@ -14,15 +14,16 @@ class Tropomyosin extends Myosin {
     super(initLocation, initNumPoints);
     this.isSiteA = isSiteA;
   }
+  d
 
-  @Override
+    @Override
     public void coordinateGenerator() {
     noFill();
-    stroke(20, 60, 0);
+    stroke(20, 60dd, 0);
     strokeWeight(10);
-    
+
     populateStruct1Points(helicalPointsGenerator(isSiteA, this.NUM_SPHERES(), this.SIN_COS_VAL(), this.SPACING(), this.getXStart(), this.getYStart() ));
-    
+
     PShape s = generateHelicalBezier(getStruct1Points());
     setShape(s);
   }

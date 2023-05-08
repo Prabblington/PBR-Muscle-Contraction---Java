@@ -20,24 +20,22 @@ void setup() {
   myosinHead = new Myosin(new PVector(-475, 90, 0), 42);
   bindingSiteA = new Tropomyosin(new PVector(-600, -10, 0), 5, true);
   bindingSiteB = new Tropomyosin(new PVector(-600, -10, 0), 5, false);
-  
-  
-  
+
   // Set variables
   myosinFilament.setHeight(1000);
   myosinFilament.setRadius(30);
 
   myosinHead.setRadius(actin.SPHERE_RADIUS() / 2);
   myosinHead.setPerlinHeight(12);
-  
+
   bindingSiteA.setNumPoints(actin.NUM_SPHERES());
   bindingSiteB.setNumPoints(actin.NUM_SPHERES());
-  
+
   // Generate points for shapes to be rendered
   actin.coordinateGenerator();
   myosinFilament.coordinateGenerator();
   myosinHead.coordinateGenerator();
-  
+
   bindingSiteA.coordinateGenerator();
   bindingSiteB.coordinateGenerator();
 }
@@ -51,7 +49,7 @@ void draw() {
   actin.displayShape();
   myosinFilament.displayShape();
   myosinHead.displayShape();
-  
+
   bindingSiteA.displayShape();
   bindingSiteB.displayShape();
 }
