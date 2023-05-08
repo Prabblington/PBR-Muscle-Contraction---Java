@@ -141,7 +141,7 @@ class MeshRenderer {
     }
     capsuleBottom.endShape(CLOSE);
     capsule.addChild(capsuleBottom);
-    
+
     // RENDER
     pushMatrix();
     translate(location.x, location.y, location.z);
@@ -218,10 +218,12 @@ class MeshRenderer {
 
 
   // Renders the mesh globe as a custom shape
-  public void renderMeshGlobe(PVector location) {
-    //this.generateMeshGlobe();
-    this.generateMeshHalfGlobe();
-
+  public void renderMeshGlobe(PVector location, boolean isFull) {
+    if (isFull) {
+      this.generateMeshGlobe();
+    } else {
+      this.generateMeshHalfGlobe();
+    }
 
     PShape customShape = createShape();
     customShape.beginShape(TRIANGLE_STRIP);

@@ -58,6 +58,6 @@ class Myosin extends MeshRenderer {
   }
 
   public void displayMyosinHead() {
-    this.renderMeshGlobe(this.location);
+    this.renderMeshGlobe(this.location, true);
   }
 }
