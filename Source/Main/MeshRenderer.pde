@@ -23,7 +23,7 @@ class MeshRenderer extends PerlinNoise {
   }
   public float getRadius() {
     return this.radius;
-  }  
+  }
 
   // Points generated for globes
   public void setNumPoints(int num) {
@@ -35,12 +35,12 @@ class MeshRenderer extends PerlinNoise {
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
-  public MeshRenderer()  {
+  public MeshRenderer() {
     super();
     this.position = new PVector(0, 0, 0);
     this.radius = 0;
   }
-  
+
   public MeshRenderer(PVector pos, float r, int initPoints) {
     super();
     this.position = new PVector(pos.x, pos.y, pos.z);
@@ -49,10 +49,10 @@ class MeshRenderer extends PerlinNoise {
   }
 
   // Renders shape mesh
-  public void renderMeshShape(PShape shape, PVector location, float rotation) {
+  public void renderMeshShape(PShape shape, PVector location) {
     pushMatrix();
     translate(location.x, location.y, location.z);
-    shape.rotateY(rotation);
+
     shape(shape, 0, 0);
     popMatrix();
   }
@@ -107,43 +107,39 @@ class MeshRenderer extends PerlinNoise {
   }
 
   // Renders the mesh globe as a custom shape
-  public void renderMeshGlobe(PVector location, boolean isFull) {
+  public PShape renderMeshGlobe(boolean isFull) {
     if (isFull) {
       this.generateMeshGlobePoints();
     } else {
       this.generateMeshHalfGlobe();
     }
 
-    PShape customShape = createShape();
-    customShape.beginShape(TRIANGLE_STRIP);
+    PShape globe = createShape();
+    globe.beginShape(TRIANGLE_STRIP);
 
     for (int i = 0; i < numPoints; i++) {
       for (int j = 0; j < numPoints; j++) {
         // These vertices form a square on the globe's surface
         // -- top left
-        customShape.vertex(coordinates.get(i * numPoints + j).x,
+        globe.vertex(coordinates.get(i * numPoints + j).x,
           coordinates.get(i * numPoints + j).y,
           coordinates.get(i * numPoints + j).z);
         // -- bottom left
-        customShape.vertex(coordinates.get((i + 1) % numPoints * numPoints + j).x,
+        globe.vertex(coordinates.get((i + 1) % numPoints * numPoints + j).x,
           coordinates.get((i + 1) % numPoints * numPoints + j).y,
           coordinates.get((i + 1) % numPoints * numPoints + j).z);
         // -- top right
-        customShape.vertex(coordinates.get(i * numPoints + (j + 1) % numPoints).x,
+        globe.vertex(coordinates.get(i * numPoints + (j + 1) % numPoints).x,
           coordinates.get(i * numPoints + (j + 1) % numPoints).y,
           coordinates.get(i * numPoints + (j + 1) % numPoints).z);
         // -- bottom right
-        customShape.vertex(coordinates.get((i + 1) % numPoints * numPoints + (j + 1) % numPoints).x,
+        globe.vertex(coordinates.get((i + 1) % numPoints * numPoints + (j + 1) % numPoints).x,
           coordinates.get((i + 1) % numPoints * numPoints + (j + 1) % numPoints).y,
           coordinates.get((i + 1) % numPoints * numPoints + (j + 1) % numPoints).z);
       }
     }
-    customShape.endShape(CLOSE);
-
-    pushMatrix();
-    translate(location.x, location.y, location.z);
-    shape(customShape, 0, 0); //display
-    popMatrix();
+    globe.endShape(CLOSE);
+    return globe;
   }
 
   // Generates the co-ordinates for a mesh globe
@@ -194,7 +190,7 @@ class MeshRenderer extends PerlinNoise {
     translate(pos.x, pos.y, pos.z);
     sphere(radius);
     popMatrix();
-  }  
+  }
 
   // helicalPointsGenerator():
   // Returns an ArrayList of points for a helical structure

@@ -1,8 +1,8 @@
-class PerlinNoise  {
+class PerlinNoise {
   private float perlinHeight;
-  
+
   // ------------------------------ GETTERS AND SETTERS ------------------------------
-  
+
   // Perlin density properties
   public void setPerlinHeight(float newHeight) {
     this.perlinHeight = newHeight;
@@ -10,14 +10,14 @@ class PerlinNoise  {
   public float getPerlinHeight() {
     return this.perlinHeight;
   }
-  
+
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
-  
+
   // Default the perlinHeight to 12
-  public PerlinNoise()  {
+  public PerlinNoise() {
     this.perlinHeight = 12;
   }
-  
+
   // CONVERT FLOAT[][] TO PVECTOR
   // FIND NORMAL USING NORMALIZE()
   // APPLY PERLIN TO NORMALIZE() DIRECTION

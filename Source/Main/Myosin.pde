@@ -2,6 +2,7 @@ class Myosin extends MeshRenderer {
   private ArrayList<PVector> vertex;
   private PVector location;
   private float filamentHeight;
+  private PShape shape;
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------
 
@@ -51,14 +52,21 @@ class Myosin extends MeshRenderer {
     vertex.add(new PVector( d[2], d[2], d[2] ));    // 3, 3, 3
     vertex.add(new PVector( -d[0], d[2], d[2] ));   // -1, 3, 3
   }
+  public void generateThickFilamentShape() {
+    this.shape = this.generateMeshCylinder(this.getNumPoints(), this.filamentHeight);
+    shape.rotateY(HALF_PI);
+  }
+
+  public void generateMyosinHeadShape() {
+    this.shape = this.renderMeshGlobe(true);
+    shape.rotateY(HALF_PI);
+  }
 
   public void displayThickFilament() {
-    //this.renderMeshCylinder(this.location, this.getNumPoints(), this.filamentHeight);
-    PShape shape = this.generateMeshCylinder(this.getNumPoints(), this.filamentHeight);
-    this.renderMeshShape(shape, this.location, HALF_PI);
+    this.renderMeshShape(shape, this.location);
   }
 
   public void displayMyosinHead() {
-    this.renderMeshGlobe(this.location, true);
+    this.renderMeshShape(shape, this.location);
   }
 }

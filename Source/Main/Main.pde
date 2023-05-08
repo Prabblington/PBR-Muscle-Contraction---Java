@@ -1,7 +1,7 @@
 CameraOrbit camera;
 Actin actin;
 Myosin myosinFilament;
-Myosin myosinHeads;
+//Myosin myosinHeads;
 Myosin globule;
 
 void setup() {
@@ -13,20 +13,16 @@ void setup() {
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
   actin = new Actin(-600, 0);
 
-  //Myosin dimentions: 1 = x, 2 = y(range), 3 = z(range)
-  //float[] d = {900, 100, 50};
   myosinFilament = new Myosin(new PVector(-25, 150, 0), 10);
   myosinFilament.setHeight(1000);
   myosinFilament.setRadius(30);
   myosinFilament.setNumPoints(50);
-
-  //myosinHeads = new Myosin();
-  //myosinHeads.setVertexGap(4);
-  //myosinHeads.setPerlinHeight(15);
+  myosinFilament.generateThickFilamentShape();
 
   globule = new Myosin(new PVector(0, 0, 200), 64);
   globule.setPerlinHeight(12);
   globule.setRadius(30);
+  globule.generateMyosinHeadShape();
 }
 
 void draw() {
