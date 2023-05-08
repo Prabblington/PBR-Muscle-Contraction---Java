@@ -1,8 +1,11 @@
 CameraOrbit camera;
+
 Actin actin;
 Myosin myosinHead;
 MyosinFilament myosinFilament;
-Tropomyosin bindingSite;
+
+Tropomyosin bindingSiteA;
+Tropomyosin bindingSiteB;
 
 
 void setup() {
@@ -15,7 +18,10 @@ void setup() {
   actin = new Actin(-600, 0);
   myosinFilament = new MyosinFilament(new PVector(-25, 150, 0), 12);
   myosinHead = new Myosin(new PVector(-475, 90, 0), 42);
-  bindingSite = new Tropomyosin(new PVector(0, 0, 250), 5);
+  bindingSiteA = new Tropomyosin(new PVector(-600, -10, 0), 5, true);
+  bindingSiteB = new Tropomyosin(new PVector(-600, -10, 0), 5, false);
+  
+  
   
   // Set variables
   myosinFilament.setHeight(1000);
@@ -24,11 +30,16 @@ void setup() {
   myosinHead.setRadius(actin.SPHERE_RADIUS() / 2);
   myosinHead.setPerlinHeight(12);
   
+  bindingSiteA.setNumPoints(actin.NUM_SPHERES());
+  bindingSiteB.setNumPoints(actin.NUM_SPHERES());
+  
   // Generate points for shapes to be rendered
   actin.coordinateGenerator();
   myosinFilament.coordinateGenerator();
   myosinHead.coordinateGenerator();
-  bindingSite.coordinateGenerator();
+  
+  bindingSiteA.coordinateGenerator();
+  bindingSiteB.coordinateGenerator();
 }
 
 void draw() {
@@ -40,7 +51,9 @@ void draw() {
   actin.displayShape();
   myosinFilament.displayShape();
   myosinHead.displayShape();
-  bindingSite.displayShape();
+  
+  bindingSiteA.displayShape();
+  bindingSiteB.displayShape();
 }
 
 // Controlls camera panning
