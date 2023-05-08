@@ -26,6 +26,7 @@ void setup() {
 
   globule = new Myosin(new PVector(0, 0, 200), 64);
   globule.setPerlinHeight(12);
+  globule.setRadius(30);
 }
 
 void draw() {
@@ -47,11 +48,9 @@ void draw() {
   // Myosin thick filament render
   fill(55);
   stroke(255);
-  //myosinFilament.renderQuadShape(myosinFilament.getVertexList());
   myosinFilament.displayThickFilament();
 
-  // Render myosin head globules
-  globule.setRadius(50);
+  // Render myosin head globules  
   globule.displayMyosinHead();
 }
 
