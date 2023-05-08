@@ -1,7 +1,7 @@
 CameraOrbit camera;
 
 Actin actin;
-Myosin myosinHead;
+MyosinHead myosinHead;
 MyosinFilament myosinFilament;
 
 Tropomyosin bindingSiteA;
@@ -17,7 +17,7 @@ void setup() {
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
   actin = new Actin(-600, 0);
   myosinFilament = new MyosinFilament(new PVector(-25, 150, 0), 12);
-  myosinHead = new Myosin(new PVector(-475, 90, 0), 42);
+  myosinHead = new MyosinHead(new PVector(-475, 90, 0), 42);
   bindingSiteA = new Tropomyosin(new PVector(-600, -10, 0), 5, true);
   bindingSiteB = new Tropomyosin(new PVector(-600, -10, 0), 5, false);
 
