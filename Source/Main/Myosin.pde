@@ -53,9 +53,8 @@ class Myosin extends MeshRenderer {
   }
 
   public void displayThickFilament() {
-    //this.renderQuadShape(vertex);
-    this.renderMeshCapsule(this.location, this.getNumPoints(), this.filamentHeight);
-    //this.renderMeshCylinder(this.location, 50, 40);
+    //this.renderMeshCylinder(this.location, this.getNumPoints(), this.filamentHeight);
+    this.renderMeshCapsule(this.location, 10, 100);
   }
 
   public void displayMyosinHead() {

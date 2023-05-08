@@ -69,46 +69,89 @@ class MeshRenderer {
     this.radius = 0;
   }
 
-  public void renderMeshCylinder(PVector location, int sides, float h) {
-    PShape cylinder = createShape();
+  public void renderMeshCapsule(PVector location, int stepSize, float h) {
+    capsuleCoordinates = new ArrayList<PVector>();
 
-    float angle = 360 / sides;
-    float halfHeight = h / 2;
-    // draw top shape
-    cylinder.beginShape();
-    for (int i = 0; i < sides; i++) {
-      float x = cos( radians( i * angle ) ) * radius;
-      float y = sin( radians( i * angle ) ) * radius;
-      cylinder.vertex( x, y, -halfHeight );
-    }
-    cylinder.endShape(CLOSE);
-    // draw bottom shape
-    cylinder.beginShape();
-    for (int i = 0; i < sides; i++) {
-      float x = cos( radians( i * angle ) ) * radius;
-      float y = sin( radians( i * angle ) ) * radius;
-      cylinder.vertex( x, y, halfHeight );
-    }
-    cylinder.endShape(CLOSE);
+    // Calculate sin and cos values for each step so we don't have to re-do it
+    float[] sinVals = new float[360 / stepSize + 1];
+    float[] cosVals = new float[360 / stepSize + 1];
 
-    // draw body
-    cylinder.beginShape(TRIANGLE_STRIP);
-    for (int i = 0; i < sides + 1; i++) {
-      float x = cos( radians( i * angle ) ) * radius;
-      float y = sin( radians( i * angle ) ) * radius;
-      cylinder.vertex( x, y, halfHeight);
-      cylinder.vertex( x, y, -halfHeight);
+    for (int i = 0; i < sinVals.length; i++) {
+      float angle = radians(i * stepSize - 180);
+      sinVals[i] = sin(angle);
+      cosVals[i] = cos(angle);
     }
-    cylinder.endShape(CLOSE);
 
+    // Init capsule body as a GROUP shape
+    PShape capsule = createShape(GROUP);
+    capsule.beginShape();
+
+    PShape capsuleBody = createShape();
+    capsuleBody.beginShape(TRIANGLE_STRIP);
+
+    // Generate cylinder body vertices
+    for (int i = 0; i < sinVals.length; i++) {
+      float x = radius * cosVals[i];
+      float z = radius * sinVals[i];
+      float y1 = -h / 2;
+      float y2 = y1 + h;
+
+      capsuleBody.vertex(x, y1, z);
+      capsuleBody.vertex(x, y2, z);
+
+      capsuleCoordinates.add(new PVector(x, y1, z));
+      capsuleCoordinates.add(new PVector(x, y2, z));
+    }
+    capsuleBody.endShape(CLOSE);
+    capsule.addChild(capsuleBody);
+
+    PShape capsuleTop = createShape();
+    capsuleTop.beginShape(TRIANGLE_FAN);
+
+    // Draw top cap vertices
+    float yTop = -h / 2;
+    capsuleTop.vertex(0, yTop, 0);
+    capsuleCoordinates.add(new PVector(0, yTop, 0));
+
+    for (int i = 0; i < sinVals.length; i++) {
+      float x = radius * cosVals[i];
+      float z = radius * sinVals[i];
+
+      capsuleTop.vertex(x, yTop, z);
+      capsuleCoordinates.add(new PVector(x, yTop, z));
+    }
+    capsuleTop.endShape(CLOSE);
+    capsule.addChild(capsuleTop);
+
+    PShape capsuleBottom = createShape();
+    capsuleBottom.beginShape(TRIANGLE_FAN);
+
+    // Draw bottom cap vertices
+    float yBottom = h / 2;
+    capsuleBottom.vertex(0, yBottom, 0);
+    capsuleCoordinates.add(new PVector(0, yBottom, 0));
+
+    for (int i = sinVals.length - 1; i >= 0; i--) {
+      float x = radius * cosVals[i];
+      float z = radius * sinVals[i];
+
+      capsuleBottom.vertex(x, yBottom, z);
+      capsuleCoordinates.add(new PVector(x, yBottom, z));
+    }
+    capsuleBottom.endShape(CLOSE);
+    capsule.addChild(capsuleBottom);
+    
+    // RENDER
     pushMatrix();
     translate(location.x, location.y, location.z);
-    shape(cylinder, 0, 0);
+    capsule.rotateY(PI/2);
+    shape(capsule, 0, 0);
     popMatrix();
   }
 
+
   // Generates capsule co-ordinates
-  public void renderMeshCapsule(PVector location, int sides, float h) {
+  public void renderMeshCylinder(PVector location, int sides, float h) {
     capsuleCoordinates = new ArrayList<PVector>();
     PShape cylinder = createShape(GROUP);
 
@@ -175,7 +218,9 @@ class MeshRenderer {
 
   // Renders the mesh globe as a custom shape
   public void renderMeshGlobe(PVector location) {
-    this.generateMeshGlobe();
+    //this.generateMeshGlobe();
+    this.generateMeshHalfGlobe();
+
 
     PShape customShape = createShape();
     customShape.beginShape(TRIANGLE_STRIP);
@@ -218,6 +263,27 @@ class MeshRenderer {
       float theta = map(i, 0, numPoints, 0, TWO_PI); // angle around the sphere
       for (int j = 0; j < numPoints; j++) {
         float phi = map(j, 0, numPoints, 0, PI); // angle from the top of the sphere
+        float x = radius * sin(phi) * cos(theta); // calculate x coordinate
+        float y = radius * sin(phi) * sin(theta); // calculate y coordinate
+        float z = radius * cos(phi); // calculate z coordinate
+
+        PVector coordinate = new PVector(x, y, z);
+
+        globeCoordinates.add(coordinate);
+      }
+    }
+    this.applyPerlin(globeCoordinates);
+  }
+
+  // Generates the co-ordinates for a mesh globe
+  private void generateMeshHalfGlobe() {
+    globeCoordinates = new ArrayList<PVector>();
+    //globePoints = new float[numPoints * numPoints][3]; // array to hold the points
+
+    for (int i = 0; i < numPoints; i++) {
+      float theta = map(i, 0, numPoints, 0, PI); // angle around the sphere
+      for (int j = 0; j < numPoints; j++) {
+        float phi = map(j, 0, numPoints, 0, HALF_PI); // angle from the top of the sphere
         float x = radius * sin(phi) * cos(theta); // calculate x coordinate
         float y = radius * sin(phi) * sin(theta); // calculate y coordinate
         float z = radius * cos(phi); // calculate z coordinate
@@ -293,37 +359,6 @@ class MeshRenderer {
       return points;
     }
     return null;
-  }
-
-  // Renders 6 sided 3D shape
-  public void renderQuadShape(ArrayList<PVector> vertices) {
-    // Define the indices for each face
-    int[][] faces = {
-      {0, 1, 2, 3}, // Front face
-      {4, 5, 6, 7}, // Back face
-      {3, 2, 6, 7}, // Top face
-      {0, 1, 5, 4}, // Bottom face
-      {0, 3, 7, 4}, // Left face
-      {1, 2, 6, 5}  // Right face
-    };
-
-    PShape customShape = createShape();
-    customShape.beginShape(QUADS);
-
-    for (int i = 0; i < faces.length; i++) {
-      int[] face = faces[i];
-      for (int j = 0; j < face.length; j++) {
-        PVector vertex = vertices.get(face[j]);
-        customShape.vertex(vertex.x, vertex.y, vertex.z);
-      }
-    }
-
-    customShape.endShape(CLOSE);
-
-    pushMatrix();
-    translate(400, 250, 0);
-    shape(customShape, 0, 0); //display
-    popMatrix();
   }
 
   // Renders anything spherical
