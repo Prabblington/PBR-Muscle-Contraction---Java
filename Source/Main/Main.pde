@@ -16,7 +16,7 @@ void setup() {
   // Object creation
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
   actin = new Actin(-600, 0);
-  myosinFilament = new MyosinFilament(new PVector(-25, 150, 0), 12);
+  myosinFilament = new MyosinFilament(new PVector(-20, 160, 0), 12);
   myosinHead = new MyosinHead(new PVector(-475, 90, 0), 42);
   bindingSiteA = new Tropomyosin(new PVector(-600, -10, 0), 5, true);
   bindingSiteB = new Tropomyosin(new PVector(-600, -10, 0), 5, false);
@@ -49,6 +49,7 @@ void draw() {
   actin.displayShape();
   myosinFilament.displayShape();
   myosinHead.displayShape();
+  myosinHead.renderMyosinHeadConnection(myosinHead.getPosition(), myosinFilament.getPosition());
 
   bindingSiteA.displayShape();
   bindingSiteB.displayShape();

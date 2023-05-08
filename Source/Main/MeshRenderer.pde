@@ -35,31 +35,32 @@ class MeshRenderer extends Protein {
     sphere(radius);
     popMatrix();
   }
-
-  public PShape generateHelicalBezier(ArrayList<PVector> points) {
-    PShape quadraticBezier = createShape();
-    quadraticBezier.beginShape();
-
-    int numPoints = this.getNumPoints();
+  
+  // Generates a helical shape for tropomyosin using quadratic bezier
+  public PShape generateBezierStructure(ArrayList<PVector> points) {
+    PShape bezier = createShape();
+    bezier.beginShape();
+    
+    int numPoints = points.size();
 
     if (numPoints < 3) {
       throw new RuntimeException("Cannot generate a quadratic bezier with less than three points.");
     }
 
-    quadraticBezier.vertex(points.get(0).x, points.get(0).y, points.get(0).z);
+    bezier.vertex(points.get(0).x, points.get(0).y, points.get(0).z);
     for (int i = 1; i < numPoints - 1; i++) {
       PVector p1 = points.get(i - 1);
       PVector p2 = points.get(i);
       PVector p3 = points.get(i + 1);
       PVector c1 = PVector.lerp(p1, p2, 0.5f);
       PVector c2 = PVector.lerp(p2, p3, 0.5f);
-      quadraticBezier.bezierVertex(c1.x, c1.y, c1.z, p2.x, p2.y, p2.z, c2.x, c2.y, c2.z);
+      bezier.bezierVertex(c1.x, c1.y, c1.z, p2.x, p2.y, p2.z, c2.x, c2.y, c2.z);
     }
-    quadraticBezier.vertex(points.get(numPoints - 1).x, points.get(numPoints - 1).y, points.get(numPoints - 1).z);
+    bezier.vertex(points.get(numPoints - 1).x, points.get(numPoints - 1).y, points.get(numPoints - 1).z);
 
-    quadraticBezier.endShape();
+    bezier.endShape();
 
-    return quadraticBezier;
+    return bezier;
   }
 
   // Returns a PShape of a defined structure of a cylinder

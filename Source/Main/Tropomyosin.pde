@@ -23,7 +23,7 @@ class Tropomyosin extends Myosin {
 
     populateStruct1Points(helicalPointsGenerator(isSiteA, this.NUM_SPHERES(), this.SIN_COS_VAL(), this.SPACING(), this.getXStart(), this.getYStart() ));
 
-    PShape s = generateHelicalBezier(getStruct1Points());
+    PShape s = generateBezierStructure(getStruct1Points());
     setShape(s);
   }
 

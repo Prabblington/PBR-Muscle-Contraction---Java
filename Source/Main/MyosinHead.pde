@@ -1,12 +1,12 @@
-class MyosinHead extends Myosin  {  
-  
- public MyosinHead(PVector initLocation, int initNumPoints)  {
-   super(initLocation, initNumPoints);
- }
- 
- // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
- 
- @Override
+class MyosinHead extends Myosin {
+
+  public MyosinHead(PVector initLocation, int initNumPoints) {
+    super(initLocation, initNumPoints);
+  }
+
+  // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------  
+
+  @Override
     public void coordinateGenerator() {
     strokeWeight(0.5);
     fill(#6F4040);
@@ -14,9 +14,9 @@ class MyosinHead extends Myosin  {
 
     PShape s = this.renderMeshGlobe(true, false);
     s.rotateY(HALF_PI);
-    
+
     setShape(s);
-  }
+  }  
 
   @Override
     public void displayShape() {
