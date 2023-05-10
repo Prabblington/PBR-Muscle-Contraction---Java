@@ -20,10 +20,10 @@ class Actin extends MeshRenderer {
       strokeWeight(1);
 
       fill(255, 0, 255, 180);
-      actin.renderSphere(points1.get(i), this.SPHERE_RADIUS());
+      renderSphere(points1.get(i), this.SPHERE_RADIUS());
 
       fill(70, 20, 150, 180);
-      actin.renderSphere(points2.get(i), this.SPHERE_RADIUS());
+      renderSphere(points2.get(i), this.SPHERE_RADIUS());
     }
   }
 }

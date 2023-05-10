@@ -1,11 +1,13 @@
 CameraOrbit camera;
 
 Actin actin;
-MyosinHead myosinHead;
 MyosinFilament myosinFilament;
+ArrayList<MyosinHead> myosinHeadList;
 
 Tropomyosin bindingSiteA;
 Tropomyosin bindingSiteB;
+
+float numOfMyosin;
 
 void setup() {
   size(1200, 800, P3D);
@@ -14,11 +16,24 @@ void setup() {
 
   // Object creation
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
-  actin = new Actin(-600, 0); 
-    
-  myosinHead = new MyosinHead(new PVector(-475, 90, 0), 42);
+  actin = new Actin(-600, 0);
+
+  // Initialize the number of myosinHeads generated based on actin molecules
+  numOfMyosin = actin.NUM_SPHERES() / 1.4;
+
+  myosinHeadList = new ArrayList<MyosinHead>();
+  PVector MHInitPosition = new PVector(-475, 90, 0);
+
+  for (int i = 0; i < numOfMyosin; i++) {
+    myosinHeadList.add(new MyosinHead(MHInitPosition, 42));
+    MHInitPosition.set(MHInitPosition.x + actin.SPACING() * 2, MHInitPosition.y, MHInitPosition.z);
+    myosinHeadList.get(i).setRadius(actin.SPHERE_RADIUS() / 2);
+    myosinHeadList.get(i).coordinateGenerator();
+    myosinHeadList.get(i).setPerlinHeight(12);
+  }
+
   myosinFilament = new MyosinFilament(new PVector(-20, 160, 0), 12);
-  
+
   // Tropomyosin binding sites for myosin heads
   bindingSiteA = new Tropomyosin(new PVector(-600, -10, 0), 5, true);
   bindingSiteB = new Tropomyosin(new PVector(-600, -10, 0), 5, false);
@@ -27,16 +42,15 @@ void setup() {
   myosinFilament.setHeight(1000);
   myosinFilament.setRadius(30);
 
-  myosinHead.setRadius(actin.SPHERE_RADIUS() / 2);
-  myosinHead.setPerlinHeight(12);
-
   bindingSiteA.setNumPoints(actin.NUM_SPHERES());
   bindingSiteB.setNumPoints(actin.NUM_SPHERES());
 
   // Generate points for shapes to be rendered
   actin.coordinateGenerator();
   myosinFilament.coordinateGenerator();
-  myosinHead.coordinateGenerator();
+
+  bindingSiteA.setRadius(actin.SPHERE_RADIUS() / 2);
+  bindingSiteB.setRadius(actin.SPHERE_RADIUS() / 2);
 
   bindingSiteA.coordinateGenerator();
   bindingSiteB.coordinateGenerator();
@@ -50,8 +64,11 @@ void draw() {
   // Display rendered structures
   actin.displayShape();
   myosinFilament.displayShape();
-  myosinHead.displayShape();
-  myosinHead.renderMyosinHeadConnection(myosinHead.getPosition(), myosinFilament.getPosition());
+
+  for (int i = 0; i < numOfMyosin; i++) {
+    myosinHeadList.get(i).displayShape();
+    myosinHeadList.get(i).renderMyosinHeadConnection( myosinHeadList.get(i).getPosition(), myosinFilament.getPosition());
+  }
 
   bindingSiteA.displayShape();
   bindingSiteB.displayShape();

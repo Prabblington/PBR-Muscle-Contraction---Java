@@ -15,13 +15,13 @@ class Tropomyosin extends Myosin {
     this.isSiteA = isSiteA;
   }
 
-    @Override
+  @Override
     public void coordinateGenerator() {
     noFill();
     stroke(20, 60, 0, 180);
     strokeWeight(10);
 
-    populateStruct1Points(helicalPointsGenerator(isSiteA, this.NUM_SPHERES(), this.SIN_COS_VAL(), this.SPACING(), this.getXStart(), this.getYStart() ));
+    populateStruct1Points( helicalPointsGenerator(isSiteA, NUM_SPHERES(), SIN_COS_VAL(), SPACING(), getXStart(), getYStart() ));
 
     PShape s = generateBezierStructure(getStruct1Points());
     setShape(s);
@@ -29,6 +29,7 @@ class Tropomyosin extends Myosin {
 
   @Override
     public void displayShape() {
+    renderSphere(getStruct1Points().get(0), getRadius());
     renderMeshShape(getShape(), getPosition());
   }
 }

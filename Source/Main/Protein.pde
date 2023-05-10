@@ -14,6 +14,7 @@ abstract class Protein extends PerlinNoise {
   private PVector position;
   private float radius;
   private int numPoints;
+  private int numObjects;
   private float objectHeight;
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------
@@ -24,6 +25,14 @@ abstract class Protein extends PerlinNoise {
   }
   public PVector getPosition() {
     return this.position;
+  }
+  
+  // Number of objects to spawn properties
+  public void setNumObjects(int num)  {
+   this.numObjects = num; 
+  }
+  public int getNumObjects()  {
+   return this.numObjects; 
   }
 
   // X start properties
