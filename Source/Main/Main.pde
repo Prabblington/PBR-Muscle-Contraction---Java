@@ -6,7 +6,7 @@ MyosinFilament myosinFilament;
 Tropomyosin bindingSiteA;
 Tropomyosin bindingSiteB;
 
-PVector renderStartPos;
+PVector sPos;
 ArrayList<MyosinHead> myosinHeadList;
 
 void setup() {
@@ -14,15 +14,14 @@ void setup() {
   background(20, 5, 15);
   frameRate(30);
   
-  renderStartPos = new PVector(-600, 0, 0);
+  myosinHeadList = new ArrayList<MyosinHead>();
+  sPos = new PVector(-600, 0, 0);
+  PVector MHInitPosition = new PVector(-475, 90, 0);
 
   // Object creation
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
-  actin = new Actin(renderStartPos);
-
-  myosinHeadList = new ArrayList<MyosinHead>();
-  PVector MHInitPosition = new PVector(-475, 90, 0);
-
+  actin = new Actin(sPos); 
+  
   myosinFilament = new MyosinFilament(new PVector(-20, 160, 0), 12);
 
   // Tropomyosin binding sites for myosin heads
@@ -51,7 +50,7 @@ void setup() {
   bindingSiteA.setXStart(-600);
   bindingSiteA.setYStart(-10);
   bindingSiteA.setRadius(actin.SPHERE_RADIUS() / 1.8f);
-  
+
   bindingSiteB.setXStart(-600);
   bindingSiteB.setYStart(-10);
   bindingSiteB.setRadius(actin.SPHERE_RADIUS() / 1.8f);

@@ -128,18 +128,20 @@ abstract class Protein extends PerlinNoise {
     points2 = new ArrayList<PVector>();
     
     this.position = new PVector(pos.x, pos.y, pos.z);
+    this.xStart = pos.x;
+    this.yStart = pos.y;
     this.radius = r;
     this.numPoints = initPoints;
   }
   // Constructor for myosin filament
-  public Protein(PVector initLocation, int initNumPoints) {
+  public Protein(PVector pos, int initNumPoints) {
     super();
     points1 = new ArrayList<PVector>();
     points2 = new ArrayList<PVector>();
     
-    this.xStart = initLocation.x;
-    this.yStart = initLocation.y;
-    this.position = new PVector(initLocation.x, initLocation.y, initLocation.z);
+    this.xStart = pos.x;
+    this.yStart = pos.y;
+    this.position = new PVector(pos.x, pos.y, pos.z);
     setNumPoints(initNumPoints);
   }
 
