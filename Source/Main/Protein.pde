@@ -114,12 +114,13 @@ abstract class Protein extends PerlinNoise {
   }
 
   //Actin generation
-  public Protein(float initX, float initY) {
+  public Protein(PVector pos) {
     points1 = new ArrayList<PVector>();
     points2 = new ArrayList<PVector>();
-
-    this.xStart = initX;
-    this.yStart = initY;
+    
+    this.position = pos;
+    this.xStart = pos.x;
+    this.yStart = pos.y;
   }
   // Myosin heads generation
   public Protein(PVector pos, float r, int initPoints) {

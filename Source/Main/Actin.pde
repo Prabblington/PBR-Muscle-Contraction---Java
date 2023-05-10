@@ -2,8 +2,8 @@ class Actin extends MeshRenderer {
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
-  public Actin(float initX, float initY) {
-    super(initX, initY);
+  public Actin(PVector pos) {
+    super(pos);
   }
 
   @Override

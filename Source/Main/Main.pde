@@ -2,19 +2,23 @@ CameraOrbit camera;
 
 Actin actin;
 MyosinFilament myosinFilament;
-ArrayList<MyosinHead> myosinHeadList;
 
 Tropomyosin bindingSiteA;
 Tropomyosin bindingSiteB;
+
+PVector renderStartPos;
+ArrayList<MyosinHead> myosinHeadList;
 
 void setup() {
   size(1200, 800, P3D);
   background(20, 5, 15);
   frameRate(30);
+  
+  renderStartPos = new PVector(-600, 0, 0);
 
   // Object creation
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
-  actin = new Actin(-600, 0);
+  actin = new Actin(renderStartPos);
 
   myosinHeadList = new ArrayList<MyosinHead>();
   PVector MHInitPosition = new PVector(-475, 90, 0);

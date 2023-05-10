@@ -29,7 +29,7 @@ class Tropomyosin extends Myosin {
 
   @Override
     public void displayShape() {
-    stroke(10, 20, 0, 180);
+    stroke(10, 20, 0, 200);
     strokeWeight(1);
     fill(20, 60, 0, 180);
 
