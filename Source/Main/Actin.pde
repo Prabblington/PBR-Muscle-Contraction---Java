@@ -8,8 +8,8 @@ class Actin extends MeshRenderer {
 
   @Override
     public void coordinateGenerator() {
-    populateStruct1Points(this.helicalPointsGenerator(true, this.NUM_SPHERES(), this.SIN_COS_VAL(), this.SPACING(), this.getXStart(), this.getYStart() ));
-    populateStruct2Points(this.helicalPointsGenerator(false, this.NUM_SPHERES(), this.SIN_COS_VAL(), this.SPACING(), this.getXStart(), this.getYStart() ));
+    populateStruct1Points(this.helicalPointsGenerator(true, NUM_SPHERES(), SIN_COS_VAL(), SPACING(),getXStart(), getYStart() ));
+    populateStruct2Points(this.helicalPointsGenerator(false, NUM_SPHERES(), SIN_COS_VAL(), SPACING(), getXStart(), getYStart() ));
   }
 
   @Override

@@ -120,6 +120,8 @@ abstract class Protein extends PerlinNoise {
   }
   // Myosin heads generation
   public Protein(PVector pos, float r, int initPoints) {
+    points1 = new ArrayList<PVector>();
+    points2 = new ArrayList<PVector>();
     this.position = new PVector(pos.x, pos.y, pos.z);
     this.radius = r;
     this.numPoints = initPoints;
@@ -127,6 +129,10 @@ abstract class Protein extends PerlinNoise {
   // Constructor for myosin filament
   public Protein(PVector initLocation, int initNumPoints) {
     super();
+    points1 = new ArrayList<PVector>();
+    points2 = new ArrayList<PVector>();
+    this.xStart = initLocation.x;
+    this.yStart = initLocation.y;
     this.position = new PVector(initLocation.x, initLocation.y, initLocation.z);
     setNumPoints(initNumPoints);
   }

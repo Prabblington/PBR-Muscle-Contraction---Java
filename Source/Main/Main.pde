@@ -35,7 +35,7 @@ void setup() {
   // Generate points for shapes to be rendered
   actin.coordinateGenerator();
   myosinFilament.coordinateGenerator();
-  
+
   for (int i = 0; i < actin.getStruct1Points().size() / 1.4; i++) {
     myosinHeadList.add(new MyosinHead(MHInitPosition, 42));
     MHInitPosition.set(MHInitPosition.x + actin.SPACING() * 2, MHInitPosition.y, MHInitPosition.z);
@@ -44,8 +44,13 @@ void setup() {
     myosinHeadList.get(i).setPerlinHeight(12);
   }
 
-  bindingSiteA.setRadius(actin.SPHERE_RADIUS() / 2);
-  bindingSiteB.setRadius(actin.SPHERE_RADIUS() / 2);
+  bindingSiteA.setXStart(-600);
+  bindingSiteA.setYStart(-10);
+  bindingSiteA.setRadius(actin.SPHERE_RADIUS());
+  
+  bindingSiteB.setXStart(-600);
+  bindingSiteB.setYStart(-10);
+  bindingSiteB.setRadius(actin.SPHERE_RADIUS());
 
   bindingSiteA.coordinateGenerator();
   bindingSiteB.coordinateGenerator();
