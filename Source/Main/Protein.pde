@@ -1,4 +1,4 @@
-abstract class Protein extends PerlinNoise {
+abstract class Protein extends Collision {
 
   // FOR ACTIN MAINLY
   private final int NUM_SPHERES = 22;

@@ -6,9 +6,6 @@ MyosinFilament myosinFilament;
 Tropomyosin bindingSiteA;
 Tropomyosin bindingSiteB;
 
-public boolean xForward = true;
-public float speed = 1;
-
 PVector sPos;
 ArrayList<MyosinHead> myosinHeadList;
 
