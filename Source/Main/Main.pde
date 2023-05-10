@@ -7,8 +7,6 @@ ArrayList<MyosinHead> myosinHeadList;
 Tropomyosin bindingSiteA;
 Tropomyosin bindingSiteB;
 
-float numOfMyosin;
-
 void setup() {
   size(1200, 800, P3D);
   background(20, 5, 15);
@@ -18,19 +16,8 @@ void setup() {
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
   actin = new Actin(-600, 0);
 
-  // Initialize the number of myosinHeads generated based on actin molecules
-  numOfMyosin = actin.NUM_SPHERES() / 1.4;
-
   myosinHeadList = new ArrayList<MyosinHead>();
   PVector MHInitPosition = new PVector(-475, 90, 0);
-
-  for (int i = 0; i < numOfMyosin; i++) {
-    myosinHeadList.add(new MyosinHead(MHInitPosition, 42));
-    MHInitPosition.set(MHInitPosition.x + actin.SPACING() * 2, MHInitPosition.y, MHInitPosition.z);
-    myosinHeadList.get(i).setRadius(actin.SPHERE_RADIUS() / 2);
-    myosinHeadList.get(i).coordinateGenerator();
-    myosinHeadList.get(i).setPerlinHeight(12);
-  }
 
   myosinFilament = new MyosinFilament(new PVector(-20, 160, 0), 12);
 
@@ -48,6 +35,14 @@ void setup() {
   // Generate points for shapes to be rendered
   actin.coordinateGenerator();
   myosinFilament.coordinateGenerator();
+  
+  for (int i = 0; i < actin.getStruct1Points().size() / 1.4; i++) {
+    myosinHeadList.add(new MyosinHead(MHInitPosition, 42));
+    MHInitPosition.set(MHInitPosition.x + actin.SPACING() * 2, MHInitPosition.y, MHInitPosition.z);
+    myosinHeadList.get(i).setRadius(actin.SPHERE_RADIUS() / 2);
+    myosinHeadList.get(i).coordinateGenerator();
+    myosinHeadList.get(i).setPerlinHeight(12);
+  }
 
   bindingSiteA.setRadius(actin.SPHERE_RADIUS() / 2);
   bindingSiteB.setRadius(actin.SPHERE_RADIUS() / 2);
@@ -65,7 +60,7 @@ void draw() {
   actin.displayShape();
   myosinFilament.displayShape();
 
-  for (int i = 0; i < numOfMyosin; i++) {
+  for (int i = 0; i < myosinHeadList.size(); i++) {
     myosinHeadList.get(i).displayShape();
     myosinHeadList.get(i).renderMyosinHeadConnection( myosinHeadList.get(i).getPosition(), myosinFilament.getPosition());
   }
