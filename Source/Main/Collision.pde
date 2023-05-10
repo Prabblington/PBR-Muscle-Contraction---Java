@@ -4,8 +4,8 @@ class Collision extends Protein  {
     super();
   }
   
-  //boolean intersects(Protein other) {
-    //float d = dist(x, y, z, other.x, other.y, other.z);
-    //return d < r + other.r;
-  //}
+  boolean collides(Protein object) {
+    float d = dist(getPosition().x, getPosition().y, getPosition().z, object.getPosition().x, object.getPosition().y, object.getPosition().z);
+    return d < getRadius() + object.getRadius();
+  }
 }

@@ -14,20 +14,20 @@ void setup() {
   background(20, 5, 15);
   frameRate(30);
 
-  myosinHeadList = new ArrayList<MyosinHead>();
   sPos = new PVector(-600, 0, 0);
+  myosinHeadList = new ArrayList<MyosinHead>();
+  
   PVector MHInitPosition = new PVector(-550, 90, 0);
 
   // Object creation
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
   actin = new Actin(sPos);
 
-  myosinFilament = new MyosinFilament(new PVector(-20, 160, 0), 12);
+  myosinFilament = new MyosinFilament(new PVector(sPos.x + 580, sPos.y + 160, 0), 12);
 
   // Tropomyosin binding sites for myosin heads
-  bindingSiteA = new Tropomyosin(new PVector(-600, -10, 0), 5, true);
-  bindingSiteB = new Tropomyosin(new PVector(-600, -10, 0), 5, false);
-
+  bindingSiteA = new Tropomyosin(new PVector(sPos.x, sPos.y - 10, 0), 5, true);
+  bindingSiteB = new Tropomyosin(new PVector(sPos.x, sPos.y - 10, 0), 5, false);
   // Set variables
   myosinFilament.setHeight(1100);
   myosinFilament.setRadius(30);
@@ -40,6 +40,7 @@ void setup() {
   myosinFilament.coordinateGenerator();
 
   float numMyosinHeads =  myosinFilament.getHeight() / (actin.SPACING() * 2);
+  
   for (int i = 0; i < numMyosinHeads; i++) {
     myosinHeadList.add(new MyosinHead(MHInitPosition, 42));
     MHInitPosition.set(MHInitPosition.x + actin.SPACING() * 2, MHInitPosition.y, MHInitPosition.z);
