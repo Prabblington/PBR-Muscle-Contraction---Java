@@ -18,14 +18,13 @@ void setup() {
 
   sPos = new PVector(-600, 0, 0);
   myosinHeadList = new ArrayList<MyosinHead>();
-  
+
   PVector MHInitPosition = new PVector(-550, 90, 0);
 
   // Object creation
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
-  
   collision = new Collision();
-  
+
   // Actin object which forms the helical structure
   actin = new Actin(sPos);
   // Myosin filment which holds Myosin heads to form cross-bridge
@@ -46,7 +45,7 @@ void setup() {
   myosinFilament.coordinateGenerator();
 
   float numMyosinHeads =  myosinFilament.getHeight() / (actin.SPACING() * 2);
-  
+
   for (int i = 0; i < numMyosinHeads; i++) {
     myosinHeadList.add(new MyosinHead(MHInitPosition, 42));
     MHInitPosition.set(MHInitPosition.x + actin.SPACING() * 2, MHInitPosition.y, MHInitPosition.z);
@@ -61,6 +60,9 @@ void setup() {
 
   bindingSiteA.coordinateGenerator();
   bindingSiteB.coordinateGenerator();
+
+  collision.setLeftBound(actin.getPosition().x - myosinFilament.getHeight() /2);
+  collision.setRightBound(0 - myosinFilament.getHeight());
 }
 
 void draw() {
@@ -75,13 +77,20 @@ void draw() {
   for (int i = 0; i < myosinHeadList.size(); i++) {
     myosinHeadList.get(i).displayShape();
     myosinHeadList.get(i).renderMyosinHeadConnection( myosinHeadList.get(i).getPosition(), myosinFilament.getPosition() );
+
+    // check collision between objects here
+    //for(int j = 0; j < bindingSiteA.getStruct1Points().size(); j++)  {
+    //  collision.checkCollision();
+    //}
   }
+  for (int i = 0; i < actin.getPoints().size(); i++) {
+    collision.update(actin);
+  }
+
 
   bindingSiteA.displayShape();
   bindingSiteB.displayShape();
 }
-
-
 
 // Controlls camera panning
 void mouseDragged() {

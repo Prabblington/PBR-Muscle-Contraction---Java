@@ -29,7 +29,7 @@ class Collision extends PerlinNoise {
   public void setRightBound(float right) {
     this.rightBound = right;
   }
-  public float getRightBound(float right) {
+  public float getRightBound() {
     return this.rightBound;
   }
 
@@ -56,7 +56,7 @@ class Collision extends PerlinNoise {
   }
   
   // Checks if current object is colliding with the paramater object using sphere collision detection
-  public boolean collides(Protein object1, Protein object2) {
+  public boolean checkCollision(Protein object1, Protein object2) {
     float d = dist(object1.getPosition().x, object1.getPosition().y, object1.getPosition().z, object2.getPosition().x, object2.getPosition().y, object2.getPosition().z);
     return d < object1.getRadius() + object2.getRadius();
   }
