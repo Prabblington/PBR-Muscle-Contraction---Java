@@ -1,0 +1,43 @@
+class Actin extends MeshRenderer {
+
+  // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
+
+  public Actin(PVector pos) {
+    super(pos);
+  }
+
+  @Override
+    public void coordinateGenerator() {
+    ArrayList<PVector> list1 = new ArrayList<PVector>();
+    ArrayList<PVector> list2 = new ArrayList<PVector>();
+    
+
+    list1 = helicalPointsGenerator(true, NUM_SPHERES(), SIN_COS_VAL(), SPACING(), getXStart(), getYStart());
+    list2 = helicalPointsGenerator(false, NUM_SPHERES(), SIN_COS_VAL(), SPACING(), getXStart(), getYStart());
+    
+    for(int i = 0; i < list2.size(); i++)  {
+     list1.add(list2.get(i));
+    }
+    setPoints(list1);
+    //populateStruct2Points( helicalPointsGenerator(false, NUM_SPHERES(), SIN_COS_VAL(), SPACING(), getXStart(), getYStart() ));
+  }
+
+  @Override
+    public void displayShape() {
+    for (int i = 0; i < NUM_SPHERES(); i++) {
+      strokeWeight(1);
+      //fill(255, 0, 255, 180);
+
+      if (i <= NUM_SPHERES() /2) {
+        fill(255, 0, 255, 180);
+      } else {
+        fill(70, 20, 150, 180);
+      }
+
+      renderSphere(getPoints().get(i), SPHERE_RADIUS());
+
+      //fill(70, 20, 150, 180);
+      //renderSphere( getPoints().get(i), SPHERE_RADIUS());
+    }
+  }
+}

@@ -83,7 +83,7 @@ void draw() {
     //  collision.checkCollision();
     //}
   }
-  for (int i = 0; i < actin.getPoints().size(); i++) {
+  for (int i = 0; i < actin.getStruct1Points().size(); i++) {
     collision.update(actin);
   }
 
