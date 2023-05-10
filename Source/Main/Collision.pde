@@ -17,7 +17,7 @@ class Collision extends Protein {
     super();
   }
 
-  boolean collides(Protein object) {
+  boolean collides(ArrayList<? extends Protein> object) {
     float d = dist(getPosition().x, getPosition().y, getPosition().z, object.getPosition().x, object.getPosition().y, object.getPosition().z);
     return d < getRadius() + object.getRadius();
   }
