@@ -6,6 +6,9 @@ MyosinFilament myosinFilament;
 Tropomyosin bindingSiteA;
 Tropomyosin bindingSiteB;
 
+public boolean xForward = true;
+public float speed = 1;
+
 PVector sPos;
 ArrayList<MyosinHead> myosinHeadList;
 
@@ -74,6 +77,8 @@ void draw() {
   bindingSiteA.displayShape();
   bindingSiteB.displayShape();
 }
+
+
 
 // Controlls camera panning
 void mouseDragged() {
