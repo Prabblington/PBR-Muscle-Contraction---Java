@@ -1,5 +1,7 @@
 CameraOrbit camera;
 
+Collision collision;
+
 Actin actin;
 MyosinFilament myosinFilament;
 
@@ -21,8 +23,12 @@ void setup() {
 
   // Object creation
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
+  
+  collision = new Collision();
+  
+  // Actin object which forms the helical structure
   actin = new Actin(sPos);
-
+  // Myosin filment which holds Myosin heads to form cross-bridge
   myosinFilament = new MyosinFilament(new PVector(sPos.x + 580, sPos.y + 160, 0), 12);
 
   // Tropomyosin binding sites for myosin heads
