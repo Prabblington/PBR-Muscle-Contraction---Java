@@ -35,12 +35,12 @@ class MeshRenderer extends Protein {
     sphere(radius);
     popMatrix();
   }
-  
+
   // Generates a helical shape for tropomyosin using quadratic bezier
   public PShape generateBezierStructure(ArrayList<PVector> points) {
     PShape bezier = createShape();
     bezier.beginShape();
-    
+
     int numPoints = points.size();
 
     if (numPoints < 3) {
@@ -48,7 +48,7 @@ class MeshRenderer extends Protein {
     }
 
     bezier.vertex(points.get(0).x, points.get(0).y, points.get(0).z);
-    
+
     for (int i = 1; i < numPoints - 1; i++) {
       PVector p1 = points.get(i - 1);
       PVector p2 = points.get(i);

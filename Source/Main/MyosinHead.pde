@@ -4,7 +4,7 @@ class MyosinHead extends Myosin {
     super(initLocation, initNumPoints);
   }
 
-  // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------  
+  // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
   @Override
     public void coordinateGenerator() {
@@ -16,7 +16,7 @@ class MyosinHead extends Myosin {
     s.rotateY(HALF_PI);
 
     setShape(s);
-  }  
+  }
 
   @Override
     public void displayShape() {

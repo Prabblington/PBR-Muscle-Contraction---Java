@@ -13,15 +13,15 @@ void setup() {
   size(1200, 800, P3D);
   background(20, 5, 15);
   frameRate(30);
-  
+
   myosinHeadList = new ArrayList<MyosinHead>();
   sPos = new PVector(-600, 0, 0);
-  PVector MHInitPosition = new PVector(-475, 90, 0);
+  PVector MHInitPosition = new PVector(-550, 90, 0);
 
   // Object creation
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
-  actin = new Actin(sPos); 
-  
+  actin = new Actin(sPos);
+
   myosinFilament = new MyosinFilament(new PVector(-20, 160, 0), 12);
 
   // Tropomyosin binding sites for myosin heads
@@ -29,7 +29,7 @@ void setup() {
   bindingSiteB = new Tropomyosin(new PVector(-600, -10, 0), 5, false);
 
   // Set variables
-  myosinFilament.setHeight(1000);
+  myosinFilament.setHeight(1100);
   myosinFilament.setRadius(30);
 
   bindingSiteA.setNumPoints(actin.NUM_SPHERES());
@@ -39,16 +39,17 @@ void setup() {
   actin.coordinateGenerator();
   myosinFilament.coordinateGenerator();
 
-  for (int i = 0; i < actin.getStruct1Points().size() / 1.4; i++) {
+  float numMyosinHeads =  myosinFilament.getHeight() / (actin.SPACING() * 2);
+  for (int i = 0; i < numMyosinHeads; i++) {
     myosinHeadList.add(new MyosinHead(MHInitPosition, 42));
     MHInitPosition.set(MHInitPosition.x + actin.SPACING() * 2, MHInitPosition.y, MHInitPosition.z);
+
     myosinHeadList.get(i).setRadius(actin.SPHERE_RADIUS() / 2);
     myosinHeadList.get(i).coordinateGenerator();
     myosinHeadList.get(i).setPerlinHeight(12);
   }
 
   bindingSiteA.setRadius(actin.SPHERE_RADIUS() / 1.8f);
-
   bindingSiteB.setRadius(actin.SPHERE_RADIUS() / 1.8f);
 
   bindingSiteA.coordinateGenerator();
@@ -66,7 +67,7 @@ void draw() {
 
   for (int i = 0; i < myosinHeadList.size(); i++) {
     myosinHeadList.get(i).displayShape();
-    myosinHeadList.get(i).renderMyosinHeadConnection( myosinHeadList.get(i).getPosition(), myosinFilament.getPosition());
+    myosinHeadList.get(i).renderMyosinHeadConnection( myosinHeadList.get(i).getPosition(), myosinFilament.getPosition() );
   }
 
   bindingSiteA.displayShape();

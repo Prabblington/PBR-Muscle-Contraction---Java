@@ -26,13 +26,13 @@ abstract class Protein extends PerlinNoise {
   public PVector getPosition() {
     return this.position;
   }
-  
+
   // Number of objects to spawn properties
-  public void setNumObjects(int num)  {
-   this.numObjects = num; 
+  public void setNumObjects(int num) {
+    this.numObjects = num;
   }
-  public int getNumObjects()  {
-   return this.numObjects; 
+  public int getNumObjects() {
+    return this.numObjects;
   }
 
   // X start properties
@@ -108,7 +108,7 @@ abstract class Protein extends PerlinNoise {
   public Protein() {
     points1 = new ArrayList<PVector>();
     points2 = new ArrayList<PVector>();
-    
+
     this.position = new PVector(0, 0, 0);
     this.radius = 0;
   }
@@ -117,7 +117,7 @@ abstract class Protein extends PerlinNoise {
   public Protein(PVector pos) {
     points1 = new ArrayList<PVector>();
     points2 = new ArrayList<PVector>();
-    
+
     this.position = pos;
     this.xStart = pos.x;
     this.yStart = pos.y;
@@ -126,7 +126,7 @@ abstract class Protein extends PerlinNoise {
   public Protein(PVector pos, float r, int initPoints) {
     points1 = new ArrayList<PVector>();
     points2 = new ArrayList<PVector>();
-    
+
     this.position = new PVector(pos.x, pos.y, pos.z);
     this.xStart = pos.x;
     this.yStart = pos.y;
@@ -138,7 +138,7 @@ abstract class Protein extends PerlinNoise {
     super();
     points1 = new ArrayList<PVector>();
     points2 = new ArrayList<PVector>();
-    
+
     this.xStart = pos.x;
     this.yStart = pos.y;
     this.position = new PVector(pos.x, pos.y, pos.z);
