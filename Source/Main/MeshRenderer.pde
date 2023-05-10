@@ -48,6 +48,7 @@ class MeshRenderer extends Protein {
     }
 
     bezier.vertex(points.get(0).x, points.get(0).y, points.get(0).z);
+    
     for (int i = 1; i < numPoints - 1; i++) {
       PVector p1 = points.get(i - 1);
       PVector p2 = points.get(i);
@@ -57,7 +58,6 @@ class MeshRenderer extends Protein {
       bezier.bezierVertex(c1.x, c1.y, c1.z, p2.x, p2.y, p2.z, c2.x, c2.y, c2.z);
     }
     bezier.vertex(points.get(numPoints - 1).x, points.get(numPoints - 1).y, points.get(numPoints - 1).z);
-
     bezier.endShape();
 
     return bezier;

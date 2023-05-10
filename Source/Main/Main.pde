@@ -46,11 +46,11 @@ void setup() {
 
   bindingSiteA.setXStart(-600);
   bindingSiteA.setYStart(-10);
-  bindingSiteA.setRadius(actin.SPHERE_RADIUS());
+  bindingSiteA.setRadius(actin.SPHERE_RADIUS() / 1.8f);
   
   bindingSiteB.setXStart(-600);
   bindingSiteB.setYStart(-10);
-  bindingSiteB.setRadius(actin.SPHERE_RADIUS());
+  bindingSiteB.setRadius(actin.SPHERE_RADIUS() / 1.8f);
 
   bindingSiteA.coordinateGenerator();
   bindingSiteB.coordinateGenerator();

@@ -29,11 +29,15 @@ class Tropomyosin extends Myosin {
 
   @Override
     public void displayShape() {
-    stroke(0);
-    fill(255, 0, 0);
+    stroke(10, 20, 0, 180);
+    strokeWeight(1);
+    fill(20, 60, 0, 180);
 
     for (int i = 0; i < getStruct1Points().size(); i++) {
+      pushMatrix();
+      translate(getPosition().x, getPosition().y, getPosition().z);
       renderSphere(getStruct1Points().get(i), getRadius());
+      popMatrix();
     }
 
     renderMeshShape(getShape(), getPosition());
