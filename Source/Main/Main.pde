@@ -47,12 +47,8 @@ void setup() {
     myosinHeadList.get(i).setPerlinHeight(12);
   }
 
-  bindingSiteA.setXStart(-600);
-  bindingSiteA.setYStart(-10);
   bindingSiteA.setRadius(actin.SPHERE_RADIUS() / 1.8f);
 
-  bindingSiteB.setXStart(-600);
-  bindingSiteB.setYStart(-10);
   bindingSiteB.setRadius(actin.SPHERE_RADIUS() / 1.8f);
 
   bindingSiteA.coordinateGenerator();
