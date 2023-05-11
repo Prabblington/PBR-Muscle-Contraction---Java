@@ -100,8 +100,6 @@ void draw() {
     popMatrix(); // Restore the saved translation and rotation matrix
   }
 
-
-
   for (int i = 0; i < myosinHeadList.size(); i++) {
     myosinHeadList.get(i).displayShape();
     myosinHeadList.get(i).renderMyosinHeadConnection( myosinHeadList.get(i).getPosition(), myosinFilament.getPosition() );
@@ -130,6 +128,7 @@ private void update(ArrayList<? extends Protein> obj, float m) {
     for (int j = 0; j < points.size(); j++) {
       PVector updatedPoint = obj.get(i).update(points.get(j));
       points.get(j).set(updatedPoint);
+      println(updatedPoint);
     }
     obj.get(i).setPoints(points);
   }
