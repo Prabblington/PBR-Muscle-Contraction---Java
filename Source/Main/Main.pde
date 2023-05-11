@@ -3,8 +3,7 @@ CameraOrbit camera;
 Actin actin;
 MyosinFilament myosinFilament;
 
-Tropomyosin bindingSiteA;
-Tropomyosin bindingSiteB;
+float orbitSpeed = 0.05;
 
 PVector sPos;
 
@@ -22,7 +21,7 @@ void setup() {
   actinList = new ArrayList<Actin>();
   myosinHeadList = new ArrayList<MyosinHead>();
   tropoList = new ArrayList<Tropomyosin>();
-  
+
   // Init starting placement PVector
   sPos = new PVector(-600, 0, 0);
   // Init Myosin heads init position PVector
@@ -45,7 +44,6 @@ void setup() {
     tropoList.get(i).setNumPoints(actinList.get(0).NUM_SPHERES());
     tropoList.get(i).setRadius(actinList.get(0).SPHERE_RADIUS() / 1.8f);
     tropoList.get(i).coordinateGenerator();
-    tropoList.get(i).findBounds();
   }
 
   // Set myosinFilament variables
@@ -58,7 +56,6 @@ void setup() {
 
   for (int i = 0; i < actinList.size(); i++) {
     actinList.get(i).coordinateGenerator();
-    actinList.get(i).findBounds();
   }
 
   for (int i = 0; i < numMyosinHeads; i++) {
@@ -79,39 +76,50 @@ void draw() {
   // Display rendered structures
   myosinFilament.displayShape();
 
+
   for (int i = 0; i < actinList.size(); i++) {
+    pushMatrix(); // Save the current translation and rotation matrix
+
+    // Apply a rotation to the translation matrix
+    translate(0, 0, 0);
+    rotateX(frameCount*orbitSpeed);
+
     stroke(1);
+    strokeWeight(1);
+
     if (i % 2 == 0) {
       fill(70, 20, 150, 180);
-      actinList.get(i).displayShape();
     } else {
       fill(255, 0, 255, 180);
-      actinList.get(i).displayShape();
     }
+    actinList.get(i).draw();
+    tropoList.get(i).draw();
+    // Apply an orbit translation to the rotation matrix
+    translate(actinList.get(i).SPHERE_RADIUS() * 2, 0, 0);
+    rotateX(frameCount*orbitSpeed);
+    popMatrix(); // Restore the saved translation and rotation matrix
   }
+
+
+
   for (int i = 0; i < myosinHeadList.size(); i++) {
     myosinHeadList.get(i).displayShape();
     myosinHeadList.get(i).renderMyosinHeadConnection( myosinHeadList.get(i).getPosition(), myosinFilament.getPosition() );
 
     // check collision between objects here
   }
-  for (int i = 0; i < tropoList.size(); i++) {
-    tropoList.get(i).displayShape();
-    
-  }
 
   //Update all values
-  //update(actinList, 0, true);  
-  //update(tropoList, 600, true);
-  
+  update(actinList, 0);
+  update(tropoList, 600);
+
   // UPDATE MYOSIN HEADS HERE
 }
 
 // Update: updates positions of movable objects
 // obj = takes in an object which extends Protein
 // m = middleOfMatrix in relation to other objects
-// canMoveYX = determines if an object specified can move along those axis
-private void update(ArrayList<? extends Protein> obj, float m, boolean canMoveYZ) {
+private void update(ArrayList<? extends Protein> obj, float m) {
   // Update values
   for (int i = 0; i < obj.size(); i++) {
     obj.get(i).setLeftBound(m - myosinFilament.getHeight());
@@ -120,9 +128,7 @@ private void update(ArrayList<? extends Protein> obj, float m, boolean canMoveYZ
     ArrayList<PVector> points = obj.get(i).getPoints();
 
     for (int j = 0; j < points.size(); j++) {
-      PVector updatedPoint = obj.get(i).update(points.get(j), canMoveYZ);
-      System.out.println("Point " + j + "UpBound" + obj.get(i).getUpperBound());
-      System.out.println("Point " + j + "LowerBound" + obj.get(i).getLowerBound());
+      PVector updatedPoint = obj.get(i).update(points.get(j));
       points.get(j).set(updatedPoint);
     }
     obj.get(i).setPoints(points);

@@ -32,6 +32,7 @@ class MeshRenderer extends Protein {
   public void renderSphere(PVector pos, float radius) {
     pushMatrix();
     translate(pos.x, pos.y, pos.z);
+    rotateZ(radians(frameCount));
     sphere(radius);
     popMatrix();
   }

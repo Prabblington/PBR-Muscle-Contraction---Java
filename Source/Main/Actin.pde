@@ -13,10 +13,9 @@ class Actin extends MeshRenderer {
     setPoints(helicalPointsGenerator(isPos, NUM_SPHERES(), SIN_COS_VAL(), SPACING(), getXStart(), getYStart() ));
   }
 
-  @Override
-    public void displayShape() {
+  public void draw() {
     for (int i = 0; i < NUM_SPHERES(); i++) {
-        renderSphere(getPoints().get(i), SPHERE_RADIUS());
+      renderSphere(getPoints().get(i), SPHERE_RADIUS());
     }
   }
 }
