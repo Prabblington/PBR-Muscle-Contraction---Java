@@ -1,10 +1,14 @@
 class Collision extends PerlinNoise {
 
   private boolean collided = false;
-  private float leftBound, rightBound;
+  private float leftBound, rightBound, upperBound, lowerBound, forwardBound, backwardBound;
 
-  public boolean xForward = true;
-  public float xSpeed = 8;
+  private boolean xForward = true;
+  private boolean yUp = true;
+  private boolean zForward = true;
+  private float xSpeed = 0.2;
+  private float ySpeed = 0.5;
+  private float zSpeed = 0.5;
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------
 
@@ -33,6 +37,38 @@ class Collision extends PerlinNoise {
     return this.rightBound;
   }
 
+  // Upper-most bound
+  public void setUpperBound(float up) {
+    this.upperBound = up;
+  }
+  public float getUpperBound() {
+    return this.upperBound;
+  }
+
+  // Lower-most bound
+  public void setLowerBound(float down) {
+    this.lowerBound = down;
+  }
+  public float getLowerBound() {
+    return this.lowerBound;
+  }
+  
+  // Forward-most bound
+  public void setForwardBound(float forward)  {
+   this.forwardBound = forward;
+  }
+  public float getForwardBound()  {
+   return this.forwardBound; 
+  }
+  
+  // Backward bound
+  public void setBackwardBound(float backward)  {
+   this.backwardBound = backward;
+  }
+  public float getBackwardBound()  {
+   return this.backwardBound; 
+  }
+
   // Direction properties
   public void setXForward(boolean isForward) {
     this.xForward = isForward;
@@ -42,11 +78,26 @@ class Collision extends PerlinNoise {
   }
 
   // Movement speed properties
+  // X speed
   public void setXSpeed(float newSpeed) {
     this.xSpeed = newSpeed;
   }
   public float getXSpeed() {
     return this.xSpeed;
+  }
+  // Y speed
+  public void setYSpeed(float newSpeed) {
+    this.ySpeed = newSpeed;
+  }
+  public float getYSpeed() {
+    return this.ySpeed;
+  }
+  // Z speed
+  public void setZSpeed(float newSpeed) {
+    this.zSpeed = newSpeed;
+  }
+  public float getZSpeed() {
+    return this.zSpeed;
   }
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
@@ -62,7 +113,7 @@ class Collision extends PerlinNoise {
   }
 
   // Updates the object's position to a new one depending on where it currently is
-  public PVector update(PVector oldPoint) {
+  public PVector update(PVector oldPoint, boolean canMoveYZ) {
     PVector newPos = oldPoint;
 
     // X MOVEMENT
@@ -84,7 +135,47 @@ class Collision extends PerlinNoise {
       xForward = true;
       xSpeed = + xSpeed;
     }
-    
+
+    // If the object can move along Y and Z axis, update positions
+    if (canMoveYZ) {
+      // If forward and x is not at rightBound, keep going
+      if (yUp && oldPoint.y < upperBound) {
+        newPos.y += ySpeed;
+      }
+      // Else if going forward and x reaches rightBound, reverse
+      else if (yUp && oldPoint.y >= upperBound) {
+        newPos.y -= ySpeed;
+        yUp = false;
+      }
+      // Else if not going forward and x is greater than leftBound, keep reversing
+      else if (!yUp && oldPoint.y >= lowerBound) {
+        newPos.y -= ySpeed;
+      }
+      // Otherwise, it's going forward, reset speed to positive
+      else {
+        yUp = true;
+        ySpeed = + ySpeed;
+      }
+      // If forward and x is not at rightBound, keep going
+      if (zForward && oldPoint.y < forwardBound) {
+        newPos.z += zSpeed;
+      }
+      // Else if going forward and x reaches rightBound, reverse
+      else if (zForward && oldPoint.z >= forwardBound) {
+        newPos.z -= zSpeed;
+        zForward = false;
+      }
+      // Else if not going forward and x is greater than leftBound, keep reversing
+      else if (!zForward && oldPoint.z >= backwardBound) {
+        newPos.z -= zSpeed;
+      }
+      // Otherwise, it's going forward, reset speed to positive
+      else {
+        zForward = true;
+        zSpeed = + zSpeed;
+      }
+    }
+
     return newPos;
   }
 }

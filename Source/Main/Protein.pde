@@ -8,7 +8,7 @@ abstract class Protein extends Collision {
 
   private float xStart, yStart;
 
-private ArrayList<PVector> points;
+  private ArrayList<PVector> points;
 
   private PVector position;
   private float radius;
@@ -81,7 +81,7 @@ private ArrayList<PVector> points;
   public void setPoints(ArrayList<PVector> newPoints) {
     this.points = newPoints;
   }
-  
+
   // Finalised temp properties for actin
   public int NUM_SPHERES() {
     return this.NUM_SPHERES;
@@ -139,5 +139,29 @@ private ArrayList<PVector> points;
   }
 
   public void displayShape() {
+  }
+
+  public void findBounds() {
+    float modifier = 10;
+
+    float maxY = Float.NEGATIVE_INFINITY;
+    float minY = Float.POSITIVE_INFINITY;
+
+    ArrayList<PVector> points = getPoints();
+
+    for (int i = 0; i < points.size(); i++) {
+      if (points.get(i).y < minY) {    // If the current point's y value is smaller than minY
+        minY = points.get(i).y;        // Update minY to the current point's y value
+      }
+      if (points.get(i).y >= maxY) {    // If current point's y value is bigger than maxY
+        maxY = points.get(i).y;        // Update maxY to current point's value
+      }
+    }
+
+    setUpperBound(maxY + modifier);
+    setLowerBound(minY - modifier);
+
+    setForwardBound(maxY + modifier);
+    setBackwardBound(minY - modifier);
   }
 }

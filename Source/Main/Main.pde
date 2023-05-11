@@ -45,18 +45,20 @@ void setup() {
     tropoList.get(i).setNumPoints(actinList.get(0).NUM_SPHERES());
     tropoList.get(i).setRadius(actinList.get(0).SPHERE_RADIUS() / 1.8f);
     tropoList.get(i).coordinateGenerator();
+    tropoList.get(i).findBounds();
   }
 
   // Set myosinFilament variables
   myosinFilament.setHeight(1100);
   myosinFilament.setRadius(30);
 
-  // Generate points for shapes to be rendered
+  // Generate points for Actin to be rendered
   float numMyosinHeads =  myosinFilament.getHeight() / (actinList.get(0).SPACING() * 2);
   myosinFilament.coordinateGenerator();
 
   for (int i = 0; i < actinList.size(); i++) {
     actinList.get(i).coordinateGenerator();
+    actinList.get(i).findBounds();
   }
 
   for (int i = 0; i < numMyosinHeads; i++) {
@@ -92,22 +94,24 @@ void draw() {
     myosinHeadList.get(i).renderMyosinHeadConnection( myosinHeadList.get(i).getPosition(), myosinFilament.getPosition() );
 
     // check collision between objects here
-    //for(int j = 0; j < bindingSiteA.getStruct1Points().size(); j++)  {
-    //  collision.checkCollision();
-    //}
   }
   for (int i = 0; i < tropoList.size(); i++) {
     tropoList.get(i).displayShape();
+    
   }
 
   //Update all values
-  update(actinList, 0);
-  update(tropoList, 600);
+  //update(actinList, 0, true);  
+  //update(tropoList, 600, true);
   
   // UPDATE MYOSIN HEADS HERE
 }
 
-private void update(ArrayList<? extends Protein> obj, float m) {
+// Update: updates positions of movable objects
+// obj = takes in an object which extends Protein
+// m = middleOfMatrix in relation to other objects
+// canMoveYX = determines if an object specified can move along those axis
+private void update(ArrayList<? extends Protein> obj, float m, boolean canMoveYZ) {
   // Update values
   for (int i = 0; i < obj.size(); i++) {
     obj.get(i).setLeftBound(m - myosinFilament.getHeight());
@@ -116,7 +120,9 @@ private void update(ArrayList<? extends Protein> obj, float m) {
     ArrayList<PVector> points = obj.get(i).getPoints();
 
     for (int j = 0; j < points.size(); j++) {
-      PVector updatedPoint = obj.get(i).update(points.get(j));
+      PVector updatedPoint = obj.get(i).update(points.get(j), canMoveYZ);
+      System.out.println("Point " + j + "UpBound" + obj.get(i).getUpperBound());
+      System.out.println("Point " + j + "LowerBound" + obj.get(i).getLowerBound());
       points.get(j).set(updatedPoint);
     }
     obj.get(i).setPoints(points);
