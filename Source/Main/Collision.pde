@@ -1,9 +1,10 @@
 class Collision extends PerlinNoise {
 
   private boolean collided = false;
-  private float leftBound, rightBound;
+  private float leftBound, rightBound, upperBound, lowerBound;
 
   private boolean xForward = true;
+  private boolean yUp = true;
   private float xSpeed = 4;
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------
@@ -31,6 +32,22 @@ class Collision extends PerlinNoise {
   }
   public float getRightBound() {
     return this.rightBound;
+  }
+  
+  // Upper-most bound
+  public void setUpperBound(float upper) {
+    this.upperBound = upper;
+  }
+  public float getUpperBound() {
+    return this.upperBound;
+  }
+  
+  // Lower-most bound
+  public void setLowerBound(float lower) {
+    this.lowerBound = lower;
+  }
+  public float getLowerBound() {
+    return this.lowerBound;
   }
 
   // Direction properties
@@ -63,7 +80,7 @@ class Collision extends PerlinNoise {
   }
 
   // Updates the object's position to a new one depending on where it currently is
-  public PVector update(PVector oldPoint) {
+  public PVector update(PVector oldPoint, boolean canMoveYZ) {
     PVector newPos = oldPoint;
 
     // X MOVEMENT
@@ -85,6 +102,42 @@ class Collision extends PerlinNoise {
       xForward = true;
       xSpeed = + xSpeed;
     }
+
+    // For myosin heads which can move along the Y and Z axis too
+    if (canMoveYZ) {      
+      float ySpeed = 0.2;
+      xSpeed = 0;
+      
+      println("Upper: " + upperBound);
+      println("Lower: " + lowerBound);
+      println("Old Y : " + oldPoint.y);
+
+      // Y MOVEMENT
+      // If going up and x is not at upperBound, keep going
+      if (yUp && oldPoint.y < upperBound) {
+        newPos.y -= ySpeed;
+        println("1: ");
+      }
+      // Else if going up and y reaches rightBound, reverse
+      else if (yUp && oldPoint.y >= upperBound) {
+        println("2: ");
+        newPos.y -= ySpeed;
+        yUp = true;
+      }
+      // Else if not going forward and x is greater than leftBound, keep reversing
+      else if (!yUp && oldPoint.y <= lowerBound) {
+        println("3: ");
+        newPos.y += ySpeed;
+      }
+      // Otherwise, it's going forward, reset speed to positive
+      else {
+        println("4: ");
+        yUp = false;
+        ySpeed = + ySpeed;
+      }
+      println("isUp: " + yUp);
+    }
+    println("New Y : " + newPos.y);
 
     return newPos;
   }

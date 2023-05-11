@@ -102,32 +102,20 @@ void draw() {
   }
 
   for (int i = 0; i < myosinHeadList.size(); i++) {
-    float distance = 5;
-    float xSpeed = 0.1f;
-    float ySpeed = 0.3f;
-    
-    // Set direction somehow
-    PVector oldPos;
-    PVector newPos = new PVector(myosinHeadList.get(i).getPosition().x, myosinHeadList.get(i).getPosition().y, myosinHeadList.get(i).getPosition().z);
 
-    for (float j = 0; j < distance; j += ySpeed) {      
-      oldPos = new PVector(myosinHeadList.get(i).getPosition().x, myosinHeadList.get(i).getPosition().y, myosinHeadList.get(i).getPosition().z);
-      
-      myosinHeadList.get(i).displayShape();
-      myosinHeadList.get(i).renderMyosinHeadConnection( myosinHeadList.get(i).getPosition(), myosinFilament.getPosition() );
-      
-      // Set new position of heads
-      newPos = new PVector(oldPos.x - xSpeed, oldPos.y - ySpeed, oldPos.z);
-      
-      myosinHeadList.get(i).setPosition(newPos.x, newPos.y, newPos.z);
-    }
-
-    // check collision between objects here
+    myosinHeadList.get(i).displayShape();
+    myosinHeadList.get(i).renderMyosinHeadConnection( myosinHeadList.get(i).getPosition(), myosinFilament.getPosition() );
   }
 
+  // check collision between objects here
+
+
   //Update all values
-  update(actinList, 0);
-  update(tropoList, 600);
+  update(actinList, 0, false);
+  update(tropoList, 600, false);
+
+
+  update(myosinHeadList, 0, true);
 
   // UPDATE MYOSIN HEADS HERE
 }
@@ -135,16 +123,37 @@ void draw() {
 // Update: updates positions of movable objects
 // obj = takes in an object which extends Protein
 // m = middleOfMatrix in relation to other objects
-private void update(ArrayList<? extends Protein> obj, float m) {
+private void update(ArrayList<? extends Protein> obj, float m, boolean canMoveYZ) {
   // Update values
   for (int i = 0; i < obj.size(); i++) {
-    obj.get(i).setLeftBound(m - myosinFilament.getHeight());
-    obj.get(i).setRightBound(m + myosinFilament.getHeight());
+    ArrayList<PVector> points = new ArrayList<PVector>();
+    float r = obj.get(i).getRadius();
 
-    ArrayList<PVector> points = obj.get(i).getPoints();
+    // If the object is MyosinHead, set seperate bounds left and right, add just the position to the points arrayList
+    if (obj.get(i) instanceof MyosinHead) {
+      float originX = obj.get(i).getXStart();
+      float originY = obj.get(i).getYStart();
+      
+      obj.get(i).setLeftBound(originX + r);
+      obj.get(i).setRightBound(originX - r);
+      
+      obj.get(i).setLowerBound(originY + (r * 2));
+      obj.get(i).setUpperBound(originY - (r * 2));
 
+      points.add(obj.get(i).getPosition());
+    }
+    // Else, set left and right bound as needed and add all points to points arrayList
+    else {
+      obj.get(i).setLeftBound(m - myosinFilament.getHeight());
+      obj.get(i).setRightBound(m + myosinFilament.getHeight());
+
+      points = obj.get(i).getPoints();
+    }
+
+    // Loop through all points and update them, saving to updatedPoint
+    // Set object's points to the new points generated after moving
     for (int j = 0; j < points.size(); j++) {
-      PVector updatedPoint = obj.get(i).update(points.get(j));
+      PVector updatedPoint = obj.get(i).update(points.get(j), canMoveYZ);
 
       points.get(j).set(updatedPoint);
     }

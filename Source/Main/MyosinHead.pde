@@ -22,5 +22,4 @@ class MyosinHead extends Myosin {
     public void displayShape() {
     renderMeshShape(getShape(), getPosition());
   } 
-  
 }
