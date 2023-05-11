@@ -9,6 +9,8 @@ themselves and an implementation of Perlin Noise using Processing's own "noise()
 used to show that it would be possible to render objects with more realism if given more time for
 the project to show a more advanced implementation of PBR. 
 
+Objects present:
+
 Actin filament = The pink and blue helical structures which move along the x-axis.
 Myosin thick filament = The cylinder underneath the actin filament
 Myosin heads (Myosin globules) = Spherical objects which have Perlin noise applied which move towards
