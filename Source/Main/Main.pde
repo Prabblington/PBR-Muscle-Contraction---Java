@@ -64,7 +64,7 @@ void setup() {
     MHInitPosition.set(MHInitPosition.x + actinList.get(0).SPACING() * 2, MHInitPosition.y, MHInitPosition.z);
 
     myosinHeadList.get(i).setRadius(actinList.get(0).SPHERE_RADIUS() / 2);
-    myosinHeadList.get(i).coordinateGenerator();
+    myosinHeadList.get(i).coordinateGenerator(); //MOVE TO DRAW
     myosinHeadList.get(i).setPerlinHeight(12);
   }
 }
@@ -103,6 +103,8 @@ void draw() {
   //Update all values
   update(actinList, 0);
   update(tropoList, 600);
+  
+  // UPDATE MYOSIN HEADS HERE
 }
 
 private void update(ArrayList<? extends Protein> obj, float m) {

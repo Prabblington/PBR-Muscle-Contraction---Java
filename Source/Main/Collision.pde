@@ -4,7 +4,7 @@ class Collision extends PerlinNoise {
   private float leftBound, rightBound;
 
   public boolean xForward = true;
-  public float speed = 8;
+  public float xSpeed = 8;
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------
 
@@ -42,11 +42,11 @@ class Collision extends PerlinNoise {
   }
 
   // Movement speed properties
-  public void setSpeed(float newSpeed) {
-    this.speed = newSpeed;
+  public void setXSpeed(float newSpeed) {
+    this.xSpeed = newSpeed;
   }
-  public float getSpeed() {
-    return this.speed;
+  public float getXSpeed() {
+    return this.xSpeed;
   }
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
@@ -54,37 +54,37 @@ class Collision extends PerlinNoise {
   public Collision() {
     super();
   }
-  
+
   // Checks if current object is colliding with the paramater object using sphere collision detection
   public boolean checkCollision(Protein object1, Protein object2) {
     float d = dist(object1.getPosition().x, object1.getPosition().y, object1.getPosition().z, object2.getPosition().x, object2.getPosition().y, object2.getPosition().z);
     return d < object1.getRadius() + object2.getRadius();
   }
-  
+
   // Updates the object's position to a new one depending on where it currently is
   public PVector update(PVector oldPoint) {
     PVector newPos = oldPoint;
-    
+
+    // X MOVEMENT
     // If forward and x is not at rightBound, keep going
     if (xForward && oldPoint.x <  rightBound) {
-      newPos.x += speed;
-    } 
+      newPos.x += xSpeed;
+    }
     // Else if going forward and x reaches rightBound, reverse
     else if (xForward && oldPoint.x >=  rightBound) {
-      newPos.x -= speed;
+      newPos.x -= xSpeed;
       xForward = false;
     }
     // Else if not going forward and x is greater than leftBound, keep reversing
-    else if(!xForward && oldPoint.x >= leftBound)  {
-      newPos.x -= speed;
+    else if (!xForward && oldPoint.x >= leftBound) {
+      newPos.x -= xSpeed;
     }
     // Otherwise, it's going forward, reset speed to positive
     else {
       xForward = true;
-      speed = +speed;
+      xSpeed = + xSpeed;
     }
     
-    return new PVector(newPos.x, newPos.y, newPos.z);
+    return newPos;
   }
-  
 }

@@ -30,7 +30,7 @@ class Tropomyosin extends Myosin {
     strokeWeight(1);
     fill(20, 60, 0, 180);
 
-    for (int i = 0; i < getPoints().size(); i++) {
+    for (int i = 0; i < getPoints().size(); i++) {      
       pushMatrix();
       translate(getPosition().x, getPosition().y, getPosition().z);
       renderSphere(getPoints().get(i), getRadius());
