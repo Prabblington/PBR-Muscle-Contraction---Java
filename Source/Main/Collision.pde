@@ -67,11 +67,11 @@ class Collision extends PerlinNoise {
 
     // X MOVEMENT
     // If forward and x is not at rightBound, keep going
-    if (xForward && oldPoint.x <  rightBound) {
+    if (xForward && oldPoint.x < rightBound) {
       newPos.x += xSpeed;
     }
     // Else if going forward and x reaches rightBound, reverse
-    else if (xForward && oldPoint.x >=  rightBound) {
+    else if (xForward && oldPoint.x >= rightBound) {
       newPos.x -= xSpeed;
       xForward = false;
     }
