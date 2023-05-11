@@ -13,8 +13,6 @@ ArrayList<Actin> actinList;
 ArrayList<MyosinHead> myosinHeadList;
 ArrayList<Tropomyosin> tropoList;
 
-ArrayList<Protein> movableObjs;
-
 void setup() {
   size(1200, 800, P3D);
   background(20, 5, 15);
@@ -24,8 +22,7 @@ void setup() {
   actinList = new ArrayList<Actin>();
   myosinHeadList = new ArrayList<MyosinHead>();
   tropoList = new ArrayList<Tropomyosin>();
-
-  movableObjs = new ArrayList<Protein>();
+  
   // Init starting placement PVector
   sPos = new PVector(-600, 0, 0);
   // Init Myosin heads init position PVector
@@ -48,21 +45,11 @@ void setup() {
     tropoList.get(i).setNumPoints(actinList.get(0).NUM_SPHERES());
     tropoList.get(i).setRadius(actinList.get(0).SPHERE_RADIUS() / 1.8f);
     tropoList.get(i).coordinateGenerator();
-
-    // Add as a movable object
-    movableObjs.add(tropoList.get(i));
   }
-  //bindingSiteA = new Tropomyosin(new PVector(sPos.x, sPos.y - 10, 0), 5, true);
-  //bindingSiteB = new Tropomyosin(new PVector(sPos.x, sPos.y - 10, 0), 5, false);
 
   // Set myosinFilament variables
   myosinFilament.setHeight(1100);
   myosinFilament.setRadius(30);
-
-  // Initiate tropomyosin array list
-
-  //bindingSiteA.setNumPoints(actinList.get(0).NUM_SPHERES());
-  //bindingSiteB.setNumPoints(actinList.get(0).NUM_SPHERES());
 
   // Generate points for shapes to be rendered
   float numMyosinHeads =  myosinFilament.getHeight() / (actinList.get(0).SPACING() * 2);
@@ -70,9 +57,6 @@ void setup() {
 
   for (int i = 0; i < actinList.size(); i++) {
     actinList.get(i).coordinateGenerator();
-
-    // Add as movable object
-    movableObjs.add(actinList.get(i));
   }
 
   for (int i = 0; i < numMyosinHeads; i++) {
@@ -82,18 +66,7 @@ void setup() {
     myosinHeadList.get(i).setRadius(actinList.get(0).SPHERE_RADIUS() / 2);
     myosinHeadList.get(i).coordinateGenerator();
     myosinHeadList.get(i).setPerlinHeight(12);
-
-    //movableObjs.add(myosinHeadList.get(i));
   }
-
-  //bindingSiteA.setRadius(actinList.get(0).SPHERE_RADIUS() / 1.8f);
-  //bindingSiteB.setRadius(actinList.get(0).SPHERE_RADIUS() / 1.8f);
-
-  //bindingSiteA.coordinateGenerator();
-  //bindingSiteB.coordinateGenerator();
-
-  //collision.setLeftBound(actinList.get(0).getPosition().x - myosinFilament.getHeight() /2);
-  //collision.setRightBound(0 - myosinFilament.getHeight());
 }
 
 void draw() {
@@ -128,32 +101,17 @@ void draw() {
   }
 
   //Update all values
-  update(actinList);
-
-
-  //// Update values
-  //for (int i = 0; i < actinList.size(); i++) {
-  //  actinList.get(i).setLeftBound(0 - myosinFilament.getHeight());
-  //  actinList.get(i).setRightBound(0 + myosinFilament.getHeight());
-
-  //  ArrayList<PVector> points = actinList.get(i).getPoints();
-
-  //  for (int j = 0; j < points.size(); j++) {
-  //    PVector updatedPoint = actinList.get(i).update(points.get(j));
-  //    points.get(j).set(updatedPoint);
-  //  }
-  //  actinList.get(i).setPoints(points);
-  //}
+  update(actinList, 0);
+  update(tropoList, 600);
 }
 
-private void update(ArrayList<? extends Protein> obj) {
+private void update(ArrayList<? extends Protein> obj, float m) {
   // Update values
   for (int i = 0; i < obj.size(); i++) {
-    obj.get(i).setLeftBound(0 - myosinFilament.getHeight());
-    obj.get(i).setRightBound(0 + myosinFilament.getHeight());
+    obj.get(i).setLeftBound(m - myosinFilament.getHeight());
+    obj.get(i).setRightBound(m + myosinFilament.getHeight());
 
     ArrayList<PVector> points = obj.get(i).getPoints();
-    System.out.println("Points: " + i + " " + points);
 
     for (int j = 0; j < points.size(); j++) {
       PVector updatedPoint = obj.get(i).update(points.get(j));

@@ -22,9 +22,6 @@ class Tropomyosin extends Myosin {
     strokeWeight(10);
 
     setPoints( helicalPointsGenerator(isSiteA, NUM_SPHERES(), SIN_COS_VAL(), SPACING(), 0, 0 ));
-
-    PShape s = generateBezierStructure(getPoints());
-    setShape(s);
   }
 
   @Override
@@ -39,6 +36,8 @@ class Tropomyosin extends Myosin {
       renderSphere(getPoints().get(i), getRadius());
       popMatrix();
     }
+    PShape s = generateBezierStructure(getPoints());
+    setShape(s);
 
     renderMeshShape(getShape(), getPosition());
   }
