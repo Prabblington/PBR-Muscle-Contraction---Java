@@ -4,7 +4,7 @@ class Collision extends PerlinNoise {
   private float leftBound, rightBound;
 
   public boolean xForward = true;
-  public float speed = 1;
+  public float speed = 4;
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------
 
@@ -62,19 +62,40 @@ class Collision extends PerlinNoise {
   }
   
   // Updates the object's position to a new one depending on where it currently is
-  public void update(Protein object) {
-    PVector newPos = object.getPosition();
-
-    if (xForward && object.getPosition().x <  leftBound) {
+  public PVector update(PVector oldPoint) {
+    PVector newPos = oldPoint;
+    
+    // If forward and x is not at rightBound, keep going
+    if (xForward && oldPoint.x <  rightBound) {
       newPos.x += speed;
-    } else if (xForward && object.getPosition().x ==  rightBound) {
+      
+      System.out.println("Position: " + newPos.x);
+      System.out.println("Forward + not rightBound");
+    } 
+    // Else if going forward and x reaches rightBound, reverse
+    else if (xForward && oldPoint.x >=  rightBound) {
       newPos.x -= speed;
-    } else {
+      xForward = false;
+      
+      System.out.println("Position: " + newPos.x);
+      System.out.println("Forward + rightBound");
+    }
+    // Else if not going forward and x is greater than leftBound, keep reversing
+    else if(!xForward && oldPoint.x >= leftBound)  {
+      newPos.x -= speed;
+      
+      System.out.println("Position: " + newPos.x);
+      System.out.println("Reversing + !leftBound");
+    }
+    // Otherwise, it's going forward, reset speed to positive
+    else {
       xForward = true;
       speed = +speed;
+      
+      System.out.println("Position: " + newPos.x);
     }
     
-    object.setPosition(newPos.x, newPos.y, newPos.z);
+    return new PVector(newPos.x, newPos.y, newPos.z);
   }
   
 }

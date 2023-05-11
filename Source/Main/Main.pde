@@ -1,7 +1,5 @@
 CameraOrbit camera;
 
-Collision collision;
-
 Actin actin;
 MyosinFilament myosinFilament;
 
@@ -25,7 +23,6 @@ void setup() {
 
   // Object creation
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
-  collision = new Collision();
 
   // Actin object which forms the helical structure
   actinList.add(new Actin(sPos, true));
@@ -67,8 +64,8 @@ void setup() {
   bindingSiteA.coordinateGenerator();
   bindingSiteB.coordinateGenerator();
 
-  collision.setLeftBound(actinList.get(0).getPosition().x - myosinFilament.getHeight() /2);
-  collision.setRightBound(0 - myosinFilament.getHeight());
+  //collision.setLeftBound(actinList.get(0).getPosition().x - myosinFilament.getHeight() /2);
+  //collision.setRightBound(0 - myosinFilament.getHeight());
 }
 
 void draw() {
@@ -98,14 +95,27 @@ void draw() {
     //  collision.checkCollision();
     //}
   }
-  for (int i = 0; i < actinList.size(); i++) {
-    for (int j = 0; j < actinList.get(i).getPoints().size(); j++) {
-      collision.update(actinList.get(i));
-    }
-  }
 
   bindingSiteA.displayShape();
   bindingSiteB.displayShape();
+
+  // Update values
+  for (int i = 0; i < actinList.size(); i++) {
+    actinList.get(i).setLeftBound(0 - myosinFilament.getHeight());
+    actinList.get(i).setRightBound(0 + myosinFilament.getHeight());
+
+    //System.out.println("Position x: " + actinList.get(i).getPosition().x);
+    //System.out.println("MF height: " + myosinFilament.getHeight() /2);
+    //System.out.printf("Right Bound: %d\n", 0 - myosinFilament.getHeight());
+
+    ArrayList<PVector> points = actinList.get(i).getPoints();
+
+    for (int j = 0; j < points.size(); j++) {
+      PVector updatedPoint = actinList.get(i).update(points.get(j));
+      points.get(j).set(updatedPoint);
+    }
+    actinList.get(i).setPoints(points);
+  }
 }
 
 // Controlls camera panning
