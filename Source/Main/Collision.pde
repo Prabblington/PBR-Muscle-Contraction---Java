@@ -6,6 +6,7 @@ class Collision extends PerlinNoise {
   private boolean xForward = true;
   private boolean yUp = true;
   private float xSpeed = 4;
+  private float ySpeed = 1.7;
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------
 
@@ -83,7 +84,25 @@ class Collision extends PerlinNoise {
   public PVector update(PVector oldPoint, boolean canMoveYZ) {
     PVector newPos = oldPoint;
 
-
+    // X MOVEMENT
+    // If forward and x is not at rightBound, keep going
+    if (xForward && oldPoint.x < rightBound) {
+      newPos.x += xSpeed;
+    }
+    // Else if going forward and x reaches rightBound, reverse
+    else if (xForward && oldPoint.x >= rightBound) {
+      newPos.x -= xSpeed;
+      xForward = false;
+    }
+    // Else if not going forward and x is greater than leftBound, keep reversing
+    else if (!xForward && oldPoint.x >= leftBound) {
+      newPos.x -= xSpeed;
+    }
+    // Otherwise, it's going forward, reset speed to positive
+    else {
+      xForward = true;
+      xSpeed = + xSpeed;
+    }
 
     // For myosin heads which can move along the Y and Z axis too
     if (canMoveYZ) {
@@ -109,26 +128,6 @@ class Collision extends PerlinNoise {
         yUp = true;
         ySpeed = + ySpeed;
       }
-    }
-
-    // X MOVEMENT
-    // If forward and x is not at rightBound, keep going
-    if (xForward && oldPoint.x < rightBound) {
-      newPos.x += xSpeed;
-    }
-    // Else if going forward and x reaches rightBound, reverse
-    else if (xForward && oldPoint.x >= rightBound) {
-      newPos.x -= xSpeed;
-      xForward = false;
-    }
-    // Else if not going forward and x is greater than leftBound, keep reversing
-    else if (!xForward && oldPoint.x >= leftBound) {
-      newPos.x -= xSpeed;
-    }
-    // Otherwise, it's going forward, reset speed to positive
-    else {
-      xForward = true;
-      xSpeed = + xSpeed;
     }
 
     return newPos;

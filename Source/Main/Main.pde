@@ -23,9 +23,9 @@ void setup() {
   tropoList = new ArrayList<Tropomyosin>();
 
   // Init starting placement PVector
-  sPos = new PVector(-600, 0, 0);
+  sPos = new PVector(-600, -20, 0);
   // Init Myosin heads init position PVector
-  PVector MHInitPosition = new PVector(-550, 90, 0);
+  PVector MHInitPosition = new PVector(-550, 80, 0);
 
   // Object creation
   camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
