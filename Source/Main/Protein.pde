@@ -8,8 +8,7 @@ abstract class Protein extends Collision {
 
   private float xStart, yStart;
 
-  private ArrayList<PVector> points1;
-  private ArrayList<PVector> points2;
+private ArrayList<PVector> points;
 
   private PVector position;
   private float radius;
@@ -76,19 +75,13 @@ abstract class Protein extends Collision {
   }
 
   // Helical structure points properties
-  public ArrayList<PVector> getStruct1Points() {
-    return this.points1;
+  public ArrayList<PVector> getPoints() {
+    return this.points;
   }
-  public ArrayList<PVector> getStruct2Points() {
-    return this.points2;
+  public void setPoints(ArrayList<PVector> newPoints) {
+    this.points = newPoints;
   }
-  public void populateStruct1Points(ArrayList<PVector> generatedPoints) {
-    this.points1 = generatedPoints;
-  }
-  public void populateStruct2Points(ArrayList<PVector> generatedPoints) {
-    this.points2 = generatedPoints;
-  }
-
+  
   // Finalised temp properties for actin
   public int NUM_SPHERES() {
     return this.NUM_SPHERES;
@@ -106,8 +99,7 @@ abstract class Protein extends Collision {
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
   public Protein() {
-    points1 = new ArrayList<PVector>();
-    points2 = new ArrayList<PVector>();
+    points = new ArrayList<PVector>();
 
     this.position = new PVector(0, 0, 0);
     this.radius = 0;
@@ -115,8 +107,7 @@ abstract class Protein extends Collision {
 
   //Actin generation
   public Protein(PVector pos) {
-    points1 = new ArrayList<PVector>();
-    points2 = new ArrayList<PVector>();
+    points = new ArrayList<PVector>();
 
     this.position = pos;
     this.xStart = pos.x;
@@ -124,8 +115,8 @@ abstract class Protein extends Collision {
   }
   // Myosin heads generation
   public Protein(PVector pos, float r, int initPoints) {
-    points1 = new ArrayList<PVector>();
-    points2 = new ArrayList<PVector>();
+    super();
+    points = new ArrayList<PVector>();
 
     this.position = new PVector(pos.x, pos.y, pos.z);
     this.xStart = pos.x;
@@ -136,8 +127,7 @@ abstract class Protein extends Collision {
   // Constructor for myosin filament
   public Protein(PVector pos, int initNumPoints) {
     super();
-    points1 = new ArrayList<PVector>();
-    points2 = new ArrayList<PVector>();
+    points = new ArrayList<PVector>();
 
     this.xStart = pos.x;
     this.yStart = pos.y;

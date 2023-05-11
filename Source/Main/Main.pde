@@ -9,6 +9,7 @@ Tropomyosin bindingSiteA;
 Tropomyosin bindingSiteB;
 
 PVector sPos;
+ArrayList<Actin> actinList;
 ArrayList<MyosinHead> myosinHeadList;
 
 void setup() {
@@ -16,8 +17,9 @@ void setup() {
   background(20, 5, 15);
   frameRate(30);
 
-  sPos = new PVector(-600, 0, 0);
+  actinList = new ArrayList<Actin>();
   myosinHeadList = new ArrayList<MyosinHead>();
+  sPos = new PVector(-600, 0, 0);
 
   PVector MHInitPosition = new PVector(-550, 90, 0);
 
@@ -26,7 +28,8 @@ void setup() {
   collision = new Collision();
 
   // Actin object which forms the helical structure
-  actin = new Actin(sPos);
+  actinList.add(new Actin(sPos, true));
+  actinList.add(new Actin(sPos, false));
   // Myosin filment which holds Myosin heads to form cross-bridge
   myosinFilament = new MyosinFilament(new PVector(sPos.x + 580, sPos.y + 160, 0), 12);
 
@@ -37,31 +40,34 @@ void setup() {
   myosinFilament.setHeight(1100);
   myosinFilament.setRadius(30);
 
-  bindingSiteA.setNumPoints(actin.NUM_SPHERES());
-  bindingSiteB.setNumPoints(actin.NUM_SPHERES());
+  bindingSiteA.setNumPoints(actinList.get(0).NUM_SPHERES());
+  bindingSiteB.setNumPoints(actinList.get(0).NUM_SPHERES());
 
   // Generate points for shapes to be rendered
-  actin.coordinateGenerator();
+  for (int i = 0; i < actinList.size(); i++) {
+    actinList.get(i).coordinateGenerator();
+  }
+
   myosinFilament.coordinateGenerator();
 
-  float numMyosinHeads =  myosinFilament.getHeight() / (actin.SPACING() * 2);
+  float numMyosinHeads =  myosinFilament.getHeight() / (actinList.get(0).SPACING() * 2);
 
   for (int i = 0; i < numMyosinHeads; i++) {
     myosinHeadList.add(new MyosinHead(MHInitPosition, 42));
-    MHInitPosition.set(MHInitPosition.x + actin.SPACING() * 2, MHInitPosition.y, MHInitPosition.z);
+    MHInitPosition.set(MHInitPosition.x + actinList.get(0).SPACING() * 2, MHInitPosition.y, MHInitPosition.z);
 
-    myosinHeadList.get(i).setRadius(actin.SPHERE_RADIUS() / 2);
+    myosinHeadList.get(i).setRadius(actinList.get(0).SPHERE_RADIUS() / 2);
     myosinHeadList.get(i).coordinateGenerator();
     myosinHeadList.get(i).setPerlinHeight(12);
   }
 
-  bindingSiteA.setRadius(actin.SPHERE_RADIUS() / 1.8f);
-  bindingSiteB.setRadius(actin.SPHERE_RADIUS() / 1.8f);
+  bindingSiteA.setRadius(actinList.get(0).SPHERE_RADIUS() / 1.8f);
+  bindingSiteB.setRadius(actinList.get(0).SPHERE_RADIUS() / 1.8f);
 
   bindingSiteA.coordinateGenerator();
   bindingSiteB.coordinateGenerator();
 
-  collision.setLeftBound(actin.getPosition().x - myosinFilament.getHeight() /2);
+  collision.setLeftBound(actinList.get(0).getPosition().x - myosinFilament.getHeight() /2);
   collision.setRightBound(0 - myosinFilament.getHeight());
 }
 
@@ -71,7 +77,16 @@ void draw() {
   stroke(0);
 
   // Display rendered structures
-  actin.displayShape();
+  for (int i = 0; i < actinList.size(); i++) {
+    stroke(1);
+    if (i % 2 == 0) {
+      fill(70, 20, 150, 180);
+      actinList.get(i).displayShape();
+    } else {
+      fill(255, 0, 255, 180);
+      actinList.get(i).displayShape();
+    }
+  }
   myosinFilament.displayShape();
 
   for (int i = 0; i < myosinHeadList.size(); i++) {
@@ -83,10 +98,11 @@ void draw() {
     //  collision.checkCollision();
     //}
   }
-  for (int i = 0; i < actin.getStruct1Points().size(); i++) {
-    collision.update(actin);
+  for (int i = 0; i < actinList.size(); i++) {
+    for (int j = 0; j < actinList.get(i).getPoints().size(); j++) {
+      collision.update(actinList.get(i));
+    }
   }
-
 
   bindingSiteA.displayShape();
   bindingSiteB.displayShape();
