@@ -134,11 +134,11 @@ private void update(ArrayList<? extends Protein> obj, float m, boolean canMoveYZ
       float originX = obj.get(i).getXStart();
       float originY = obj.get(i).getYStart();
       
-      obj.get(i).setLeftBound(originX + r);
-      obj.get(i).setRightBound(originX - r);
+      obj.get(i).setLeftBound(originX + (r * 3));
+      obj.get(i).setRightBound(originX - (r * 3));
       
-      obj.get(i).setLowerBound(originY + (r * 2));
-      obj.get(i).setUpperBound(originY - (r * 2));
+      obj.get(i).setLowerBound(originY + (r / 1.6));
+      obj.get(i).setUpperBound(originY - (r / 1.6));
 
       points.add(obj.get(i).getPosition());
     }
