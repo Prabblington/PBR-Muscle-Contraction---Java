@@ -22,4 +22,10 @@ class MyosinHead extends Myosin {
     public void displayShape() {
     renderMeshShape(getShape(), getPosition());
   }
+
+  @Override
+    PVector update(PVector oldPoint)  {
+      // This function moves the myosin heads
+      return new PVector(0,0,0); //TEMP, NEEDS CHANGING 
+  }
 }
