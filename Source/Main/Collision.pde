@@ -106,7 +106,7 @@ class Collision extends PerlinNoise {
 
     // For myosin heads which can move along the Y and Z axis too
     if (canMoveYZ) {
-      float ySpeed = random(1.7);
+      ySpeed = random(1.7);
       xSpeed = random(1);
 
       // Y MOVEMENT
