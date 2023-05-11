@@ -21,6 +21,6 @@ class MyosinHead extends Myosin {
   @Override
     public void displayShape() {
     renderMeshShape(getShape(), getPosition());
-  }
-
+  } 
+  
 }

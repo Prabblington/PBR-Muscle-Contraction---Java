@@ -78,7 +78,8 @@ void draw() {
 
 
   for (int i = 0; i < actinList.size(); i++) {
-    pushMatrix(); // Save the current translation and rotation matrix
+    // Save the current translation matrix
+    pushMatrix();
 
     // Apply a rotation to the translation matrix
     translate(0, 0, 0);
@@ -101,8 +102,25 @@ void draw() {
   }
 
   for (int i = 0; i < myosinHeadList.size(); i++) {
-    myosinHeadList.get(i).displayShape();
-    myosinHeadList.get(i).renderMyosinHeadConnection( myosinHeadList.get(i).getPosition(), myosinFilament.getPosition() );
+    float distance = 5;
+    float xSpeed = 0.1f;
+    float ySpeed = 0.3f;
+    
+    // Set direction somehow
+    PVector oldPos;
+    PVector newPos = new PVector(myosinHeadList.get(i).getPosition().x, myosinHeadList.get(i).getPosition().y, myosinHeadList.get(i).getPosition().z);
+
+    for (float j = 0; j < distance; j += ySpeed) {      
+      oldPos = new PVector(myosinHeadList.get(i).getPosition().x, myosinHeadList.get(i).getPosition().y, myosinHeadList.get(i).getPosition().z);
+      
+      myosinHeadList.get(i).displayShape();
+      myosinHeadList.get(i).renderMyosinHeadConnection( myosinHeadList.get(i).getPosition(), myosinFilament.getPosition() );
+      
+      // Set new position of heads
+      newPos = new PVector(oldPos.x - xSpeed, oldPos.y - ySpeed, oldPos.z);
+      
+      myosinHeadList.get(i).setPosition(newPos.x, newPos.y, newPos.z);
+    }
 
     // check collision between objects here
   }
@@ -127,8 +145,8 @@ private void update(ArrayList<? extends Protein> obj, float m) {
 
     for (int j = 0; j < points.size(); j++) {
       PVector updatedPoint = obj.get(i).update(points.get(j));
+
       points.get(j).set(updatedPoint);
-      println(updatedPoint);
     }
     obj.get(i).setPoints(points);
   }
