@@ -6,7 +6,7 @@ class Collision extends PerlinNoise {
   private boolean xForward = true;
   private boolean yUp = true;
   private float xSpeed = 4;
-  private float ySpeed = 1.7;
+  private float ySpeed = 1.5;
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------
 
@@ -106,8 +106,8 @@ class Collision extends PerlinNoise {
 
     // For myosin heads which can move along the Y and Z axis too
     if (canMoveYZ) {
-      ySpeed = random(1.7);
-      xSpeed = random(1);
+      ySpeed = random(1.4);
+      xSpeed = random(0.5);
 
       // Y MOVEMENT
       // If going up and x is not at upperBound, keep going
