@@ -13,7 +13,7 @@ ArrayList<MyosinHead> myosinHeadList;
 ArrayList<Tropomyosin> tropoList;
 
 void setup() {
-  size(1200, 800, P3D);
+  size(1600, 1000, P3D);
   background(20, 5, 15);
   frameRate(30);
 
