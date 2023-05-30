@@ -20,7 +20,7 @@ void setup() {
   mh_list = new ArrayList<MyosinHead>();
   t_list = new ArrayList<Tropomyosin>();
 
-  // Init starting placement PVector
+  // Init starting placement PVector for actin
   i_position = new PVector(-600, -20, 0);
   // Init Myosin heads init position PVector
   PVector mh_initPosition = new PVector(-550, 80, 0);
@@ -47,19 +47,20 @@ void setup() {
   mf_myofilament.setRadius(30);
 
   // Generate points for Actin to be rendered
-  float numMyosinHeads = mf_myofilament.getHeight() / (a_list.get(0).SPACING() * 2);
+  float mh_numObjects = mf_myofilament.getHeight() / (a_list.get(0).SPACING() * 2);
+  int mh_numPoints = 42;
   mf_myofilament.coordinateGenerator();
 
   for (int i = 0; i < a_list.size(); i++) {
     a_list.get(i).coordinateGenerator();
   }
 
-  for (int i = 0; i < numMyosinHeads; i++) {
-    mh_list.add(new MyosinHead(mh_initPosition, 42));
+  for (int i = 0; i < mh_numObjects; i++) {
+    mh_list.add(new MyosinHead(mh_initPosition, mh_numPoints));
     mh_initPosition.set(mh_initPosition.x + a_list.get(0).SPACING() * 2, mh_initPosition.y, mh_initPosition.z);
 
     mh_list.get(i).setRadius(a_list.get(0).SPHERE_RADIUS() / 2);
-    mh_list.get(i).coordinateGenerator(); //MOVE TO DRAW
+    mh_list.get(i).coordinateGenerator();
     mh_list.get(i).setPerlinHeight(12);
   }
 }
