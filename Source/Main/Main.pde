@@ -1,16 +1,15 @@
-CameraOrbit camera;
+CameraOrbit c_Camera;
 
 Actin actin;
-MyosinFilament myosinFilament;
+MyosinFilament myofilament;
 
-float orbitSpeed = 0.05;
-
-PVector sPos;
+float c_OrbitSpeed = 0.05;
+PVector i_Position;
 
 // Object lists
-ArrayList<Actin> actinList;
-ArrayList<MyosinHead> myosinHeadList;
-ArrayList<Tropomyosin> tropoList;
+ArrayList<Actin> a_List;
+ArrayList<MyosinHead> mh_List;
+ArrayList<Tropomyosin> t_List;
 
 void setup() {
   size(1600, 1000, P3D);
@@ -18,72 +17,72 @@ void setup() {
   frameRate(30);
 
   // Init object lists
-  actinList = new ArrayList<Actin>();
-  myosinHeadList = new ArrayList<MyosinHead>();
-  tropoList = new ArrayList<Tropomyosin>();
+  a_List = new ArrayList<Actin>();
+  mh_List = new ArrayList<MyosinHead>();
+  t_List = new ArrayList<Tropomyosin>();
 
   // Init starting placement PVector
-  sPos = new PVector(-600, -20, 0);
+  i_Position = new PVector(-600, -20, 0);
   // Init Myosin heads init position PVector
-  PVector MHInitPosition = new PVector(-550, 80, 0);
+  PVector mh_InitPosition = new PVector(-550, 80, 0);
 
   // Object creation
-  camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
+  c_Camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
 
   // Initiate actin list which forms the helical structure
-  actinList.add(new Actin(sPos, true));
-  actinList.add(new Actin(sPos, false));
+  a_List.add(new Actin(i_Position, true));
+  a_List.add(new Actin(i_Position, false));
   // Initiate myosin filment which holds Myosin heads to form cross-bridge
-  myosinFilament = new MyosinFilament(new PVector(sPos.x + 580, sPos.y + 160, 0), 12);
+  myofilament = new MyosinFilament(new PVector(i_Position.x + 580, i_Position.y + 160, 0), 12);
 
   // Initiate tropomyosin list of binding sites for myosin heads
-  tropoList.add(new Tropomyosin(new PVector(sPos.x, sPos.y - 10, 0), 5, true));
-  tropoList.add(new Tropomyosin(new PVector(sPos.x, sPos.y - 10, 0), 5, false));
+  t_List.add(new Tropomyosin(new PVector(i_Position.x, i_Position.y - 10, 0), 5, true));
+  t_List.add(new Tropomyosin(new PVector(i_Position.x, i_Position.y - 10, 0), 5, false));
   // Set tropomyosin variables
-  for (int i = 0; i < tropoList.size(); i++) {
-    tropoList.get(i).setNumPoints(actinList.get(0).NUM_SPHERES());
-    tropoList.get(i).setRadius(actinList.get(0).SPHERE_RADIUS() / 1.8f);
-    tropoList.get(i).coordinateGenerator();
+  for (int i = 0; i < t_List.size(); i++) {
+    t_List.get(i).setNumPoints(a_List.get(0).NUM_SPHERES());
+    t_List.get(i).setRadius(a_List.get(0).SPHERE_RADIUS() / 1.8f);
+    t_List.get(i).coordinateGenerator();
   }
 
   // Set myosinFilament variables
-  myosinFilament.setHeight(1100);
-  myosinFilament.setRadius(30);
+  myofilament.setHeight(1100);
+  myofilament.setRadius(30);
 
   // Generate points for Actin to be rendered
-  float numMyosinHeads =  myosinFilament.getHeight() / (actinList.get(0).SPACING() * 2);
-  myosinFilament.coordinateGenerator();
+  float numMyosinHeads =  myofilament.getHeight() / (a_List.get(0).SPACING() * 2);
+  myofilament.coordinateGenerator();
 
-  for (int i = 0; i < actinList.size(); i++) {
-    actinList.get(i).coordinateGenerator();
+  for (int i = 0; i < a_List.size(); i++) {
+    a_List.get(i).coordinateGenerator();
   }
 
   for (int i = 0; i < numMyosinHeads; i++) {
-    myosinHeadList.add(new MyosinHead(MHInitPosition, 42));
-    MHInitPosition.set(MHInitPosition.x + actinList.get(0).SPACING() * 2, MHInitPosition.y, MHInitPosition.z);
+    mh_List.add(new MyosinHead(mh_InitPosition, 42));
+    mh_InitPosition.set(mh_InitPosition.x + a_List.get(0).SPACING() * 2, mh_InitPosition.y, mh_InitPosition.z);
 
-    myosinHeadList.get(i).setRadius(actinList.get(0).SPHERE_RADIUS() / 2);
-    myosinHeadList.get(i).coordinateGenerator(); //MOVE TO DRAW
-    myosinHeadList.get(i).setPerlinHeight(12);
+    mh_List.get(i).setRadius(a_List.get(0).SPHERE_RADIUS() / 2);
+    mh_List.get(i).coordinateGenerator(); //MOVE TO DRAW
+    mh_List.get(i).setPerlinHeight(12);
   }
 }
 
 void draw() {
   background(20, 5, 15);
-  camera.update();
+  c_Camera.update();
   stroke(0);
 
   // Display rendered structures
-  myosinFilament.displayShape();
+  myofilament.displayShape();
 
 
-  for (int i = 0; i < actinList.size(); i++) {
+  for (int i = 0; i < a_List.size(); i++) {
     // Save the current translation matrix
     pushMatrix();
 
     // Apply a rotation to the translation matrix
     translate(0, 0, 0);
-    rotateX(frameCount*orbitSpeed);
+    rotateX(frameCount * c_OrbitSpeed);
 
     stroke(1);
     strokeWeight(1);
@@ -93,29 +92,28 @@ void draw() {
     } else {
       fill(255, 0, 255, 180);
     }
-    actinList.get(i).draw();
-    tropoList.get(i).draw();
+    a_List.get(i).draw();
+    t_List.get(i).draw();
     // Apply an orbit translation to the rotation matrix
-    translate(actinList.get(i).SPHERE_RADIUS() * 2, 0, 0);
-    rotateX(frameCount*orbitSpeed);
+    translate(a_List.get(i).SPHERE_RADIUS() * 2, 0, 0);
+    rotateX(frameCount * c_OrbitSpeed);
     popMatrix(); // Restore the saved translation and rotation matrix
   }
 
-  for (int i = 0; i < myosinHeadList.size(); i++) {
-
-    myosinHeadList.get(i).displayShape();
-    myosinHeadList.get(i).renderMyosinHeadConnection( myosinHeadList.get(i).getPosition(), myosinFilament.getPosition() );
+  for (int i = 0; i < mh_List.size(); i++) {    
+    mh_List.get(i).displayShape();
+    mh_List.get(i).renderMyosinHeadConnection( mh_List.get(i).getPosition(), myofilament.getPosition() );
   }
 
   // check collision between objects here
 
 
   //Update all values
-  update(actinList, 0, false);
-  update(tropoList, 600, false);
+  update(a_List, 0, false);
+  update(t_List, 600, false);
 
 
-  update(myosinHeadList, 0, true);
+  update(mh_List, 0, true);
 
   // UPDATE MYOSIN HEADS HERE
 }
@@ -145,8 +143,8 @@ private void update(ArrayList<? extends Protein> obj, float m, boolean canMoveYZ
     }
     // Else, set left and right bound as needed and add all points to points arrayList
     else {
-      obj.get(i).setLeftBound(m - myosinFilament.getHeight());
-      obj.get(i).setRightBound(m + myosinFilament.getHeight());
+      obj.get(i).setLeftBound(m - myofilament.getHeight());
+      obj.get(i).setRightBound(m + myofilament.getHeight());
 
       points = obj.get(i).getPoints();
     }
@@ -165,13 +163,13 @@ private void update(ArrayList<? extends Protein> obj, float m, boolean canMoveYZ
 // Controlls camera panning
 void mouseDragged() {
   if (mouseButton == RIGHT) {
-    camera.orbit((mouseX - pmouseX) * camera.CAMERA_ORBIT_SPEED(), (mouseY - pmouseY) * camera.CAMERA_ORBIT_SPEED());
+    c_Camera.orbit((mouseX - pmouseX) * c_Camera.CAMERA_ORBIT_SPEED(), (mouseY - pmouseY) * c_Camera.CAMERA_ORBIT_SPEED());
   } else if (mouseButton == LEFT) {
-    camera.pan(mouseX - pmouseX, mouseY - pmouseY);
+    c_Camera.pan(mouseX - pmouseX, mouseY - pmouseY);
   }
 }
 
 // Control the zoom of the camera
 void mouseWheel(MouseEvent event) {
-  camera.zoom(event.getCount() * camera.CAMERA_ZOOM_SPEED());
+  c_Camera.zoom(event.getCount() * c_Camera.CAMERA_ZOOM_SPEED());
 }
