@@ -1,19 +1,15 @@
 abstract class Protein extends Collision {
-
-  // FOR ACTIN MAINLY
-  private final int NUM_SPHERES = 22;
-  private final int SPHERE_RADIUS = 30;
-  private final float SPACING = SPHERE_RADIUS * 1.05;
   private final float SIN_COS_VAL = 0.019;
-
-  private float xStart, yStart;
 
   private ArrayList<PVector> points;
 
+  private float xStart, yStart;
   private PVector position;
+  
+  private float spacing;
   private float radius;
   private int numPoints;
-  private int numObjects;
+  private int amount;
   private float objectHeight;
 
   // ------------------------------ GETTERS AND SETTERS ------------------------------
@@ -27,11 +23,11 @@ abstract class Protein extends Collision {
   }
 
   // Number of objects to spawn properties
-  public void setNumObjects(int num) {
-    this.numObjects = num;
+  public void setAmount(int num) {
+    this.amount = num;
   }
-  public int getNumObjects() {
-    return this.numObjects;
+  public int getAmount() {
+    return this.amount;
   }
 
   // X start properties
@@ -81,19 +77,11 @@ abstract class Protein extends Collision {
   public void setPoints(ArrayList<PVector> newPoints) {
     this.points = newPoints;
   }
-
-  // Finalised temp properties for actin
-  public int NUM_SPHERES() {
-    return this.NUM_SPHERES;
-  }
-  public int SPHERE_RADIUS() {
-    return this.SPHERE_RADIUS;
-  }
   public float SIN_COS_VAL() {
     return this.SIN_COS_VAL;
   }
-  public float SPACING() {
-    return this.SPACING;
+  public float getSpacing() {
+    return this.spacing;
   }
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
@@ -105,13 +93,17 @@ abstract class Protein extends Collision {
     this.radius = 0;
   }
 
-  //Actin generation
-  public Protein(PVector pos) {
+  //Actin generation  
+  public Protein(PVector pos, int amount, int r) {
     points = new ArrayList<PVector>();
 
     this.position = pos;
     this.xStart = pos.x;
     this.yStart = pos.y;
+
+    this.amount = amount;
+    this.radius = r;
+    this.spacing = r * 1.05;
   }
   // Myosin heads generation
   public Protein(PVector pos, float r, int initPoints) {
@@ -132,6 +124,7 @@ abstract class Protein extends Collision {
     this.xStart = pos.x;
     this.yStart = pos.y;
     this.position = new PVector(pos.x, pos.y, pos.z);
+    setAmount(initNumPoints);
     setNumPoints(initNumPoints);
   }
 

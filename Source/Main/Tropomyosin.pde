@@ -9,9 +9,9 @@ class Tropomyosin extends Myosin {
     super();
   }
 
-  // Constructor for myosin
-  public Tropomyosin(PVector initLocation, int initNumPoints, boolean isSiteA) {
-    super(initLocation, initNumPoints);
+  // Constructor for tropomyosin
+  public Tropomyosin(PVector initLocation, int amount, boolean isSiteA) {
+    super(initLocation, amount);
     this.isSiteA = isSiteA;
   }
 
@@ -21,7 +21,7 @@ class Tropomyosin extends Myosin {
     stroke(20, 60, 0, 180);
     strokeWeight(10);
 
-    setPoints( helicalPointsGenerator(isSiteA, NUM_SPHERES(), SIN_COS_VAL(), SPACING(), 0, 0 ));
+    setPoints( helicalPointsGenerator(isSiteA, getAmount(), SIN_COS_VAL(), getSpacing(), 0, 0 ));
   }
 
   public void draw() {

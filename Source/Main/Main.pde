@@ -27,8 +27,8 @@ void setup() {
 
   // Object creation
   c_camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
-  a_list.add(new Actin(i_position, true));
-  a_list.add(new Actin(i_position, false));
+  a_list.add(new Actin(i_position, true, 22, 30));
+  a_list.add(new Actin(i_position, false, 22, 30));
   // Initiate myosin filment which holds Myosin heads to form cross-bridge
   mf_myofilament = new MyosinFilament(new PVector(i_position.x + 580, i_position.y + 160, 0), 12);
 
@@ -37,8 +37,8 @@ void setup() {
   t_list.add(new Tropomyosin(new PVector(i_position.x, i_position.y - 10, 0), 5, false));
   // Set tropomyosin variables
   for (int i = 0; i < t_list.size(); i++) {
-    t_list.get(i).setNumPoints(a_list.get(0).NUM_SPHERES());
-    t_list.get(i).setRadius(a_list.get(0).SPHERE_RADIUS() / 1.8f);
+    t_list.get(i).setNumPoints(a_list.get(0).getAmount());
+    t_list.get(i).setRadius(a_list.get(0).getRadius() / 1.8f);
     t_list.get(i).coordinateGenerator();
   }
 
@@ -47,7 +47,7 @@ void setup() {
   mf_myofilament.setRadius(30);
 
   // Generate points for Actin to be rendered
-  float mh_numObjects = mf_myofilament.getHeight() / (a_list.get(0).SPACING() * 2);
+  float mh_numObjects = mf_myofilament.getHeight() / (a_list.get(0).getSpacing() * 2);
   int mh_numPoints = 42;
   mf_myofilament.coordinateGenerator();
 
@@ -57,9 +57,9 @@ void setup() {
 
   for (int i = 0; i < mh_numObjects; i++) {
     mh_list.add(new MyosinHead(mh_initPosition, mh_numPoints));
-    mh_initPosition.set(mh_initPosition.x + a_list.get(0).SPACING() * 2, mh_initPosition.y, mh_initPosition.z);
+    mh_initPosition.set(mh_initPosition.x + a_list.get(0).getSpacing() * 2, mh_initPosition.y, mh_initPosition.z);
 
-    mh_list.get(i).setRadius(a_list.get(0).SPHERE_RADIUS() / 2);
+    mh_list.get(i).setRadius(a_list.get(0).getRadius() / 2);
     mh_list.get(i).coordinateGenerator();
     mh_list.get(i).setPerlinHeight(12);
   }
@@ -92,7 +92,7 @@ void draw() {
     a_list.get(i).draw();
     t_list.get(i).draw();
     // Apply an orbit translation to the rotation matrix
-    translate(a_list.get(i).SPHERE_RADIUS() * 2, 0, 0);
+    translate(a_list.get(i).getRadius() * 2, 0, 0);
     rotateX(frameCount * c_orbitSpeed);
     popMatrix(); // Restore the saved translation and rotation matrix
   }
@@ -108,8 +108,6 @@ void draw() {
   //Update all values
   update(a_list, 0, false);
   update(t_list, 600, false);
-
-
   update(mh_list, 0, true);
 
   // UPDATE MYOSIN HEADS HERE

@@ -3,19 +3,19 @@ class Actin extends MeshRenderer {
 
   // ------------------------------ CONSTRUCTOR AND FUNCTIONS ------------------------
 
-  public Actin(PVector pos, boolean isPositive) {
-    super(pos);
-    this.isPos = isPositive;
+  public Actin(PVector pos, boolean isPositive, int amount, int r) {
+    super(pos, amount, r);
+    this.isPos = isPositive;    
   }
 
   @Override
     public void coordinateGenerator() {
-    setPoints(helicalPointsGenerator(isPos, NUM_SPHERES(), SIN_COS_VAL(), SPACING(), getXStart(), getYStart() ));
+    setPoints(helicalPointsGenerator(isPos, getAmount(), SIN_COS_VAL(), getSpacing(), getXStart(), getYStart() ));
   }
 
   public void draw() {
-    for (int i = 0; i < NUM_SPHERES(); i++) {
-      renderSphere(getPoints().get(i), SPHERE_RADIUS());
+    for (int i = 0; i < getAmount(); i++) {
+      renderSphere(getPoints().get(i), getRadius());
     }
   }
 }
