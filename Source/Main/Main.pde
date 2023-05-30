@@ -1,7 +1,6 @@
 CameraOrbit c_Camera;
-
-Actin actin;
-MyosinFilament myofilament;
+Actin a_Actin;
+MyosinFilament mf_Myofilament;
 
 float c_OrbitSpeed = 0.05;
 PVector i_Position;
@@ -28,12 +27,10 @@ void setup() {
 
   // Object creation
   c_Camera = new CameraOrbit(800, 0, 0, new PVector(0, 0, 0));
-
-  // Initiate actin list which forms the helical structure
   a_List.add(new Actin(i_Position, true));
   a_List.add(new Actin(i_Position, false));
   // Initiate myosin filment which holds Myosin heads to form cross-bridge
-  myofilament = new MyosinFilament(new PVector(i_Position.x + 580, i_Position.y + 160, 0), 12);
+  mf_Myofilament = new MyosinFilament(new PVector(i_Position.x + 580, i_Position.y + 160, 0), 12);
 
   // Initiate tropomyosin list of binding sites for myosin heads
   t_List.add(new Tropomyosin(new PVector(i_Position.x, i_Position.y - 10, 0), 5, true));
@@ -46,12 +43,12 @@ void setup() {
   }
 
   // Set myosinFilament variables
-  myofilament.setHeight(1100);
-  myofilament.setRadius(30);
+  mf_Myofilament.setHeight(1100);
+  mf_Myofilament.setRadius(30);
 
   // Generate points for Actin to be rendered
-  float numMyosinHeads =  myofilament.getHeight() / (a_List.get(0).SPACING() * 2);
-  myofilament.coordinateGenerator();
+  float numMyosinHeads = mf_Myofilament.getHeight() / (a_List.get(0).SPACING() * 2);
+  mf_Myofilament.coordinateGenerator();
 
   for (int i = 0; i < a_List.size(); i++) {
     a_List.get(i).coordinateGenerator();
@@ -73,8 +70,7 @@ void draw() {
   stroke(0);
 
   // Display rendered structures
-  myofilament.displayShape();
-
+  mf_Myofilament.displayShape();
 
   for (int i = 0; i < a_List.size(); i++) {
     // Save the current translation matrix
@@ -100,9 +96,9 @@ void draw() {
     popMatrix(); // Restore the saved translation and rotation matrix
   }
 
-  for (int i = 0; i < mh_List.size(); i++) {    
+  for (int i = 0; i < mh_List.size(); i++) {
     mh_List.get(i).displayShape();
-    mh_List.get(i).renderMyosinHeadConnection( mh_List.get(i).getPosition(), myofilament.getPosition() );
+    mh_List.get(i).renderMyosinHeadConnection( mh_List.get(i).getPosition(), mf_Myofilament.getPosition() );
   }
 
   // check collision between objects here
@@ -131,11 +127,11 @@ private void update(ArrayList<? extends Protein> obj, float m, boolean canMoveYZ
     if (obj.get(i) instanceof MyosinHead) {
       float originX = obj.get(i).getXStart();
       float originY = obj.get(i).getYStart();
-      
+
       obj.get(i).setXSpeed(4);
       obj.get(i).setLeftBound(originX - (r * 2));
       obj.get(i).setRightBound(originX + (r * 2));
-      
+
       obj.get(i).setLowerBound(originY + (r / 1.6));
       obj.get(i).setUpperBound(originY - (r / 1.6));
 
@@ -143,8 +139,8 @@ private void update(ArrayList<? extends Protein> obj, float m, boolean canMoveYZ
     }
     // Else, set left and right bound as needed and add all points to points arrayList
     else {
-      obj.get(i).setLeftBound(m - myofilament.getHeight());
-      obj.get(i).setRightBound(m + myofilament.getHeight());
+      obj.get(i).setLeftBound(m - mf_Myofilament.getHeight());
+      obj.get(i).setRightBound(m + mf_Myofilament.getHeight());
 
       points = obj.get(i).getPoints();
     }
@@ -153,7 +149,6 @@ private void update(ArrayList<? extends Protein> obj, float m, boolean canMoveYZ
     // Set object's points to the new points generated after moving
     for (int j = 0; j < points.size(); j++) {
       PVector updatedPoint = obj.get(i).update(points.get(j), canMoveYZ);
-
       points.get(j).set(updatedPoint);
     }
     obj.get(i).setPoints(points);
